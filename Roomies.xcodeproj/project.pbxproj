@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		656EB7E1AD380E3F429615CA /* Pods_Roomies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
-		8A75B09A21632B090071227C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09921632B090071227C /* ViewController.swift */; };
 		8A75B09D21632B090071227C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09B21632B090071227C /* Main.storyboard */; };
 		8A75B09F21632B0A0071227C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09E21632B0A0071227C /* Assets.xcassets */; };
 		8A75B0A221632B0A0071227C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B0A021632B0A0071227C /* LaunchScreen.storyboard */; };
+		8A75B0AA21632D290071227C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B0A921632D290071227C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.release.xcconfig"; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A75B09721632B090071227C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8A75B09921632B090071227C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8A75B09C21632B090071227C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A75B09E21632B0A0071227C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A75B0A121632B0A0071227C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A75B0A321632B0A0071227C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A75B0A921632D290071227C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Roomies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3095B704A0B5C538F03CD9 /* Pods-Roomies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,6 +60,7 @@
 		8A75B08B21632B090071227C = {
 			isa = PBXGroup;
 			children = (
+				8A75B0A921632D290071227C /* GoogleService-Info.plist */,
 				8A75B09621632B090071227C /* Roomies */,
 				8A75B09521632B090071227C /* Products */,
 				6D1954BE76554F001836A9AE /* Pods */,
@@ -79,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				8A75B09721632B090071227C /* AppDelegate.swift */,
-				8A75B09921632B090071227C /* ViewController.swift */,
 				8A75B09B21632B090071227C /* Main.storyboard */,
 				8A75B09E21632B0A0071227C /* Assets.xcassets */,
 				8A75B0A021632B0A0071227C /* LaunchScreen.storyboard */,
@@ -149,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A75B0A221632B0A0071227C /* LaunchScreen.storyboard in Resources */,
+				8A75B0AA21632D290071227C /* GoogleService-Info.plist in Resources */,
 				8A75B09F21632B0A0071227C /* Assets.xcassets in Resources */,
 				8A75B09D21632B090071227C /* Main.storyboard in Resources */,
 			);
@@ -228,7 +229,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A75B09A21632B090071227C /* ViewController.swift in Sources */,
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
