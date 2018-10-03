@@ -13,6 +13,9 @@
 		8A75B09F21632B0A0071227C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09E21632B0A0071227C /* Assets.xcassets */; };
 		8A75B0A221632B0A0071227C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B0A021632B0A0071227C /* LaunchScreen.storyboard */; };
 		8A75B0AA21632D290071227C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B0A921632D290071227C /* GoogleService-Info.plist */; };
+		8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AB216332EA0071227C /* LoginViewController.swift */; };
+		8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AD216333DA0071227C /* GlobalOverrides.swift */; };
+		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		8A75B0A121632B0A0071227C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A75B0A321632B0A0071227C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A75B0A921632D290071227C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8A75B0AB216332EA0071227C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8A75B0AD216333DA0071227C /* GlobalOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOverrides.swift; sourceTree = "<group>"; };
+		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Roomies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3095B704A0B5C538F03CD9 /* Pods-Roomies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +90,9 @@
 				8A75B09E21632B0A0071227C /* Assets.xcassets */,
 				8A75B0A021632B0A0071227C /* LaunchScreen.storyboard */,
 				8A75B0A321632B0A0071227C /* Info.plist */,
+				8A75B0AB216332EA0071227C /* LoginViewController.swift */,
+				8A75B0AD216333DA0071227C /* GlobalOverrides.swift */,
+				8A75B0AF2163363A0071227C /* UserManager.swift */,
 			);
 			path = Roomies;
 			sourceTree = "<group>";
@@ -229,6 +238,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */,
+				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
+				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

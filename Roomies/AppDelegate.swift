@@ -11,7 +11,7 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    let bullshit = "yuh"
     var window: UIWindow?
 
 
