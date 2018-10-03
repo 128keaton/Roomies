@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		656EB7E1AD380E3F429615CA /* Pods_Roomies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */; };
+		8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* User.swift */; };
+		8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
 		8A75B09D21632B090071227C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09B21632B090071227C /* Main.storyboard */; };
 		8A75B09F21632B0A0071227C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09E21632B0A0071227C /* Assets.xcassets */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.release.xcconfig"; sourceTree = "<group>"; };
+		8A2DFEB821654BCC00D71FC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A75B09721632B090071227C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A75B09C21632B090071227C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +67,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8A2DFEB721654BBA00D71FC5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8A2DFEBA21654C9300D71FC5 /* User */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8A2DFEBA21654C9300D71FC5 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8A75B0AF2163363A0071227C /* UserManager.swift */,
+				8A2DFEB821654BCC00D71FC5 /* User.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		8A75B08B21632B090071227C = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +106,7 @@
 		8A75B09621632B090071227C /* Roomies */ = {
 			isa = PBXGroup;
 			children = (
+				8A2DFEB721654BBA00D71FC5 /* Models */,
 				8A75B09721632B090071227C /* AppDelegate.swift */,
 				8A75B09B21632B090071227C /* Main.storyboard */,
 				8A75B09E21632B0A0071227C /* Assets.xcassets */,
@@ -92,7 +114,7 @@
 				8A75B0A321632B0A0071227C /* Info.plist */,
 				8A75B0AB216332EA0071227C /* LoginViewController.swift */,
 				8A75B0AD216333DA0071227C /* GlobalOverrides.swift */,
-				8A75B0AF2163363A0071227C /* UserManager.swift */,
+				8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */,
 			);
 			path = Roomies;
 			sourceTree = "<group>";
@@ -241,7 +263,9 @@
 				8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
+				8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */,
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
+				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

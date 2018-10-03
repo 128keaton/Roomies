@@ -9,21 +9,30 @@
 import Foundation
 import Firebase
 
-class UserManager{
-   /* func signInUser(email: String, password: String){
+class UserManager {
+    private (set) public var currentUser: User?
+
+    // TODO: use a completion block here
+    func signInUser(email: String, password: String)  {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, authError) in
             guard let result = authResult
-                else{
+                else {
                     print("authResult is nil")
                     return
             }
             print(result)
-            
-            if (authError != nil){
+
+            if (authError != nil) {
                 print(authError!)
-                return
+
             }
-        
+
         }
-    }*/
+    }
+    
+    // Registers a a user with email, password and full name
+    func registerUser(email: String, password: String, fullName: String){
+    
+    }
+
 }
