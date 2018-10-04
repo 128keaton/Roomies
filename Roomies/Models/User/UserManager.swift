@@ -21,24 +21,28 @@ class UserManager {
             // If you didn't get a result, you're el fucko'd
             guard let result = authResult
                 else {
+                    self.currentFIRUser = nil
+                    self.currentUser = nil
                     print("authResult is nil")
                     authReturned(nil)
                     return
             }
             print(result)
-            
+
             // If you got an auth error, fucking ditto muh guy
             if (authError != nil) {
                 authReturned(nil)
+                self.currentFIRUser = nil
+                self.currentUser = nil
                 print(authError!)
             }
-            
+
             // Finds the FIRUser and then either finds or creates a user in the 'users' table
             self.currentFIRUser = authResult?.user
             self.findUser(userID: self.currentFIRUser!.uid, email: email, returnedUser: { (appUser) in
-                if(appUser != nil){
+                if(appUser != nil) {
                     authReturned(appUser)
-                }else{
+                } else {
                     authReturned(nil)
                 }
             })
