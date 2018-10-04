@@ -8,4 +8,14 @@
 
 import Foundation
 
-class Item {}
+class Item {
+    var uuid: UUID
+    var name: String
+    
+    init(initialName: String) {
+        // set UUID
+            // SOURCE: https://stackoverflow.com/questions/24428250/generate-a-uuid-on-ios-from-swift
+        self.uuid = UUID()
+        self.name = initialName
+    }
+}
