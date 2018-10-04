@@ -304,13 +304,9 @@
 				C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
-<<<<<<< HEAD
 				C7C62F9E2165D9B40095E33E /* Firebase.swift in Sources */,
 				C7C62F9C2165D90B0095E33E /* GroceryList.swift in Sources */,
-				8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */,
-=======
 				8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */,
->>>>>>> master
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
 				C7C62F922165D3C70095E33E /* GroceryListManager.swift in Sources */,
