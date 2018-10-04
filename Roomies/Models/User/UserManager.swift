@@ -17,6 +17,7 @@ class UserManager {
 
     // TODO: use a completion block here
     func signInUser(email: String, password: String, authReturned: @escaping (AppUser?) -> Void) {
+>>>>>>> master
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, authError) in
             // If you didn't get a result, you're el fucko'd
             guard let result = authResult
@@ -30,6 +31,7 @@ class UserManager {
             print(result)
 
             // If you got an auth error, fucking ditto muh guy
+>>>>>>> master
             if (authError != nil) {
                 authReturned(nil)
                 self.currentFIRUser = nil
@@ -46,12 +48,15 @@ class UserManager {
                     authReturned(nil)
                 }
             })
+>>>>>>> master
         }
     }
 
     // Registers a a user with email, password and full name
     func registerUser(email: String, password: String, fullName: String) {
 
+<<<<<<< HEAD
+=======
     }
 
     private func findUser(userID: String, email: String, returnedUser: @escaping (AppUser?) -> Void) {
@@ -71,6 +76,7 @@ class UserManager {
                 })
             }
         }
+>>>>>>> master
     }
 
     func createUserOnBackend(fullName: String?, email: String, userID: String, completion: @escaping (Bool) -> Void) {
