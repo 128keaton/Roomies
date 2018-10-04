@@ -7,7 +7,8 @@ target 'Roomies' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
-
+  pod 'CodableFirebase'
+  pod 'MBProgressHUD'
   # Pods for Roomies
 
 end
