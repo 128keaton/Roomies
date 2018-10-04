@@ -18,6 +18,10 @@
 		8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AB216332EA0071227C /* LoginViewController.swift */; };
 		8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AD216333DA0071227C /* GlobalOverrides.swift */; };
 		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
+		C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F912165D3C70095E33E /* GroceryManager.swift */; };
+		C7C62F942165D3DA0095E33E /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F932165D3DA0095E33E /* ShoppingList.swift */; };
+		C7C62F962165D40E0095E33E /* Grocery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F952165D40E0095E33E /* Grocery.swift */; };
+		C7C62F982165D41C0095E33E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F972165D41C0095E33E /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		8A75B0AB216332EA0071227C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A75B0AD216333DA0071227C /* GlobalOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOverrides.swift; sourceTree = "<group>"; };
 		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		C7C62F912165D3C70095E33E /* GroceryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryManager.swift; sourceTree = "<group>"; };
+		C7C62F932165D3DA0095E33E /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
+		C7C62F952165D40E0095E33E /* Grocery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grocery.swift; sourceTree = "<group>"; };
+		C7C62F972165D41C0095E33E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Roomies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3095B704A0B5C538F03CD9 /* Pods-Roomies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +80,7 @@
 			children = (
 				C7C62F8F2165D32E0095E33E /* Apartment */,
 				8A2DFEBA21654C9300D71FC5 /* User */,
+				C7C62F972165D41C0095E33E /* Item.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -131,6 +140,9 @@
 		C7C62F902165D33F0095E33E /* Groceries */ = {
 			isa = PBXGroup;
 			children = (
+				C7C62F912165D3C70095E33E /* GroceryManager.swift */,
+				C7C62F932165D3DA0095E33E /* ShoppingList.swift */,
+				C7C62F952165D40E0095E33E /* Grocery.swift */,
 			);
 			path = Groceries;
 			sourceTree = "<group>";
@@ -276,12 +288,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7C62F982165D41C0095E33E /* Item.swift in Sources */,
 				8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */,
+				C7C62F942165D3DA0095E33E /* ShoppingList.swift in Sources */,
+				C7C62F962165D40E0095E33E /* Grocery.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
 				8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */,
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
+				C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
