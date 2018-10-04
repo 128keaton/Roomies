@@ -13,7 +13,7 @@ class UserManager {
     private (set) public var currentUser: User?
 
     // TODO: use a completion block here
-    func signInUser(email: String, password: String)  {
+    func signInUser(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, authError) in
             guard let result = authResult
                 else {
@@ -21,18 +21,15 @@ class UserManager {
                     return
             }
             print(result)
-
             if (authError != nil) {
                 print(authError!)
-
             }
-
         }
     }
     
     // Registers a a user with email, password and full name
-    func registerUser(email: String, password: String, fullName: String){
-    
+    func registerUser(email: String, password: String, fullName: String) {
+
     }
 
 }

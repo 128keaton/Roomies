@@ -70,6 +70,7 @@
 		8A2DFEB721654BBA00D71FC5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C7C62F8F2165D32E0095E33E /* Apartment */,
 				8A2DFEBA21654C9300D71FC5 /* User */,
 			);
 			path = Models;
@@ -117,6 +118,21 @@
 				8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */,
 			);
 			path = Roomies;
+			sourceTree = "<group>";
+		};
+		C7C62F8F2165D32E0095E33E /* Apartment */ = {
+			isa = PBXGroup;
+			children = (
+				C7C62F902165D33F0095E33E /* Groceries */,
+			);
+			path = Apartment;
+			sourceTree = "<group>";
+		};
+		C7C62F902165D33F0095E33E /* Groceries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Groceries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
