@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		656EB7E1AD380E3F429615CA /* Pods_Roomies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */; };
-		8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* User.swift */; };
+		8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* AppUser.swift */; };
 		8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
 		8A75B09D21632B090071227C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B09B21632B090071227C /* Main.storyboard */; };
@@ -28,7 +28,7 @@
 
 /* Begin PBXFileReference section */
 		5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.release.xcconfig"; sourceTree = "<group>"; };
-		8A2DFEB821654BCC00D71FC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8A2DFEB821654BCC00D71FC5 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A75B09721632B090071227C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				8A75B0AF2163363A0071227C /* UserManager.swift */,
-				8A2DFEB821654BCC00D71FC5 /* User.swift */,
+				8A2DFEB821654BCC00D71FC5 /* AppUser.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -255,8 +255,10 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Roomies/Pods-Roomies-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -271,8 +273,10 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -300,9 +304,13 @@
 				C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
+<<<<<<< HEAD
 				C7C62F9E2165D9B40095E33E /* Firebase.swift in Sources */,
 				C7C62F9C2165D90B0095E33E /* GroceryList.swift in Sources */,
 				8A2DFEB921654BCC00D71FC5 /* User.swift in Sources */,
+=======
+				8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */,
+>>>>>>> master
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
 				C7C62F922165D3C70095E33E /* GroceryListManager.swift in Sources */,

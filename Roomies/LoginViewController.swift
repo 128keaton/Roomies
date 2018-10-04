@@ -9,27 +9,26 @@
 import Foundation
 import UIKit
 import Firebase
+import MBProgressHUD
 
 class LoginViewController: UIViewController{
     @IBOutlet weak var emailField: UITextField?
     @IBOutlet weak var passwordField: UITextField?
     
+    var userManager: UserManager? = nil
+    
+    override func viewDidLoad() {
+        userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
+    }
+    
     @IBAction func loginButtonPressed(){
+        
         if(validateFields()){
-            Auth.auth().signIn(withEmail: (emailField?.text)!, password: (passwordField?.text)!) { (authResult, authError) in
-                guard let result = authResult
-                    else{
-                        print("authResult is nil")
-                        return
+            userManager?.signInUser(email: (emailField?.text)!, password: (passwordField?.text)!, authReturned: { (user) in
+                if(user == nil){
+                    self.displayAlert(message: "Incorrect username or password", title: "Error")
                 }
-                print(result)
-                
-                if (authError != nil){
-                    print(authError!)
-                    return
-                }
-                self.displayAlert(message: "Successfully authenticated", title: "Success")
-            }
+            })
         }
     }
     
