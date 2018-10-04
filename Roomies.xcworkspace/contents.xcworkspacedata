@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/jhatcher/Desktop/workspace/team-projects/Roomies/Roomies/Models/Apartment/Groceries/GroceryList.swift">
-   </FileRef>
-   <FileRef
       location = "group:Roomies.xcodeproj">
    </FileRef>
    <FileRef
