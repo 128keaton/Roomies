@@ -11,7 +11,7 @@ import Foundation
 class GroceryListManager {
     var groceryList: Array<GroceryItem>?
     
-    func groceryWasPurchased(by: User, for: Apartment, with price: Double) {
+    func groceryWasPurchased(by: AppUser, for: Apartment, with price: Double) {
         // log the transaction
         // cross the item off of the list
     }
