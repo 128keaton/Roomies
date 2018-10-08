@@ -8,19 +8,19 @@
 
 import Foundation
 
-class AppUser: Codable{
+class AppUser: Codable {
     var emailAddress: String?
     var fullName: String?
     var userID: String?
     var authState: UserAuthState? = .unauthorized
     
-    init(emailAddress: String, fullName: String?){
+    init(emailAddress: String, fullName: String?) {
         self.fullName = fullName
         self.emailAddress = emailAddress
     }
 }
 
-enum UserAuthState: Int, Codable{
+enum UserAuthState: Int, Codable {
     case authorized = 0
     case unauthorized = 1
 }
