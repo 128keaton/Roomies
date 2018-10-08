@@ -399,6 +399,7 @@
 		};
 		8A75B0A521632B0A0071227C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

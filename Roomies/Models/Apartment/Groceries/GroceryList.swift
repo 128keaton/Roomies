@@ -8,6 +8,16 @@
 
 import Foundation
 
-class GroceryList {
+protocol Listable: Codable {
+}
+
+class GroceryList: Listable {
+//    var groceryItems: Array<GroceryItem>?
+    var groceryListID: String = "Default" /// the root name of the grocery list
+    
+//    init(initialGroceryItems: Array<GroceryItem>) {
+//        self.groceryItems = initialGroceryItems
+//        self.groceryListID = "Default"
+//    }
     
 }
