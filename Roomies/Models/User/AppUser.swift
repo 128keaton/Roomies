@@ -12,6 +12,7 @@ class AppUser: Codable {
     var emailAddress: String?
     var fullName: String?
     var userID: String?
+    var apartments: [UUID] = []
     
     init(emailAddress: String, fullName: String?) {
         self.fullName = fullName

@@ -14,25 +14,25 @@ class GroceryListManager {
     var managedGroceryLists: Array<GroceryList>?
     private var defaultGroceryPath = "groceries"
 //    private var userDefinedGroceryPath: String?
-    
+
     func groceryItemWasPurchased(by: AppUser, for: Apartment, with price: Double) {
         // log the transaction
         // cross the item off of the list
     }
-    
+
     // ---------------------------------------------------------------------
-    
+
     func deleteGroceryItemOnBackend(item: GroceryItem) {
         // delete request to firebase
     }
-    
-    func updateGroceryListOnBackend() {}
-    
+
+    func updateGroceryListOnBackend() { }
+
     /// Create a blank grocery list on the backend, return a grocery list object
     func createOnBackend(completion: @escaping (Bool) -> Void) {
         let transientGroceryList = GroceryList()
         let encodedGroceryList = try! FirestoreEncoder().encode(transientGroceryList)
-    Firestore.firestore().collection(self.defaultGroceryPath).document(transientGroceryList.groceryListID).setData(encodedGroceryList) { (error) in
+        Firestore.firestore().collection(self.defaultGroceryPath).document(transientGroceryList.groceryListID).setData(encodedGroceryList) { (error) in
             if(error != nil) {
                 completion(false)
             } else {
@@ -40,7 +40,7 @@ class GroceryListManager {
             }
         }
     }
-    
+
     init(groceryListsToManage: Array<GroceryList>?) {
         self.managedGroceryLists = groceryListsToManage
     }

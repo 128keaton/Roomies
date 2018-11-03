@@ -14,25 +14,25 @@ class UserManager {
     private (set) public var currentUser: AppUser?
     private var currentFIRUser: User?
     private let userPath = "users"
-    private (set) public var authState: UserAuthState? = .unauthorized
-    
-    init(){
-        
+    private (set) public var authState: UserAuthState = .unauthorized
+
+    init() {
+
     }
-    
-    init(firUser: User){
+
+    init(firUser: User) {
         self.currentFIRUser = firUser
         self.findUser(userID: (self.currentFIRUser?.uid)!, email: (self.currentFIRUser?.email)!, returnedUser: { (user) in
-            if(user == nil){
-                self.authState = .unauthorized
-            }else{
-                self.authState = .authorized
-                self.currentUser = user!
-            }
-        })
-        
+                if(user == nil) {
+                    self.authState = .unauthorized
+                } else {
+                    self.authState = .authorized
+                    self.currentUser = user!
+                }
+            })
+
     }
-    
+
     // TODO: use a completion block here
     func signInUser(email: String, password: String, authReturned: @escaping (AppUser?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, authError) in
@@ -50,9 +50,9 @@ class UserManager {
             })
         }
     }
-    
+
     // Handles the authorization result callback
-    private func handleUserAuthResult(email: String, authResult: AuthDataResult?, authError: Error?, authReturned: @escaping (AppUser?) -> Void){
+    private func handleUserAuthResult(email: String, authResult: AuthDataResult?, authError: Error?, authReturned: @escaping (AppUser?) -> Void) {
         // If you didn't get a result, you're el fucko'd
         guard let result = authResult
             else {
@@ -63,7 +63,7 @@ class UserManager {
                 return
         }
         print(result)
-        
+
         // If you got an auth error, fucking ditto muh guy
         if (authError != nil) {
             authReturned(nil)
@@ -71,7 +71,7 @@ class UserManager {
             self.currentUser = nil
             print(authError!)
         }
-        
+
         // Finds the FIRUser and then either finds or creates a user in the 'users' table
         self.currentFIRUser = authResult?.user
         self.findUser(userID: self.currentFIRUser!.uid, email: email, returnedUser: { (appUser) in
@@ -83,7 +83,17 @@ class UserManager {
             }
         })
     }
-    
+
+    // Username lookup from UUID
+    public func getUserNameFor(userID: String, returnedUserName: @escaping (String?) -> Void) {
+        Firestore.firestore().collection(userPath).document(userID).getDocument { document, error in
+            if document != nil && document?.data() != nil {
+                let user = try! FirestoreDecoder().decode(AppUser.self, from: document!.data()!)
+                returnedUserName(user.fullName ?? user.emailAddress)
+            }
+        }
+    }
+
     // Finds the user in the 'users' table by FIRUser uid
     private func findUser(userID: String, email: String, returnedUser: @escaping (AppUser?) -> Void) {
         Firestore.firestore().collection(userPath).document(userID).getDocument { document, error in
@@ -116,9 +126,4 @@ class UserManager {
             }
         }
     }
-}
-
-enum UserAuthState: Int, Codable{
-    case authorized = 0
-    case unauthorized = 1
 }

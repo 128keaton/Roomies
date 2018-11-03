@@ -14,10 +14,13 @@
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
-		<key>Roomies.xcscheme_^#shared#^_</key>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8A75B09321632B090071227C</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>18</integer>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

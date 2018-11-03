@@ -29,6 +29,8 @@ class LoginViewController: UIViewController {
                     MBProgressHUD.hide(for: self.view, animated: true)
                     if(user == nil) {
                         self.displayAlert(message: "Incorrect username or password", title: "Error")
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
                     }
                 })
             }
