@@ -18,6 +18,7 @@
 		8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AB216332EA0071227C /* LoginViewController.swift */; };
 		8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AD216333DA0071227C /* GlobalOverrides.swift */; };
 		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
+		C746F6AF2165E7C300C58D19 /* GroceryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C746F6AE2165E7C300C58D19 /* GroceryList.swift */; };
 		C7C62F922165D3C70095E33E /* GroceryListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F912165D3C70095E33E /* GroceryListManager.swift */; };
 		C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F952165D40E0095E33E /* GroceryItem.swift */; };
 		C7C62F982165D41C0095E33E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F972165D41C0095E33E /* Item.swift */; };
@@ -39,6 +40,7 @@
 		8A75B0AB216332EA0071227C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A75B0AD216333DA0071227C /* GlobalOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOverrides.swift; sourceTree = "<group>"; };
 		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		C746F6AE2165E7C300C58D19 /* GroceryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryList.swift; sourceTree = "<group>"; };
 		C7C62F912165D3C70095E33E /* GroceryListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListManager.swift; sourceTree = "<group>"; };
 		C7C62F952165D40E0095E33E /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		C7C62F972165D41C0095E33E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */,
 				C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
+				C746F6AF2165E7C300C58D19 /* GroceryList.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
 				C7C62F9E2165D9B40095E33E /* Firebase.swift in Sources */,
 				8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */,
@@ -333,6 +336,7 @@
 /* Begin XCBuildConfiguration section */
 		8A75B0A421632B0A0071227C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -394,6 +398,7 @@
 		};
 		8A75B0A521632B0A0071227C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

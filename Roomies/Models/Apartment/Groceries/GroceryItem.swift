@@ -9,12 +9,11 @@
 import Foundation
 
 class GroceryItem: Item {
-    var price: Double
-    // var averagePrice { ... calculated value
-    var brandName: String?
     
-    init(initialName: String, initialPrice: Double) {
-        self.price = initialPrice
-        super.init(initialName: initialName)
-    }
+    // var averagePrice { ... calculated value
+    
+//    override init(initialName: String, initialPrice: Double) {
+//        super.init(initialName: initialName, initialPrice: initialPrice)
+//    }
+    
 }

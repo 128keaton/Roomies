@@ -9,9 +9,9 @@
 import Foundation
 
 class Apartment {
-    var apartmentName: String
+    var apartmentID: String = "DefaultApartment"
     
-    init(initialApartmentName: String) {
-        self.apartmentName = initialApartmentName
-    }
+//    init(initialApartmentID: String) {
+//        self.apartmentID = initialApartmentID
+//    }
 }
