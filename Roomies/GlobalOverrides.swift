@@ -12,7 +12,7 @@ import UIKit
 
 // BorderRadius on UIView/UIButton
 @IBDesignable extension UIView {
-    
+
     @IBInspectable var borderWidth: CGFloat {
         set {
             layer.borderWidth = newValue
@@ -21,7 +21,7 @@ import UIKit
             return layer.borderWidth
         }
     }
-    
+
     @IBInspectable var cornerRadius: CGFloat {
         set {
             layer.cornerRadius = newValue
@@ -30,7 +30,7 @@ import UIKit
             return layer.cornerRadius
         }
     }
-    
+
     @IBInspectable var borderColor: UIColor? {
         set {
             guard let uiColor = newValue else { return }
@@ -43,3 +43,19 @@ import UIKit
     }
 }
 
+
+class TableViewHelper {
+
+    class func emptyMessage(message: String, viewController: UITableViewController) {
+        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        let messageLabel = UILabel(frame: rect)
+        messageLabel.text = message
+        messageLabel.textColor = UIColor.gray
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.sizeToFit()
+
+        viewController.tableView.backgroundView = messageLabel
+        viewController.tableView.separatorStyle = .none
+    }
+}

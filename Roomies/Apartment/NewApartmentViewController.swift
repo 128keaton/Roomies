@@ -13,7 +13,21 @@ import MBProgressHUD
 
 class NewApartmentViewController: UITableViewController {
     var currentApartmentLocation: CLLocation?
-    
+    var userSearchController: UserSearchViewController? = nil
+    var currentUserUUID = ""
+    var userManager: UserManager? = nil
+
+    // hack because reload adds more fields
+    var alreadyAddedAddressCell = false
+    var alreadyAddedNameCell = false
+
+    var roommateUUIDs: [String] = []
+    var roommates: [String] = [] {
+        didSet {
+            reloadRoommateRows()
+        }
+    }
+
     lazy var locationManager: CLLocationManager = {
         var _locationManager = CLLocationManager()
         _locationManager.delegate = self
@@ -27,10 +41,14 @@ class NewApartmentViewController: UITableViewController {
     let apartmentManager = ApartmentManager()
     let geocoder = CLGeocoder()
 
-    @IBOutlet var apartmentAddressField: UITextField?
-    @IBOutlet var apartmentNameField: UITextField?
+    var apartmentAddressField: UITextField?
+    var apartmentNameField: UITextField?
 
-    @IBAction func useCurrentLocation(sender: UIButton) {
+    override func viewDidLoad() {
+        userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
+    }
+
+    @objc func useCurrentLocation() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation() // start location manager
         }
@@ -40,14 +58,19 @@ class NewApartmentViewController: UITableViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         if(currentApartmentLocation != nil && apartmentNameField?.text != "") {
             let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: self.apartmentManager.appUser!)
+
+            for uuid in roommateUUIDs {
+                apartment.users?.append(uuid)
+            }
+
             apartmentManager.persistApartment(apartment: apartment)
-            
-            self.dismiss(animated: true, completion: nil)
-            
+            MBProgressHUD.hide(for: self.view, animated: true)
+            dismissSelf()
+
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {
             validateAddress(addressString: (apartmentAddressField?.text!)!)
         } else if(apartmentAddressField?.text == "" && currentApartmentLocation == nil) {
-             displayAlert(message: "Please input a valid address or use your current location", title: "Invalid Address")
+            displayAlert(message: "Please input a valid address or use your current location", title: "Invalid Address")
         } else {
             displayAlert(message: "Please input an apartment name", title: "Invalid Name")
         }
@@ -55,12 +78,23 @@ class NewApartmentViewController: UITableViewController {
     }
 
 
-    @IBAction func addRoommates(sender: UIButton) {
+    @IBAction func dismissSelf(){
+         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section == 2 && indexPath.row == 0) {
+            showUserSearch()
+        }
 
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    private func didAddRoommate() {
-
+    func showUserSearch() {
+        userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
+        userSearchController!.delegate = self
+        userSearchController?.currentUserUUID = self.currentUserUUID
+        userSearchController?.presentSelfIn(viewController: self)
     }
 
     func updateAddressField(address: String) {
@@ -87,6 +121,95 @@ class NewApartmentViewController: UITableViewController {
         }
         alert.addAction(dismissAction)
         self.present(alert, animated: true, completion: nil)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = self.tableView.dequeueReusableCell(withIdentifier: "basicCell")!
+        let deviceWidth = UIScreen.main.bounds.width
+
+        if(indexPath.section == 0) {
+            // Information section
+            switch indexPath.row {
+            case 0:
+                // FIXME hack
+                if(!alreadyAddedNameCell) {
+                    apartmentNameField = UITextField(frame: CGRect(x: 12, y: 0, width: deviceWidth - 12, height: cell.frame.height))
+                    apartmentNameField?.placeholder = "Apartment Name"
+                    apartmentNameField?.borderStyle = .none
+
+                    cell.addSubview(apartmentNameField!)
+                }
+                
+                alreadyAddedNameCell = true
+                break;
+            case 1:
+                // FIXME hack
+                if(!alreadyAddedAddressCell) {
+                    let currentLocationButton = UIButton(frame: CGRect(x: deviceWidth - 58, y: 0, width: 50, height: cell.frame.height))
+                    currentLocationButton.addTarget(self, action: #selector(NewApartmentViewController.useCurrentLocation), for: .touchUpInside)
+                    currentLocationButton.setImage(UIImage(named: "location"), for: .normal)
+                    currentLocationButton.tintColor = self.view.tintColor
+
+                    apartmentAddressField = UITextField(frame: CGRect(x: 12, y: 0, width: deviceWidth - 66, height: cell.frame.height))
+                    apartmentAddressField?.placeholder = "Apartment Address"
+                    apartmentAddressField?.borderStyle = .none
+
+                    cell.addSubview(apartmentAddressField!)
+                    cell.addSubview(currentLocationButton)
+                }
+
+                alreadyAddedAddressCell = true
+                break;
+            default:
+                break;
+            }
+        } else if(indexPath.section == 1) {
+            if(roommates.count > 0) {
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "textCell")!
+                cell.textLabel?.text = roommates[indexPath.row]
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textColor = UIColor.black
+            }
+        } else {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "textCell")
+            cell.textLabel?.text = "Add a Roommate"
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = self.view.tintColor
+        }
+        return cell
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if(section == 0) {
+            return "Information"
+        } else if (section == 1 && roommates.count > 0) {
+            return "Roommates"
+        }
+        return nil
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return roommates.count
+        default:
+            return 1
+        }
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+
+    func reloadRoommateRows() {
+        // FIXME
+        self.tableView.reloadData()
     }
 
 }
@@ -135,4 +258,13 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
     }
 
 
+}
+
+extension NewApartmentViewController: UserSearchViewControllerDelegate {
+    func didSelectUser(uuid: String, emailAddress: String) {
+        self.userManager?.findUser(userID: uuid, email: emailAddress, returnedUser: { (roommateUser) in
+            self.roommateUUIDs.append(uuid)
+            self.roommates.append(roommateUser?.fullName ?? (roommateUser?.emailAddress)!)
+        })
+    }
 }

@@ -15,6 +15,8 @@
 		8A29D544218D534C003D2334 /* ApartmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D543218D534C003D2334 /* ApartmentManager.swift */; };
 		8A29D546218D5BCE003D2334 /* ApartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D545218D5BCE003D2334 /* ApartmentViewController.swift */; };
 		8A29D548218D5FAE003D2334 /* UITableViewMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */; };
+		8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */; };
+		8A29D551218D9965003D2334 /* ApartmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D550218D9965003D2334 /* ApartmentListViewController.swift */; };
 		8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* AppUser.swift */; };
 		8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
@@ -41,6 +43,8 @@
 		8A29D543218D534C003D2334 /* ApartmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApartmentManager.swift; sourceTree = "<group>"; };
 		8A29D545218D5BCE003D2334 /* ApartmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApartmentViewController.swift; sourceTree = "<group>"; };
 		8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewMapCell.swift; sourceTree = "<group>"; };
+		8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		8A29D550218D9965003D2334 /* ApartmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApartmentListViewController.swift; sourceTree = "<group>"; };
 		8A2DFEB821654BCC00D71FC5 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,8 +100,9 @@
 		8A29D549218D6B1D003D2334 /* Apartment */ = {
 			isa = PBXGroup;
 			children = (
-				8A29D53D218D3C5E003D2334 /* NewApartmentViewController.swift */,
 				8A29D545218D5BCE003D2334 /* ApartmentViewController.swift */,
+				8A29D53D218D3C5E003D2334 /* NewApartmentViewController.swift */,
+				8A29D550218D9965003D2334 /* ApartmentListViewController.swift */,
 			);
 			path = Apartment;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			children = (
 				8A75B0AB216332EA0071227C /* LoginViewController.swift */,
 				8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */,
+				8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */,
 			);
 			path = "Misc. ViewControllers";
 			sourceTree = "<group>";
@@ -364,6 +370,8 @@
 				8A29D544218D534C003D2334 /* ApartmentManager.swift in Sources */,
 				C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */,
 				C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */,
+				8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */,
+				8A29D551218D9965003D2334 /* ApartmentListViewController.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
 				8A29D548218D5FAE003D2334 /* UITableViewMapCell.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,

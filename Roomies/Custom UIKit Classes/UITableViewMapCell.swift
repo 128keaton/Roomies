@@ -12,7 +12,6 @@ import MapKit
 
 class UITableViewMapCell: UITableViewCell{
     @IBOutlet var mapView: MKMapView?
-    var annotation: MKPointAnnotation?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,10 +21,10 @@ class UITableViewMapCell: UITableViewCell{
         super.init(coder: aDecoder)
     }
     
-    func addMapPoint(){
-        let center = annotation?.coordinate
-        let region = MKCoordinateRegion(center: center!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-        self.mapView?.addAnnotation(annotation!)
+    func addMapPoint(annotation: MKPointAnnotation){
+        let center = annotation.coordinate
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+        self.mapView?.addAnnotation(annotation)
         self.mapView?.setRegion(region, animated: true)
     }
 }

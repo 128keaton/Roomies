@@ -16,6 +16,8 @@ class UserManager {
     private let userPath = "users"
     private (set) public var authState: UserAuthState = .unauthorized
 
+    var delegate: UserManagerDelegate? = nil
+    
     init() {
 
     }
@@ -25,12 +27,20 @@ class UserManager {
         self.findUser(userID: (self.currentFIRUser?.uid)!, email: (self.currentFIRUser?.email)!, returnedUser: { (user) in
                 if(user == nil) {
                     self.authState = .unauthorized
+                    print("User has been unauthenticated??")
                 } else {
                     self.authState = .authorized
                     self.currentUser = user!
+                    self.delegate?.userHasBeenAuthenticated()
                 }
             })
 
+    }
+    
+    public func recheckAuth(){
+        if(self.authState == .authorized && self.currentUser != nil){
+                self.delegate?.userHasBeenAuthenticated()
+        }
     }
 
     // TODO: use a completion block here
@@ -51,6 +61,7 @@ class UserManager {
         }
     }
 
+    
     // Handles the authorization result callback
     private func handleUserAuthResult(email: String, authResult: AuthDataResult?, authError: Error?, authReturned: @escaping (AppUser?) -> Void) {
         // If you didn't get a result, you're el fucko'd
@@ -95,7 +106,7 @@ class UserManager {
     }
 
     // Finds the user in the 'users' table by FIRUser uid
-    private func findUser(userID: String, email: String, returnedUser: @escaping (AppUser?) -> Void) {
+    public func findUser(userID: String, email: String, returnedUser: @escaping (AppUser?) -> Void) {
         Firestore.firestore().collection(userPath).document(userID).getDocument { document, error in
             if document != nil && document?.data() != nil {
                 let user = try! FirestoreDecoder().decode(AppUser.self, from: document!.data()!)
@@ -114,6 +125,26 @@ class UserManager {
         }
     }
 
+    public func addApartmentToUser(apartment: Apartment, user: AppUser?){
+        var userToAddTo = self.currentUser
+        
+        if(user != nil){
+            userToAddTo = user
+        }
+        
+        var apartments: [UUID] = []
+        if(userToAddTo?.apartments != nil){
+            apartments = (userToAddTo?.apartments)!
+        }
+        
+        apartments.append(apartment.uuid)
+        userToAddTo?.apartments = apartments
+        
+        let userData = try! FirestoreEncoder().encode(userToAddTo)
+        
+        Firestore.firestore().collection("users").document((userToAddTo?.userID!)!).updateData(["apartments":userData["apartments"]!])
+    }
+    
     func createUserOnBackend(fullName: String?, email: String, userID: String, completion: @escaping (Bool) -> Void) {
         let transientUser = AppUser(emailAddress: email, fullName: fullName)
         transientUser.userID = userID
@@ -126,4 +157,8 @@ class UserManager {
             }
         }
     }
+}
+
+protocol UserManagerDelegate {
+    func userHasBeenAuthenticated()
 }
