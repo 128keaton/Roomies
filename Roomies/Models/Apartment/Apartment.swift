@@ -16,15 +16,18 @@ class Apartment: Codable {
     
     var apartmentName: String
     var baseUser: String
-    var users: [String]? = []
+    var users: [String] = []
+    var userNames: [String] = []
     var uuid = UUID()
     
     init(apartmentLocation: CLLocationCoordinate2D, apartmentName: String, baseUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
         self.apartmentLongitude = apartmentLocation.longitude
         
-        self.users = [baseUser.userID!]
-        self.baseUser = baseUser.userID!
+        self.users = [baseUser.userID]
+        self.userNames = [baseUser.fullName]
+        
+        self.baseUser = baseUser.userID
         self.apartmentName = apartmentName
     }
     

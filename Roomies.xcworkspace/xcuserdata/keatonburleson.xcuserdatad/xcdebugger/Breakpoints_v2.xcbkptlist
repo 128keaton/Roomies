@@ -265,7 +265,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/UserManager.swift"
-            timestampString = "562928878.6844929"
+            timestampString = "562936373.833045"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
@@ -281,7 +281,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Misc. ViewControllers/UserSearchViewController.swift"
-            timestampString = "562928878.684615"
+            timestampString = "562936373.8336411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "61"
@@ -297,7 +297,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Misc. ViewControllers/UserSearchViewController.swift"
-            timestampString = "562928878.684752"
+            timestampString = "562936373.833751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "55"
@@ -313,7 +313,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Misc. ViewControllers/UserSearchViewController.swift"
-            timestampString = "562928878.684848"
+            timestampString = "562936373.833865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
@@ -329,7 +329,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Misc. ViewControllers/UserSearchViewController.swift"
-            timestampString = "562928878.684911"
+            timestampString = "562936373.8339731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
@@ -345,12 +345,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.68498"
+            timestampString = "562936373.834078"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "didSelectUser(uuid:emailAddress:)"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "didSelectUser(uuid:fullName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -361,43 +361,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.685052"
+            timestampString = "562936373.8342"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "fetchApartmentData(apartmentID:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.685115"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "fetchApartmentData(apartmentID:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.685212"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -409,11 +377,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.685322"
+            timestampString = "562936373.834307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -425,11 +393,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.685392"
+            timestampString = "562936373.8344181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -441,7 +409,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Misc. ViewControllers/UserSearchViewController.swift"
-            timestampString = "562928878.685452"
+            timestampString = "562936373.83453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
@@ -457,13 +425,125 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "562928878.6855"
+            timestampString = "562936373.834599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Roomies/Managers/UserManager.swift"
+            timestampString = "562936373.834685"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "addApartmentToUser(apartment:user:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Roomies/Managers/ApartmentManager.swift"
+            timestampString = "562936373.835032"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "addApartmentToUsers(apartment:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Roomies/Apartment/NewApartmentViewController.swift"
+            timestampString = "562936373.835094"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "validateResponses()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Roomies/Apartment/NewApartmentViewController.swift"
+            timestampString = "562936373.835147"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "validateResponses()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Roomies/Managers/ApartmentManager.swift"
+            timestampString = "562936373.835197"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "addApartmentToUsers(apartment:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Roomies.ApartmentManager.addApartmentToUsers(apartment: Roomies.Apartment, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Roomies"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Managers/ApartmentManager.swift"
+                  timestampString = "562936373.895541"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "1567">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Roomies.ApartmentManager.addApartmentToUsers(apartment: Roomies.Apartment, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Roomies"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Managers/ApartmentManager.swift"
+                  timestampString = "562936373.898185"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "77">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

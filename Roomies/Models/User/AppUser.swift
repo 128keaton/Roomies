@@ -9,14 +9,19 @@
 import Foundation
 
 class AppUser: Codable {
-    var emailAddress: String?
-    var fullName: String?
-    var userID: String?
+    var emailAddress: String
+    var fullName: String
+    var userID: String
     var apartments: [UUID] = []
     
-    init(emailAddress: String, fullName: String?) {
-        self.fullName = fullName
+    init(emailAddress: String, fullName: String?, userID: String?) {
+        self.fullName = fullName!
         self.emailAddress = emailAddress
+        self.userID = userID!
+    }
+    
+    convenience init(emailAddress: String, fullName: String?){
+        self.init(emailAddress: emailAddress, fullName: fullName, userID: "")
     }
 }
 

@@ -12,71 +12,109 @@ import CodableFirebase
 
 class ApartmentManager {
     var appUser: AppUser? = nil
-    var fetchedApartments: [Apartment] = [] {
-        didSet{
-            if fetchedApartments.count == expectedApartmentCount  {
+    private var fetchedApartments: [Apartment] = [] {
+        didSet {
+            if fetchedApartments.count == expectedApartmentCount {
                 didFetchApartments = true
             }
         }
     }
-    
+
     var delegate: ApartmentManagerDelegate? = nil
-    
+
     private var userManager: UserManager? = nil
-    
+
     private var expectedApartmentCount = 0
-    
-    private var didFetchApartments = false{
-        didSet{
-          delegate?.apartmentsRetrieved()
+
+    private var didFetchApartments = false {
+        didSet {
+            delegate?.apartmentsRetrieved()
         }
     }
-    
+
     init() {
         userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
         appUser = userManager!.currentUser
     }
 
-    func fetchApartments(){
+    func accessStoredApartments(exclude: Bool = true) -> [Apartment] {
+        let userDefaults = UserDefaults.standard
+        let currentApartmentUUID = userDefaults.string(forKey: "selectedApartmentUUID")
+
+        if(exclude && currentApartmentUUID != nil) {
+            return fetchedApartments.filter { $0.uuid != UUID(uuidString: currentApartmentUUID!)! }
+        }
+        return fetchedApartments
+    }
+
+    func fetchApartments() {
         let currentUser = userManager?.currentUser!
         expectedApartmentCount = (currentUser?.apartments.count)!
-        
-        for uuid in (currentUser?.apartments)!{
+
+        for uuid in (currentUser?.apartments)! {
             Firestore.firestore().collection("apartments").document(uuid.uuidString).getDocument { (document, error) in
                 if(error != nil) {
                     print(error!.localizedDescription)
                 }
-                let apartment =  try! FirestoreDecoder().decode(Apartment.self, from: document!.data()!)
-                self.fetchedApartments.append(apartment)
-                
+                if(document?.data() == nil) {
+                    self.expectedApartmentCount -= 1
+                    self.userManager?.removeApartmentFromUser(apartment: nil, user: currentUser, uuid: uuid)
+                } else {
+                    let apartment = try! FirestoreDecoder().decode(Apartment.self, from: document!.data()!)
+                    self.fetchedApartments.append(apartment)
+                }
             }
         }
     }
-    
-    func addApartmentToUUID(apartment: Apartment, uuid: String, completion: @escaping (Bool) -> Void) {
-        var apartmentUsers: [String] = []
-        
-        // God I'm so tired
-        if((apartment.users != nil) && (apartment.users?.count)! > 0 && !(apartment.users?.contains(uuid))!){
-            apartmentUsers = apartment.users!
-            apartmentUsers.append(uuid)
-        }else if((apartment.users != nil) && (apartment.users?.count)! > 0){
-             apartmentUsers = apartment.users!
-        }
-        
-        apartment.users = apartmentUsers
 
+    func addApartmentToUsers(apartment: Apartment, completion: @escaping (Bool) -> Void) {
+        Firestore.firestore().collection("apartments").document(apartment.uuid.uuidString).updateData(["users": apartment.users, "userNames":apartment.userNames]) { (error) in
+            if(error != nil) {
+                print(error!.localizedDescription)
+            }
+        }
+
+        for userUUID in apartment.users {
+            Firestore.firestore().collection("users").document(userUUID).getDocument(completion: { (document, error) in
+                if let document = document {
+                    let roommateUser = try! FirestoreDecoder().decode(AppUser.self, from: document.data()!)
+                    self.userManager?.addApartmentToUser(apartment: apartment, user: roommateUser)
+                } else {
+                    print("Document does not exist")
+                }
+            })
+        }
+        completion(true)
+    }
+
+    func removeApartmentFromUser(apartment: Apartment, uuid: String, fullName: String, completion: @escaping (Bool) -> Void) {
+        var apartmentUsers: [String] = []
+        var apartmentUserNames: [String] = []
+
+        // God I'm so tired
+        if(apartment.users.count > 0 && (apartment.users.contains(uuid))) {
+            apartmentUsers = apartment.users
+            apartmentUsers = apartmentUsers.filter { $0 != uuid }
+        }
+
+        if(apartment.userNames.count > 0 && (apartment.userNames.contains(fullName))) {
+            apartmentUserNames = apartment.userNames
+            apartmentUserNames = apartmentUserNames.filter { $0 != fullName }
+        }
+
+        apartment.users = apartmentUsers
+        apartment.userNames = apartmentUserNames
 
         Firestore.firestore().collection("apartments").document(apartment.uuid.uuidString).updateData(["users": apartmentUsers]) { (error) in
             if(error != nil) {
                 print(error!.localizedDescription)
                 completion(false)
             }
-            
+
             Firestore.firestore().collection("users").document(uuid).getDocument(completion: { (document, error) in
                 if let document = document {
                     let roommateUser = try! FirestoreDecoder().decode(AppUser.self, from: document.data()!)
-                    self.userManager?.addApartmentToUser(apartment: apartment, user: roommateUser)
+                    self.userManager?.removeApartmentFromUser(apartment: apartment, user: roommateUser, uuid: nil)
                     completion(true)
                 } else {
                     print("Document does not exist")
@@ -94,12 +132,14 @@ class ApartmentManager {
                 print(error!.localizedDescription)
             }
 
-            self.userManager?.addApartmentToUser(apartment: apartment, user: self.appUser!)
+            self.addApartmentToUsers(apartment: apartment, completion: { (_) in
+                //
+            })
         }
 
     }
 }
 
-protocol ApartmentManagerDelegate{
+protocol ApartmentManagerDelegate {
     func apartmentsRetrieved()
 }

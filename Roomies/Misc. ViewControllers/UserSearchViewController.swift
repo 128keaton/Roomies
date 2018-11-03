@@ -108,7 +108,7 @@ class UserSearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isFiltering() {
             self.dismiss(animated: true, completion: nil)
-            self.delegate?.didSelectUser(uuid: filteredUsers[indexPath.row]["uuid"]!, emailAddress: filteredUsers[indexPath.row]["query"]!)
+            self.delegate?.didSelectUser(uuid: filteredUsers[indexPath.row]["uuid"]!, fullName: filteredUsers[indexPath.row]["query"]!)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -125,5 +125,5 @@ extension UserSearchViewController: UISearchResultsUpdating {
 }
 
 protocol UserSearchViewControllerDelegate {
-    func didSelectUser(uuid: String, emailAddress: String)
+    func didSelectUser(uuid: String, fullName: String)
 }

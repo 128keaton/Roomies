@@ -15,6 +15,8 @@ class NewApartmentViewController: UITableViewController {
     var currentApartmentLocation: CLLocation?
     var userSearchController: UserSearchViewController? = nil
     var currentUserUUID = ""
+    var currentUserFullName = ""
+    
     var userManager: UserManager? = nil
 
     // hack because reload adds more fields
@@ -46,6 +48,7 @@ class NewApartmentViewController: UITableViewController {
 
     override func viewDidLoad() {
         userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
+        currentUserFullName = userManager?.currentUser!.fullName ?? (userManager?.currentUser?.emailAddress)!
     }
 
     @objc func useCurrentLocation() {
@@ -59,13 +62,12 @@ class NewApartmentViewController: UITableViewController {
         if(currentApartmentLocation != nil && apartmentNameField?.text != "") {
             let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: self.apartmentManager.appUser!)
 
-            for uuid in roommateUUIDs {
-                apartment.users?.append(uuid)
-            }
-
+            apartment.users.append(contentsOf: self.roommateUUIDs)
+            apartment.userNames.append(contentsOf: self.roommates)
+            
             apartmentManager.persistApartment(apartment: apartment)
             MBProgressHUD.hide(for: self.view, animated: true)
-            dismissSelf()
+            setDefaultApartmentAndDismiss(defaultApartmentUUID: apartment.uuid)
 
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {
             validateAddress(addressString: (apartmentAddressField?.text!)!)
@@ -77,11 +79,20 @@ class NewApartmentViewController: UITableViewController {
         MBProgressHUD.hide(for: self.view, animated: true)
     }
 
+    func setDefaultApartmentAndDismiss(defaultApartmentUUID: UUID) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(defaultApartmentUUID.uuidString, forKey: "selectedApartmentUUID")
+        userDefaults.synchronize()
 
-    @IBAction func dismissSelf(){
-         self.dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "showNewApartment"), object: nil)
+        
+        dismissSelf()
     }
-    
+
+    @IBAction func dismissSelf() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 2 && indexPath.row == 0) {
             showUserSearch()
@@ -139,7 +150,7 @@ class NewApartmentViewController: UITableViewController {
 
                     cell.addSubview(apartmentNameField!)
                 }
-                
+
                 alreadyAddedNameCell = true
                 break;
             case 1:
@@ -261,8 +272,8 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
 }
 
 extension NewApartmentViewController: UserSearchViewControllerDelegate {
-    func didSelectUser(uuid: String, emailAddress: String) {
-        self.userManager?.findUser(userID: uuid, email: emailAddress, returnedUser: { (roommateUser) in
+    func didSelectUser(uuid: String, fullName: String) {
+        self.userManager?.findUserByID(userID: uuid, returnedUser: { (roommateUser) in
             self.roommateUUIDs.append(uuid)
             self.roommates.append(roommateUser?.fullName ?? (roommateUser?.emailAddress)!)
         })
