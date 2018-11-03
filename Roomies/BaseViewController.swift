@@ -8,12 +8,15 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class BaseViewController: UITabBarController{
     override func viewDidAppear(_ animated: Bool) {
-        let userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
-        if(userManager.currentUser == nil){
-            self.performSegue(withIdentifier: "showLogin", sender: self)
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if(user == nil){
+                  self.performSegue(withIdentifier: "showLogin", sender: self)
+            }
         }
+    
     }
 }

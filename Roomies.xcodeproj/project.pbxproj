@@ -147,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				C7C62F912165D3C70095E33E /* GroceryListManager.swift */,
-				C746F6AE2165E7C300C58D19 /* GroceryList.swift */,
 				C7C62F952165D40E0095E33E /* GroceryItem.swift */,
 			);
 			path = Groceries;

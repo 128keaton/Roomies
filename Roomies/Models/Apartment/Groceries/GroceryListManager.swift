@@ -13,7 +13,6 @@ import CodableFirebase
 class GroceryListManager {
     var managedGroceryLists: Array<GroceryList>?
     private var defaultGroceryPath = "groceries"
-    
 //    private var userDefinedGroceryPath: String?
     
     func groceryItemWasPurchased(by: AppUser, for: Apartment, with price: Double) {
