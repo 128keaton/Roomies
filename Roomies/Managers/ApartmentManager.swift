@@ -73,7 +73,7 @@ class ApartmentManager {
         }
         
         for user in apartment.users {
-            self.userManager?.updateUserData(modificationType: .add, data: apartment.apartmentID, firebaseID: user, key: "apartments")
+            self.userManager?.updateUserData(modificationType: .add, data: apartment.apartmentID, userID: user, key: "apartments")
             self.updateApartmentData(modificationType: .add, data: user, apartment: apartment, key: "users")
         }
         completion(true)
@@ -87,7 +87,7 @@ class ApartmentManager {
     
     func removeApartmentFromUser(apartment: Apartment, userID: String, fullName: String, completion: @escaping (Bool) -> Void) {        
         bulkUpdateApartmentData(modificationType: .remove, data: [userID, fullName], apartment: apartment, keys: ["users", "userNames"])
-        self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, firebaseID: userID, key: "apartments")
+        self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, userID: userID, key: "apartments")
         completion(true)
     }
 
@@ -111,7 +111,7 @@ class ApartmentManager {
 
     func deleteApartment(apartment: Apartment) {
         for user in apartment.users {
-            self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, firebaseID: user, key: "apartments")
+            self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, userID: user, key: "apartments")
             Firestore.firestore().collection("apartments").document(apartment.apartmentID).delete()
         }
     }

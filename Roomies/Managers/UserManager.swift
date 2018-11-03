@@ -147,8 +147,8 @@ class UserManager {
         }
     }
 
-    public func updateUserData(modificationType: DataModificationType, data: String, firebaseID: String, key: String) {
-        findUserByID(userID: firebaseID) { (user) in
+    public func updateUserData(modificationType: DataModificationType, data: String, userID: String, key: String) {
+        findUserByID(userID: userID) { (user) in
             if(user != nil) {
                 self.updateUserData(modificationType: modificationType, data: data, user: user, key: key)
             } else {
