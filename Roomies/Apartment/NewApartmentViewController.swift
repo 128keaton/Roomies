@@ -14,7 +14,7 @@ import MBProgressHUD
 class NewApartmentViewController: UITableViewController {
     var currentApartmentLocation: CLLocation?
     var userSearchController: UserSearchViewController? = nil
-    var currentUserUUID = ""
+    var currentUserID = ""
     var currentUserFullName = ""
     
     var userManager: UserManager? = nil
@@ -23,7 +23,7 @@ class NewApartmentViewController: UITableViewController {
     var alreadyAddedAddressCell = false
     var alreadyAddedNameCell = false
 
-    var roommateUUIDs: [String] = []
+    var roommateIDs: [String] = []
     var roommates: [String] = [] {
         didSet {
             reloadRoommateRows()
@@ -60,14 +60,14 @@ class NewApartmentViewController: UITableViewController {
     @IBAction func validateResponses() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         if(currentApartmentLocation != nil && apartmentNameField?.text != "") {
-            let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: self.apartmentManager.appUser!)
+            let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: self.apartmentManager.currentUser!)
 
-            apartment.users.append(contentsOf: self.roommateUUIDs)
+            apartment.users.append(contentsOf: self.roommateIDs)
             apartment.userNames.append(contentsOf: self.roommates)
             
             apartmentManager.persistApartment(apartment: apartment)
             MBProgressHUD.hide(for: self.view, animated: true)
-            setDefaultApartmentAndDismiss(defaultApartmentUUID: apartment.uuid)
+            setDefaultApartmentAndDismiss(defaultApartmentID: apartment.apartmentID)
 
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {
             validateAddress(addressString: (apartmentAddressField?.text!)!)
@@ -79,9 +79,9 @@ class NewApartmentViewController: UITableViewController {
         MBProgressHUD.hide(for: self.view, animated: true)
     }
 
-    func setDefaultApartmentAndDismiss(defaultApartmentUUID: UUID) {
+    func setDefaultApartmentAndDismiss(defaultApartmentID: String) {
         let userDefaults = UserDefaults.standard
-        userDefaults.set(defaultApartmentUUID.uuidString, forKey: "selectedApartmentUUID")
+        userDefaults.set(defaultApartmentID, forKey: "selectedApartmentID")
         userDefaults.synchronize()
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: "showNewApartment"), object: nil)
@@ -104,7 +104,7 @@ class NewApartmentViewController: UITableViewController {
     func showUserSearch() {
         userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
         userSearchController!.delegate = self
-        userSearchController?.currentUserUUID = self.currentUserUUID
+        userSearchController?.currentUserID = self.currentUserID
         userSearchController?.presentSelfIn(viewController: self)
     }
 
@@ -272,9 +272,9 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
 }
 
 extension NewApartmentViewController: UserSearchViewControllerDelegate {
-    func didSelectUser(uuid: String, fullName: String) {
-        self.userManager?.findUserByID(userID: uuid, returnedUser: { (roommateUser) in
-            self.roommateUUIDs.append(uuid)
+    func didSelectUser(userID: String, fullName: String) {
+        self.userManager?.findUserByID(userID: userID, returnedUser: { (roommateUser) in
+            self.roommateIDs.append(userID)
             self.roommates.append(roommateUser?.fullName ?? (roommateUser?.emailAddress)!)
         })
     }

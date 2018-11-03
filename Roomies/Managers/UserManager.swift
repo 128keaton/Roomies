@@ -95,7 +95,7 @@ class UserManager {
         })
     }
 
-    // Username lookup from UUID
+    // Username lookup from userID
     public func getUserNameFor(userID: String, returnedUserName: @escaping (String?) -> Void) {
         Firestore.firestore().collection(userPath).document(userID).getDocument { document, error in
             if document != nil && document?.data() != nil {
@@ -134,45 +134,6 @@ class UserManager {
         }
     }
 
-    public func removeApartmentFromUser(apartment: Apartment?, user: AppUser?, uuid: UUID?) {
-        var userToRemoveFrom = self.currentUser
-        var absoluteUUID = uuid
-        
-        if (absoluteUUID == nil){
-            absoluteUUID = apartment?.uuid
-        }
-        
-        if(user != nil) {
-            userToRemoveFrom = user
-        }
-        
-        userToRemoveFrom?.apartments =  userToRemoveFrom!.apartments.filter { $0 != absoluteUUID! }
-
-        let userData = try! FirestoreEncoder().encode(userToRemoveFrom)
-
-        Firestore.firestore().collection("users").document((userToRemoveFrom?.userID)!).updateData(["apartments": userData["apartments"]!])
-    }
-    
-    public func addApartmentToUser(apartment: Apartment, user: AppUser?) {
-        var userToAddTo = self.currentUser
-
-        if(user != nil) {
-            userToAddTo = user
-        }
-
-        var apartments: [UUID] = []
-        if(userToAddTo?.apartments != nil) {
-            apartments = (userToAddTo?.apartments)!
-        }
-
-        apartments.append(apartment.uuid)
-        userToAddTo?.apartments = apartments
-
-        let userData = try! FirestoreEncoder().encode(userToAddTo)
-
-        Firestore.firestore().collection("users").document((userToAddTo?.userID)!).updateData(["apartments": userData["apartments"]!])
-    }
-
     func createUserOnBackend(fullName: String?, email: String, userID: String, completion: @escaping (Bool) -> Void) {
         let transientUser = AppUser(emailAddress: email, fullName: fullName)
         transientUser.userID = userID
@@ -185,8 +146,62 @@ class UserManager {
             }
         }
     }
+
+    public func updateUserData(modificationType: DataModificationType, data: String, firebaseID: String, key: String) {
+        findUserByID(userID: firebaseID) { (user) in
+            if(user != nil) {
+                self.updateUserData(modificationType: modificationType, data: data, user: user, key: key)
+            } else {
+                print("Unable to update user (\(user!)) data: \(data)")
+            }
+        }
+    }
+
+    public func updateUserData(modificationType: DataModificationType, data: String, user: AppUser?, key: String) {
+        let userToModify = self.determineUserObject(user: user)
+        var userData = try! FirestoreEncoder().encode(userToModify)
+        let userID = userToModify.userID
+
+        var exclusiveData = userData[key] as! [String]
+
+        switch modificationType {
+        case .remove:
+            exclusiveData = exclusiveData.filter { $0 != data }
+            break
+        case .add:
+            if(!exclusiveData.contains(data)) {
+                exclusiveData.append(data)
+            }
+            break
+        case .update:
+            exclusiveData = exclusiveData.filter { $0 != data }
+            exclusiveData.append(data)
+            break
+        }
+
+        userData[key] = exclusiveData
+
+        Firestore.firestore().collection("users").document(userID).updateData(userData)
+    }
+
+    private func determineUserObject(user: AppUser?) -> AppUser {
+        var userToModify = self.currentUser
+        if(user != nil) {
+            userToModify = user
+        }
+        return userToModify!
+    }
 }
 
 protocol UserManagerDelegate {
     func userHasBeenAuthenticated()
 }
+
+enum DataModificationType {
+    case remove
+    case update
+    case add
+}
+
+
+

@@ -15,7 +15,7 @@ class UserSearchViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredUsers: [[String: String]] = []
     var delegate: UserSearchViewControllerDelegate? = nil
-    var currentUserUUID: String = ""
+    var currentUserID: String = ""
 
     func presentSelfIn(viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: self)
@@ -59,11 +59,11 @@ class UserSearchViewController: UITableViewController {
 
                 for document in snapshot.documents {
                     let data = document.data()
-                    let uuid = data["userID"]! as! String
+                    let userID = data["userID"]! as! String
 
-                    if(uuid != self.currentUserUUID) {
+                    if(userID != self.currentUserID) {
                         let searchQuery = data["fullName"] ?? data["emailAddress"]
-                        let baseSearchUser = ["query": searchQuery, "uuid": uuid]
+                        let baseSearchUser = ["query": searchQuery, "userID": userID]
                         self.filteredUsers.append(baseSearchUser as! [String: String])
                     }
                 }
@@ -108,7 +108,7 @@ class UserSearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isFiltering() {
             self.dismiss(animated: true, completion: nil)
-            self.delegate?.didSelectUser(uuid: filteredUsers[indexPath.row]["uuid"]!, fullName: filteredUsers[indexPath.row]["query"]!)
+            self.delegate?.didSelectUser(userID: filteredUsers[indexPath.row]["userID"]!, fullName: filteredUsers[indexPath.row]["query"]!)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -125,5 +125,5 @@ extension UserSearchViewController: UISearchResultsUpdating {
 }
 
 protocol UserSearchViewControllerDelegate {
-    func didSelectUser(uuid: String, fullName: String)
+    func didSelectUser(userID: String, fullName: String)
 }
