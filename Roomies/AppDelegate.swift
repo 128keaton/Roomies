@@ -12,8 +12,8 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var userManager = UserManager()
-
+    var userManager: UserManager? = nil
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -21,12 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = db.settings
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
-        
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if(user != nil){
-                self.userManager = UserManager(firUser: user!)
-            }
-        }
+
         return true
     }
 

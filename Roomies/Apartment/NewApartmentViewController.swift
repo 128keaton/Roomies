@@ -40,14 +40,14 @@ class NewApartmentViewController: UITableViewController {
         return _locationManager
     }()
 
-    let apartmentManager = ApartmentManager()
+    var apartmentManager: ApartmentManager? = nil
     let geocoder = CLGeocoder()
 
     var apartmentAddressField: UITextField?
     var apartmentNameField: UITextField?
 
     override func viewDidLoad() {
-        userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
+        apartmentManager = ApartmentManager(withUserManager: userManager!)
         currentUserFullName = userManager?.currentUser!.fullName ?? (userManager?.currentUser?.emailAddress)!
     }
 
@@ -60,12 +60,12 @@ class NewApartmentViewController: UITableViewController {
     @IBAction func validateResponses() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         if(currentApartmentLocation != nil && apartmentNameField?.text != "") {
-            let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: self.apartmentManager.currentUser!)
+            let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: (self.apartmentManager?.currentUser!)!)
 
             apartment.users.append(contentsOf: self.roommateIDs)
             apartment.userNames.append(contentsOf: self.roommates)
             
-            apartmentManager.persistApartment(apartment: apartment)
+            apartmentManager?.persistApartment(apartment: apartment)
             MBProgressHUD.hide(for: self.view, animated: true)
             setDefaultApartmentAndDismiss(defaultApartmentID: apartment.apartmentID)
 

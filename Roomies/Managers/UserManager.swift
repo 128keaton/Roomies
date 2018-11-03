@@ -24,17 +24,20 @@ class UserManager {
 
     init(firUser: User) {
         self.currentFIRUser = firUser
+    }
+    
+    func getCurrentUser(completion: @escaping (AppUser) -> Void){
         self.findUser(userID: (self.currentFIRUser?.uid)!, email: (self.currentFIRUser?.email)!, returnedUser: { (user) in
-                if(user == nil) {
-                    self.authState = .unauthorized
-                    print("User has been unauthenticated??")
-                } else {
-                    self.authState = .authorized
-                    self.currentUser = user!
-                    self.delegate?.userHasBeenAuthenticated()
-                }
-            })
-
+            if(user == nil) {
+                self.authState = .unauthorized
+                print("User has been unauthenticated??")
+            } else {
+                self.authState = .authorized
+                self.currentUser = user!
+                self.delegate?.userHasBeenAuthenticated()
+                completion(self.currentUser!)
+            }
+        })
     }
 
     public func recheckAuth() {

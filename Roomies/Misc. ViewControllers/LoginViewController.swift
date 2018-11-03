@@ -18,7 +18,11 @@ class LoginViewController: UIViewController {
     var userManager: UserManager? = nil
 
     override func viewDidLoad() {
-        userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if(user != nil){
+                self.userManager = UserManager(firUser: user!)
+            }
+        }
     }
 
     @IBAction func loginButtonPressed() {

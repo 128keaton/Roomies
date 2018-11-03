@@ -14,7 +14,7 @@ import MBProgressHUD
 
 class ApartmentViewController: UITableViewController {
     var userManager: UserManager? = nil
-    var appUser: AppUser? = nil
+    var currentUser: AppUser? = nil
     var currentApartment: Apartment? = nil
     var currentApartmentID = "" {
         didSet {
@@ -26,19 +26,26 @@ class ApartmentViewController: UITableViewController {
     var createApartmentButton: UIButton? = nil
     var currentHUD: MBProgressHUD? = nil
 
-    let apartmentManager = ApartmentManager()
+    var apartmentManager: ApartmentManager? = nil
     let userDefaults = UserDefaults.standard
 
     override func viewDidLoad() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
-            if(user != nil) {
+            if(user != nil){
                 self.currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-                self.userManager = (UIApplication.shared.delegate as! AppDelegate).userManager
-                self.userManager?.delegate = self
-                self.appUser = self.userManager?.currentUser
+                self.userManager = UserManager(firUser: user!)
+                self.userManager?.getCurrentUser(completion: { (user) in
+                    self.currentUser = user
+                    self.getSelectedApartmentID()
+                    self.apartmentManager = ApartmentManager(withUserManager: self.userManager!)
+                    self.apartmentManager?.currentApartmentDelegate = self
+                    self.apartmentManager?.startWatchingApartment(apartmentID: self.currentApartmentID)
+                    (UIApplication.shared.delegate as! AppDelegate).userManager = self.userManager
+                })
+                
             }
         }
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(getSelectedApartmentID), name: Notification.Name(rawValue: "showNewApartment"), object: nil)
     }
 
@@ -159,6 +166,7 @@ class ApartmentViewController: UITableViewController {
             userDefaults.set(newApartmentID!, forKey: "selectedApartmentID")
             userDefaults.synchronize()
             self.currentApartmentID = newApartmentID!
+            
         } else {
             self.currentHUD?.hide(animated: true)
             addCreateApartmentButton()
@@ -169,7 +177,7 @@ class ApartmentViewController: UITableViewController {
         var apartmentID = userDefaults.string(forKey: "selectedApartmentID")
 
         if(apartmentID == nil) {
-            apartmentID = self.appUser?.apartments.last
+            apartmentID = self.currentUser?.apartments.first
             updateApartmentID(newApartmentID: apartmentID)
         } else {
             self.currentApartmentID = apartmentID!
@@ -184,8 +192,8 @@ class ApartmentViewController: UITableViewController {
     }
 
     @objc func addApartment() {
-        if(self.appUser != nil || self.userManager?.currentUser != nil) {
-            self.appUser = self.userManager?.currentUser
+        if(self.currentUser != nil || self.userManager?.currentUser != nil) {
+            self.currentUser = self.userManager?.currentUser
             self.performSegue(withIdentifier: "addApartment", sender: self)
         }
     }
@@ -202,7 +210,7 @@ class ApartmentViewController: UITableViewController {
             let userToRemoveID = self.currentApartment?.users[indexPath.row]
             let userToRemoveName = self.currentApartment?.userNames[indexPath.row]
 
-            self.apartmentManager.removeApartmentFromUser(apartment: self.currentApartment!, userID: userToRemoveID!, fullName: userToRemoveName!) { (didRemove) in
+            self.apartmentManager?.removeApartmentFromUser(apartment: self.currentApartment!, userID: userToRemoveID!, fullName: userToRemoveName!) { (didRemove) in
                 if(didRemove) {
                     self.fetchApartmentData(apartmentID: (self.currentApartment?.apartmentID)!)
                 }
@@ -213,10 +221,12 @@ class ApartmentViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "addApartment") {
             let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
-            newApartmentViewController.currentUserID = (self.userManager?.currentUser?.userID)!
+            newApartmentViewController.userManager = self.userManager
         } else if (segue.identifier == "showApartments") {
             let apartmentListController = segue.destination.children.first! as! ApartmentListViewController
             apartmentListController.apartmentViewController = self
+            apartmentListController.userManager = self.userManager
+            apartmentListController.currentApartmentID = self.currentApartmentID
         }
     }
 
@@ -265,13 +275,39 @@ extension ApartmentViewController: UserManagerDelegate {
     }
 }
 
+extension ApartmentViewController: CurrentApartmentManagerDelegate{
+    func currentApartmentRemoved(removedApartment: Apartment) {
+        self.currentApartment = nil
+        self.currentApartmentID = ""
+        userDefaults.set(nil, forKey: "selectedApartmentID")
+        userDefaults.synchronize()
+        self.tableView.reloadData()
+    }
+    func currentApartmentUpdated(updatedApartment: Apartment) {
+        let previousApartment = self.currentApartment!
+        self.currentApartment = updatedApartment
+        if(previousApartment.users != currentApartment!.users){
+            self.tableView.reloadSections([1], with: .automatic)
+        }
+        
+        if(previousApartment.apartmentLongitude != currentApartment?.apartmentLongitude || previousApartment.apartmentLatitude != currentApartment?.apartmentLatitude){
+            self.tableView.reloadSections([0], with: .automatic)
+        }
+        
+        if(previousApartment.apartmentName != currentApartment?.apartmentName){
+            self.navigationItem.title = currentApartment?.apartmentName
+            self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+        }
+        
+    }
+}
 extension ApartmentViewController: UserSearchViewControllerDelegate {
     func didSelectUser(userID: String, fullName: String) {
         let apartment = currentApartment!
         apartment.userNames.append(fullName)
         apartment.users.append(userID)
 
-        self.apartmentManager.addApartmentToUsers(apartment: apartment) { (_) in
+        self.apartmentManager?.addApartmentToUsers(apartment: apartment) { (_) in
             self.tableView.reloadSections([1], with: .automatic)
         }
     }

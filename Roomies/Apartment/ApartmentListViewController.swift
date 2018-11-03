@@ -11,17 +11,18 @@ import UIKit
 import MBProgressHUD
 
 class ApartmentListViewController: UITableViewController {
-    let apartmentManager = ApartmentManager()
-
+    var apartmentManager: ApartmentManager? = nil
+    var userManager: UserManager? = nil
     var currentUserID = ""
+    var currentApartmentID = ""
     var apartmentViewController: ApartmentViewController? = nil
     var userApartments: [Apartment] = []
 
     override func viewDidLoad() {
+        apartmentManager = ApartmentManager(withUserManager: self.userManager!)
+        apartmentManager!.delegate = self
+        apartmentManager!.startWatchingApartments()
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        currentUserID = (apartmentManager.currentUser?.userID)!
-        apartmentManager.delegate = self
-        apartmentManager.fetchApartments()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -29,6 +30,7 @@ class ApartmentListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        MBProgressHUD.hide(for: self.view, animated: true)
         if(userApartments.count == 0) {
             TableViewHelper.emptyMessage(message: "You have no other apartments", viewController: self)
             return 0
@@ -80,11 +82,10 @@ class ApartmentListViewController: UITableViewController {
             let apartment = userApartments[indexPath.row]
             if(currentUserID == apartment.baseUser) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
-                apartmentManager.deleteApartment(apartment: apartment)
-                apartmentManager.delegate = self
-                apartmentManager.fetchApartments()
+                apartmentManager?.deleteApartment(apartment: apartment)
+                apartmentManager?.delegate = self
             } else {
-                apartmentManager.removeApartmentFromUser(apartment: apartment, user: apartmentManager.currentUser!)
+                apartmentManager?.removeApartmentFromUser(apartment: apartment, user: (apartmentManager?.currentUser!)!)
             }
         }
     }
@@ -92,21 +93,29 @@ class ApartmentListViewController: UITableViewController {
 }
 
 extension ApartmentListViewController: ApartmentManagerDelegate {
-    func apartmentsRetrieved() {
-        let updatedUserApartments = apartmentManager.accessStoredApartments(exclude: true)
-        var indexPaths: [IndexPath] = []
-        for i in 0...self.userApartments.count {
-            let indexPath = IndexPath(row: i, section: 0)
-            indexPaths.append(indexPath)
+    func apartmentAdded(addedApartment: Apartment) {
+        if(addedApartment.apartmentID != currentApartmentID) {
+            self.userApartments.append(addedApartment)
+            let indexRow = self.userApartments.firstIndex { (apartment) -> Bool in
+                return addedApartment.apartmentID == apartment.apartmentID
+            }
+            self.tableView.insertRows(at: [IndexPath(row: indexRow!, section: 0)], with: .automatic)
         }
-
-        self.userApartments = updatedUserApartments
-        if(updatedUserApartments.count != 0) {
-            self.tableView.insertRows(at: indexPaths, with: .automatic)
-        } else {
-            self.tableView.reloadData()
+    }
+    func apartmentChanged(changedApartment: Apartment) {
+        if(changedApartment.apartmentID != currentApartmentID) {
+            let indexRow = self.userApartments.firstIndex { (apartment) -> Bool in
+                return changedApartment.apartmentID == apartment.apartmentID
+            }
+            self.userApartments[indexRow!] = changedApartment
+            self.tableView.reloadRows(at: [IndexPath(row: indexRow!, section: 0)], with: .automatic)
         }
-
-        MBProgressHUD.hide(for: self.view, animated: true)
+    }
+    func apartmentRemoved(removedApartment: Apartment) {
+        let indexRow = self.userApartments.firstIndex { (apartment) -> Bool in
+            return removedApartment.apartmentID == apartment.apartmentID
+        }
+        self.userApartments = self.userApartments.filter { $0.apartmentID != removedApartment.apartmentID }
+        self.tableView.deleteRows(at: [IndexPath(row: indexRow!, section: 0)], with: .automatic)
     }
 }

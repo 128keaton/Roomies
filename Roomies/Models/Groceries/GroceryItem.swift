@@ -9,16 +9,32 @@
 import Foundation
 
 class GroceryItem: Codable {
-    var price: Double
     var name: String
     var category: GroceryCategory
+    var priority = 0
+    var groceryItemID = UUID().uuidString
+    var attachedApartmentID: String
 
-    init(price: Double, name: String, category: GroceryCategory?){
-        self.price = price
+    init(name: String, category: GroceryCategory?, priority: Int, apartmentID: String) {
         self.name = name
-        if(category == nil){
+        if(category == nil) {
             self.category = GroceryCategory(name: "Uncategorized")
+        } else {
+            self.category = category!
         }
-        self.category = category!
+
+        self.attachedApartmentID = apartmentID
+        self.priority = priority
+    }
+
+    func getPriority() -> String {
+        switch self.priority {
+        case 1:
+            return "❗️"
+        case 2:
+            return "❗️❗️"
+        default:
+            return "❗️❗️❗️"
+        }
     }
 }

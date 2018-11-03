@@ -13,28 +13,32 @@ import MapKit
 class Apartment: Codable {
     var apartmentLatitude: Double
     var apartmentLongitude: Double
-    
+
     var apartmentName: String
     var baseUser: String
     var users: [String] = []
     var userNames: [String] = []
     var apartmentID = UUID().uuidString.lowercased()
     
+    var groceries: [String] = []
+
     init(apartmentLocation: CLLocationCoordinate2D, apartmentName: String, baseUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
         self.apartmentLongitude = apartmentLocation.longitude
-        
+
         self.users = [baseUser.userID]
         self.userNames = [baseUser.fullName]
-        
+
         self.baseUser = baseUser.userID
         self.apartmentName = apartmentName
     }
-    
-    func getApartmentPlacemark() -> MKPointAnnotation{
+
+    func getApartmentPlacemark() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(self.apartmentLatitude, self.apartmentLongitude)
         return annotation
     }
     
+    
+
 }
