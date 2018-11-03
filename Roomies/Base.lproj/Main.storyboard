@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xbx-H3-36T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xbx-H3-36T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5aW-EO-WEg">
                                 <rect key="frame" x="13" y="40" width="349" height="410"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzN-dm-sZy">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roomies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzN-dm-sZy">
                                         <rect key="frame" x="24.5" y="26" width="300" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
@@ -64,16 +64,26 @@
                                             <action selector="loginButtonPressed" destination="kM2-G5-jud" eventType="touchUpInside" id="UDf-kA-A4f"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkA-QJ-sxY">
+                                        <rect key="frame" x="24" y="63" width="301" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="KTI-Yz-KIS" firstAttribute="top" secondItem="ADb-ZJ-Pax" secondAttribute="bottom" constant="33" id="1VP-Pm-9XZ"/>
                                     <constraint firstItem="NB3-kN-Wfs" firstAttribute="leading" secondItem="vzN-dm-sZy" secondAttribute="leading" id="3YT-Gd-cJD"/>
+                                    <constraint firstItem="PkA-QJ-sxY" firstAttribute="top" secondItem="vzN-dm-sZy" secondAttribute="bottom" constant="1" id="3xi-DJ-cLe"/>
                                     <constraint firstItem="ADb-ZJ-Pax" firstAttribute="centerX" secondItem="nHI-rc-OTO" secondAttribute="centerX" id="4Ly-UH-bse"/>
+                                    <constraint firstItem="PkA-QJ-sxY" firstAttribute="centerX" secondItem="5aW-EO-WEg" secondAttribute="centerX" id="9OD-fN-7G1"/>
                                     <constraint firstItem="vzN-dm-sZy" firstAttribute="centerX" secondItem="nHI-rc-OTO" secondAttribute="centerX" id="CFF-nf-BKU"/>
                                     <constraint firstItem="nHI-rc-OTO" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NB3-kN-Wfs" secondAttribute="trailing" id="D6Q-Cq-8rC"/>
                                     <constraint firstItem="ADb-ZJ-Pax" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vzN-dm-sZy" secondAttribute="leading" id="FMb-oL-G2n"/>
+                                    <constraint firstItem="ADb-ZJ-Pax" firstAttribute="top" secondItem="PkA-QJ-sxY" secondAttribute="bottom" constant="8" symbolic="YES" id="Jn4-yL-FKD"/>
                                     <constraint firstItem="NB3-kN-Wfs" firstAttribute="centerX" secondItem="nHI-rc-OTO" secondAttribute="centerX" id="NIN-zA-F0B"/>
+                                    <constraint firstItem="PkA-QJ-sxY" firstAttribute="leading" secondItem="nHI-rc-OTO" secondAttribute="leading" constant="24" id="NbB-gp-Oc3"/>
                                     <constraint firstItem="NB3-kN-Wfs" firstAttribute="top" secondItem="KTI-Yz-KIS" secondAttribute="bottom" constant="81" id="Nps-hS-pq3"/>
                                     <constraint firstItem="NB3-kN-Wfs" firstAttribute="leading" secondItem="nHI-rc-OTO" secondAttribute="leading" constant="24.5" id="UxA-wL-uBv"/>
                                     <constraint firstItem="vzN-dm-sZy" firstAttribute="top" secondItem="nHI-rc-OTO" secondAttribute="top" constant="26" id="Xp4-HK-0Tf"/>
@@ -124,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMF-vH-1Fr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2434" y="-521"/>
+            <point key="canvasLocation" x="1630" y="-77"/>
         </scene>
         <!--Shopping-->
         <scene sceneID="WPe-7I-BSM">
@@ -140,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gmG-dU-0XU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2434" y="-1186"/>
+            <point key="canvasLocation" x="1762" y="-860"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="nH0-Rw-wUx">
