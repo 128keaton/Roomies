@@ -38,14 +38,14 @@ class GroceryListManager {
                 let groceryItem = try! FirebaseDecoder().decode(GroceryItem.self, from: diff.document.data())
                 if (diff.type == .added) {
                     self.delegate?.groceryAdded(addedGrocery: groceryItem)
-                    self.apartmentManager?.updateApartmentData(modificationType: .add, data: groceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceries")
+                    self.apartmentManager?.updateApartmentData(modificationType: .add, data: groceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceryIDs")
                 }
                 if (diff.type == .modified) {
                     self.delegate?.groceryChanged(changedGrocery: groceryItem)
                 }
                 if (diff.type == .removed) {
                     self.delegate?.groceryRemoved(removedGrocery: groceryItem)
-                    self.apartmentManager?.updateApartmentData(modificationType: .remove, data: groceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceries")
+                    self.apartmentManager?.updateApartmentData(modificationType: .remove, data: groceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceryIDs")
                 }
             }
         }

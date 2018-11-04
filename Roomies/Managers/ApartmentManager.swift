@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import CodableFirebase
+import CoreLocation
 
 class ApartmentManager {
     var currentUser: AppUser? = nil
@@ -24,6 +25,24 @@ class ApartmentManager {
         self.userManager = withUserManager
         self.currentUserID = (self.userManager?.currentUser?.userID)!
         self.currentUser = self.userManager?.currentUser
+    }
+
+    func checkIfUserInRangeOfApartments(userID: String, userLocation: CLLocation) {
+        Firestore.firestore().collection("apartments").whereField("userIDs", arrayContains: self.currentUserID).getDocuments { (querySnapshot, error) in
+            guard let snapshot = querySnapshot
+                else {
+                    return
+            }
+            for document in snapshot.documents {
+                let apartment = try! FirebaseDecoder().decode(Apartment.self, from: document.data())
+                let apartmentLocation = CLLocation(latitude: apartment.apartmentLatitude, longitude: apartment.apartmentLongitude)
+                if(userLocation.distance(from: apartmentLocation) <= 10) {
+                    self.updateApartmentData(modificationType: .add, data: userID, apartment: apartment, key: "usersInRange")
+                } else if(apartment.usersInRange.contains(userID)) {
+                    self.updateApartmentData(modificationType: .remove, data: userID, apartment: apartment, key: "usersInRange")
+                }
+            }
+        }
     }
 
     func startWatchingApartments() {
@@ -127,6 +146,7 @@ class ApartmentManager {
             Firestore.firestore().collection("apartments").document(apartment.apartmentID).delete()
         }
     }
+
 
     private func deleteRawApartment(apartmentID: String) {
         Firestore.firestore().collection("apartments").document(apartmentID).delete()

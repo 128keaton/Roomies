@@ -14,11 +14,6 @@ class GroceryListViewController: UITableViewController {
     var groceryListManager: GroceryListManager? = nil
     var groceryItems = [GroceryItem]()
     var apartmentID = ""
-    var apartmentIDChanged = false
-    
-    override func viewDidLoad() {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         let userDefaults = UserDefaults.standard
@@ -62,7 +57,6 @@ class GroceryListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(groceryItems.count == 0) {
-            MBProgressHUD.hide(for: self.view, animated: true)
             TableViewHelper.emptyMessage(message: "You have nothing on your shopping list", viewController: self)
             return 0
         } else {

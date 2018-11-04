@@ -8,12 +8,20 @@
 
 import UIKit
 import Firebase
-
+import CoreLocation
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     var window: UIWindow?
-    var userManager: UserManager? = nil
-    
+    var userManager: UserManager? = nil {
+        didSet {
+            apartmentManager = ApartmentManager(withUserManager: userManager!)
+            checkUserInRange(location: lastUserLocation)
+        }
+    }
+    var apartmentManager: ApartmentManager? = nil
+    var locationManager: CLLocationManager? = CLLocationManager()
+    var lastUserLocation: CLLocation? = nil
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -22,7 +30,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
 
+        locationManager!.delegate = self
+        locationManager!.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager!.startUpdatingLocation() // start location manager
+        }
+
         return true
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            if(apartmentManager != nil && userManager != nil) {
+                checkUserInRange(location: location)
+            }
+            lastUserLocation = location
+        }
+    }
+
+    func checkUserInRange(location: CLLocation?) {
+        if(location != nil){
+              apartmentManager?.checkIfUserInRangeOfApartments(userID: (userManager?.currentUser?.userID)!, userLocation: location!)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

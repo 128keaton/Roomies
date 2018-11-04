@@ -54,6 +54,7 @@ class NewApartmentViewController: UITableViewController {
 
     @objc func useCurrentLocation() {
         if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
             locationManager.startUpdatingLocation() // start location manager
         }
     }
@@ -243,6 +244,7 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
                 self.apartmentAddressField?.text = addressData.joined(separator: " ")
                 self.addressData = addressData
             }
+            locationManager.delegate = (UIApplication.shared.delegate as! AppDelegate)
         }
     }
 

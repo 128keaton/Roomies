@@ -15,6 +15,7 @@ class UITableViewMapCell: UITableViewCell {
     @IBOutlet var addressLineOne: UILabel?
     @IBOutlet var addressLineTwo: UILabel?
     @IBOutlet var addressLineThree: UILabel?
+    @IBOutlet var distanceLabel: UILabel?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,11 +36,15 @@ class UITableViewMapCell: UITableViewCell {
             addressLineOne?.text = addressData[0]
             addressLineTwo?.text = addressData[1]
             addressLineThree?.text = addressData[2]
-        }else{
+        } else {
             addressLineOne?.text = ""
             addressLineTwo?.text = ""
             addressLineThree?.text = ""
         }
+    }
+
+    func setDistance(distance: Double) {
+        distanceLabel?.text = "\(distance)mi"
     }
 
     func addMapPoint(annotation: MKPointAnnotation) {

@@ -21,9 +21,11 @@ class Apartment: Codable {
     
     var userIDs: [String] = []
     var userNames: [String] = []
+    var usersInRange: [String] = []
     
     var apartmentID = UUID().uuidString.lowercased()
     var groceryIDs: [String] = []
+    var billIDs: [String] = []
 
     init(apartmentAddress: String, apartmentLocation: CLLocationCoordinate2D, apartmentName: String, ownerUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude

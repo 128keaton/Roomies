@@ -22,6 +22,10 @@
 		8A29D559218E5D10003D2334 /* GroceryItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D558218E5D10003D2334 /* GroceryItemViewController.swift */; };
 		8A29D55C218E78ED003D2334 /* AddressLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55B218E78ED003D2334 /* AddressLookup.swift */; };
 		8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */; };
+		8A29D561218ED945003D2334 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D560218ED945003D2334 /* Bill.swift */; };
+		8A29D563218EE5A7003D2334 /* BillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D562218EE5A7003D2334 /* BillManager.swift */; };
+		8A29D566218EE719003D2334 /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D565218EE719003D2334 /* BillsViewController.swift */; };
+		8A29D568218EEEAE003D2334 /* UITableViewBillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D567218EEEAE003D2334 /* UITableViewBillCell.swift */; };
 		8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* AppUser.swift */; };
 		8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
@@ -53,6 +57,10 @@
 		8A29D558218E5D10003D2334 /* GroceryItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItemViewController.swift; sourceTree = "<group>"; };
 		8A29D55B218E78ED003D2334 /* AddressLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressLookup.swift; sourceTree = "<group>"; };
 		8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewStatCell.swift; sourceTree = "<group>"; };
+		8A29D560218ED945003D2334 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
+		8A29D562218EE5A7003D2334 /* BillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillManager.swift; sourceTree = "<group>"; };
+		8A29D565218EE719003D2334 /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
+		8A29D567218EEEAE003D2334 /* UITableViewBillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewBillCell.swift; sourceTree = "<group>"; };
 		8A2DFEB821654BCC00D71FC5 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +127,7 @@
 				C7C62F912165D3C70095E33E /* GroceryManager.swift */,
 				8A75B0AF2163363A0071227C /* UserManager.swift */,
 				8A29D543218D534C003D2334 /* ApartmentManager.swift */,
+				8A29D562218EE5A7003D2334 /* BillManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -136,6 +145,7 @@
 			children = (
 				8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */,
 				8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */,
+				8A29D567218EEEAE003D2334 /* UITableViewBillCell.swift */,
 			);
 			path = "Custom UIKit Classes";
 			sourceTree = "<group>";
@@ -160,9 +170,26 @@
 			path = "Grocery List";
 			sourceTree = "<group>";
 		};
+		8A29D55F218ED935003D2334 /* Bills */ = {
+			isa = PBXGroup;
+			children = (
+				8A29D560218ED945003D2334 /* Bill.swift */,
+			);
+			path = Bills;
+			sourceTree = "<group>";
+		};
+		8A29D564218EE707003D2334 /* Bills */ = {
+			isa = PBXGroup;
+			children = (
+				8A29D565218EE719003D2334 /* BillsViewController.swift */,
+			);
+			path = Bills;
+			sourceTree = "<group>";
+		};
 		8A2DFEB721654BBA00D71FC5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8A29D55F218ED935003D2334 /* Bills */,
 				C7C62F902165D33F0095E33E /* Groceries */,
 				C7C62F8F2165D32E0095E33E /* Apartment */,
 				8A2DFEBA21654C9300D71FC5 /* User */,
@@ -200,6 +227,7 @@
 		8A75B09621632B090071227C /* Roomies */ = {
 			isa = PBXGroup;
 			children = (
+				8A29D564218EE707003D2334 /* Bills */,
 				8A75B09E21632B0A0071227C /* Assets.xcassets */,
 				8A75B09721632B090071227C /* AppDelegate.swift */,
 				8A29D549218D6B1D003D2334 /* Apartment */,
@@ -390,14 +418,18 @@
 				8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */,
 				8A29D551218D9965003D2334 /* ApartmentListViewController.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
+				8A29D563218EE5A7003D2334 /* BillManager.swift in Sources */,
 				8A29D548218D5FAE003D2334 /* UITableViewMapCell.swift in Sources */,
 				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
 				8A29D53E218D3C5E003D2334 /* NewApartmentViewController.swift in Sources */,
+				8A29D568218EEEAE003D2334 /* UITableViewBillCell.swift in Sources */,
 				8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */,
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 				8A29D557218E5512003D2334 /* AddGroceryListItemController.swift in Sources */,
+				8A29D566218EE719003D2334 /* BillsViewController.swift in Sources */,
 				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
 				8A29D55C218E78ED003D2334 /* AddressLookup.swift in Sources */,
+				8A29D561218ED945003D2334 /* Bill.swift in Sources */,
 				8A29D553218DC9BB003D2334 /* GroceryCategory.swift in Sources */,
 				8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */,
 				C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */,
