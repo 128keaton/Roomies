@@ -14,7 +14,7 @@ class BillsViewController: UITableViewController {
     var billManager: BillManager? = nil
     var bills = [Bill]()
     var apartmentID = ""
-
+    
     override func viewWillAppear(_ animated: Bool) {
         let userDefaults = UserDefaults.standard
         let userManager = (UIApplication.shared.delegate as! AppDelegate).userManager!
@@ -65,14 +65,22 @@ class BillsViewController: UITableViewController {
         
         cell?.billTitleLabel?.text = bill.title
         cell?.billAmountLabel?.text = "\((numberFormatter.string(from: (bill.amount as NSNumber))!))"
+        cell?.layer.cornerRadius = 4
+        cell?.clipsToBounds = true
         
         if(bill.dueBy == Date()){
             cell?.billDueLabel?.text = "Due today"
         }else if(Date() > bill.dueBy){
+            cell?.backgroundColor = UIColor(red: 0.9, green: 0.1, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Past due (\(dateFormatter.string(from: bill.dueBy)))"
         }else{
+             cell?.backgroundColor = UIColor(red: 0.1, green: 0.9, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Due on \(dateFormatter.string(from: bill.dueBy))"
         }
+        
+        cell?.billTitleLabel?.textColor = UIColor.white
+        cell?.billDueLabel?.textColor = UIColor.white
+        cell?.billAmountLabel?.textColor = UIColor.white
         
         return cell!
     }

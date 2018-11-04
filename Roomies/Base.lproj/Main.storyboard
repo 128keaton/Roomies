@@ -500,7 +500,7 @@
                             <outlet property="delegate" destination="3LV-Ic-nBv" id="5YH-Fs-HPZ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="You" id="NkG-Ld-F4x"/>
+                    <tabBarItem key="tabBarItem" title="You" image="user" id="NkG-Ld-F4x"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4m4-Y7-y9O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1024,6 +1024,7 @@
         <image name="bills" width="34.5" height="34.5"/>
         <image name="groceries" width="46" height="46"/>
         <image name="home" width="46" height="43"/>
+        <image name="user" width="54" height="54"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Z21-fE-CRg"/>

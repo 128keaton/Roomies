@@ -159,7 +159,7 @@ class ApartmentViewController: UITableViewController {
             userDefaults.set(newApartmentID!, forKey: "selectedApartmentID")
             userDefaults.synchronize()
             self.currentApartmentID = newApartmentID!
-
+            self.apartmentManager?.startWatchingApartment(apartmentID: self.currentApartmentID)
         } else {
             self.currentHUD?.hide(animated: true)
             addCreateApartmentButton()
@@ -300,6 +300,7 @@ extension ApartmentViewController: CurrentApartmentManagerDelegate {
         userDefaults.synchronize()
         self.tableView.reloadData()
     }
+    
     func currentApartmentUpdated(updatedApartment: Apartment) {
         let previousApartment = self.currentApartment!
         self.currentApartment = updatedApartment

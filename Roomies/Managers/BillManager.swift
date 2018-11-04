@@ -43,6 +43,7 @@ class BillManager {
                 if (diff.type == .modified) {
                     self.delegate?.billChanged(changedBill: bill)
                 }
+                
                 if (diff.type == .removed) {
                     self.delegate?.billRemoved(removedBill: bill)
                     self.apartmentManager?.updateApartmentData(modificationType: .remove, data: bill.billID, apartment: self.currentApartment!, key: "billIDs")
