@@ -28,7 +28,14 @@ class ApartmentListViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "addApartment"){
+            let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
+            newApartmentViewController.userManager = self.userManager
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         MBProgressHUD.hide(for: self.view, animated: true)
         if(userApartments.count == 0) {
@@ -71,7 +78,7 @@ class ApartmentListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         let apartment = userApartments[indexPath.row]
-        if(currentUserID == apartment.baseUser) {
+        if(currentUserID == apartment.ownerUserID) {
             return "Delete"
         }
         return "Leave"
@@ -80,7 +87,7 @@ class ApartmentListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let apartment = userApartments[indexPath.row]
-            if(currentUserID == apartment.baseUser) {
+            if(currentUserID == apartment.ownerUserID) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
                 apartmentManager?.deleteApartment(apartment: apartment)
                 apartmentManager?.delegate = self

@@ -31,7 +31,7 @@ class ApartmentViewController: UITableViewController {
 
     override func viewDidLoad() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
-            if(user != nil){
+            if(user != nil) {
                 self.currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
                 self.userManager = UserManager(firUser: user!)
                 self.userManager?.getCurrentUser(completion: { (user) in
@@ -42,10 +42,10 @@ class ApartmentViewController: UITableViewController {
                     self.apartmentManager?.startWatchingApartment(apartmentID: self.currentApartmentID)
                     (UIApplication.shared.delegate as! AppDelegate).userManager = self.userManager
                 })
-                
+
             }
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(getSelectedApartmentID), name: Notification.Name(rawValue: "showNewApartment"), object: nil)
     }
 
@@ -58,7 +58,6 @@ class ApartmentViewController: UITableViewController {
                 self.currentApartment = apartment
                 self.tableView.reloadData()
 
-                self.navigationItem.title = apartment.apartmentName
                 let mapCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! UITableViewMapCell
                 mapCell.addMapPoint(annotation: apartment.getApartmentPlacemark())
             } else {
@@ -112,8 +111,10 @@ class ApartmentViewController: UITableViewController {
         if(self.currentApartment != nil) {
             switch section {
             case 0:
-                return 2
+                return 1
             case 1:
+                return 1
+            case 2:
                 guard let apartment = currentApartment
                     else {
                         return 0
@@ -129,10 +130,12 @@ class ApartmentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if(indexPath.section == 0 && indexPath.row == 0) {
             // Map cell
-            return 195
-        } else if(indexPath.section == 1 || indexPath.section == 2 || (indexPath.section == 0 && indexPath.row == 1)) {
+            return (self.currentApartment?.addressComponents.count == 3 ? 300 : 200)
+        } else if(indexPath.section == 1) {
+            return 85
+        } else if(indexPath.section == 2 || (indexPath.section == 0 && indexPath.row == 1)) {
             // Roommates cells and name cell
-            return 65
+            return 55
         }
 
         return super.tableView(tableView, heightForRowAt: indexPath)
@@ -140,24 +143,17 @@ class ApartmentViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(section == 0) {
-            return "Information"
+            return "Map"
         } else if (section == 1) {
-            return "Roommates"
+            return "Information"
+        } else if(section == 2) {
+            return "Household"
         }
+
         return nil
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if(section == 2) {
-            return -1
-        }
-        return super.tableView(tableView, heightForHeaderInSection: section)
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section == 2 && indexPath.row == 0) {
-            self.showUserSearch()
-        }
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -166,7 +162,7 @@ class ApartmentViewController: UITableViewController {
             userDefaults.set(newApartmentID!, forKey: "selectedApartmentID")
             userDefaults.synchronize()
             self.currentApartmentID = newApartmentID!
-            
+
         } else {
             self.currentHUD?.hide(animated: true)
             addCreateApartmentButton()
@@ -184,10 +180,10 @@ class ApartmentViewController: UITableViewController {
         }
     }
 
-    func showUserSearch() {
+    @IBAction func showUserSearch() {
         userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
         userSearchController!.delegate = self
-        userSearchController?.currentUserID = (self.userManager?.currentUser?.userID)!
+        userSearchController?.currentUserIDs = (currentApartment?.userIDs)!
         userSearchController?.presentSelfIn(viewController: self.parent!)
     }
 
@@ -199,7 +195,7 @@ class ApartmentViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if(indexPath.section == 1 && self.currentApartment?.users[indexPath.row] != self.currentApartment?.baseUser) {
+        if(indexPath.section == 2 && self.currentApartment?.userIDs[indexPath.row] != self.currentApartment?.ownerUserID) {
             return true
         }
         return false
@@ -207,7 +203,7 @@ class ApartmentViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let userToRemoveID = self.currentApartment?.users[indexPath.row]
+            let userToRemoveID = self.currentApartment?.userIDs[indexPath.row]
             let userToRemoveName = self.currentApartment?.userNames[indexPath.row]
 
             self.apartmentManager?.removeApartmentFromUser(apartment: self.currentApartment!, userID: userToRemoveID!, fullName: userToRemoveName!) { (didRemove) in
@@ -219,14 +215,14 @@ class ApartmentViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "addApartment") {
-            let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
-            newApartmentViewController.userManager = self.userManager
-        } else if (segue.identifier == "showApartments") {
+        if (segue.identifier == "showApartments") {
             let apartmentListController = segue.destination.children.first! as! ApartmentListViewController
             apartmentListController.apartmentViewController = self
             apartmentListController.userManager = self.userManager
             apartmentListController.currentApartmentID = self.currentApartmentID
+        }else if (segue.identifier == "addApartment"){
+            let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
+            newApartmentViewController.userManager = self.userManager
         }
     }
 
@@ -237,25 +233,32 @@ class ApartmentViewController: UITableViewController {
                 return cell
         }
 
-        if(indexPath.section == 0) {
-            // Information section
-            switch indexPath.row {
-            case 0:
-                cell = self.tableView.dequeueReusableCell(withIdentifier: "mapCell") as! UITableViewMapCell
-                break
-            case 1:
-                cell = self.tableView.dequeueReusableCell(withIdentifier: "infoCell")!
-                cell.textLabel?.text = "Apartment Name"
-                cell.detailTextLabel?.text = currentApartment?.apartmentName
-                break
-            default:
-                break
-            }
-        } else if(indexPath.section == 1) {
+        if(indexPath.section == 0 && indexPath.row == 0) {
+            // Map section
+            let mapCell = self.tableView.dequeueReusableCell(withIdentifier: "mapCell") as! UITableViewMapCell
+            mapCell.addAddressData(addressData: apartment.addressComponents)
+            cell = mapCell
+        } else if(indexPath.section == 1 && indexPath.row == 0) {
+            let statCell = self.tableView.dequeueReusableCell(withIdentifier: "statCell")! as! UITableViewStatCell
+
+            statCell.setBillNumber(bills: 0)
+            statCell.setGroceriesNumber(groceries: apartment.groceryIDs.count)
+            statCell.setRoommatesNumber(roommates: (apartment.userIDs.count - 1))
+            
+            cell = statCell
+        } else if(indexPath.section == 2) {
             if(apartment.userNames.count > 0) {
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "infoCell")!
                 cell.textLabel?.text = apartment.userNames[indexPath.row]
-                cell.detailTextLabel?.text = ""
+                
+                if(apartment.userIDs[indexPath.row] == self.currentUser?.userID){
+                    cell.detailTextLabel?.text = "(you)"
+                    cell.textLabel?.textColor = UIColor.gray
+                    cell.detailTextLabel?.textColor = UIColor.gray
+                }else{
+                    cell.detailTextLabel?.text = ""
+                    cell.accessoryType = .disclosureIndicator
+                }
             }
         } else {
             cell = UITableViewCell(style: .default, reuseIdentifier: "buttonCell")
@@ -265,6 +268,7 @@ class ApartmentViewController: UITableViewController {
         }
         return cell
     }
+    
 }
 
 extension ApartmentViewController: UserManagerDelegate {
@@ -275,7 +279,7 @@ extension ApartmentViewController: UserManagerDelegate {
     }
 }
 
-extension ApartmentViewController: CurrentApartmentManagerDelegate{
+extension ApartmentViewController: CurrentApartmentManagerDelegate {
     func currentApartmentRemoved(removedApartment: Apartment) {
         self.currentApartment = nil
         self.currentApartmentID = ""
@@ -286,29 +290,29 @@ extension ApartmentViewController: CurrentApartmentManagerDelegate{
     func currentApartmentUpdated(updatedApartment: Apartment) {
         let previousApartment = self.currentApartment!
         self.currentApartment = updatedApartment
-        if(previousApartment.users != currentApartment!.users){
-            self.tableView.reloadSections([1], with: .automatic)
+        
+        if(previousApartment.userIDs != currentApartment!.userIDs) {
+            self.tableView.reloadSections([2], with: .automatic)
         }
         
-        if(previousApartment.apartmentLongitude != currentApartment?.apartmentLongitude || previousApartment.apartmentLatitude != currentApartment?.apartmentLatitude){
-            self.tableView.reloadSections([0], with: .automatic)
+        if(previousApartment.addressComponents != currentApartment!.addressComponents){
+           self.tableView.reloadSections([0], with: .automatic)
         }
-        
-        if(previousApartment.apartmentName != currentApartment?.apartmentName){
-            self.navigationItem.title = currentApartment?.apartmentName
+
+        if(previousApartment.apartmentName != currentApartment?.apartmentName) {
             self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
         }
-        
+
     }
 }
 extension ApartmentViewController: UserSearchViewControllerDelegate {
     func didSelectUser(userID: String, fullName: String) {
         let apartment = currentApartment!
         apartment.userNames.append(fullName)
-        apartment.users.append(userID)
+        apartment.userIDs.append(userID)
 
         self.apartmentManager?.addApartmentToUsers(apartment: apartment) { (_) in
-            self.tableView.reloadSections([1], with: .automatic)
+            self.tableView.reloadSections([2], with: .automatic)
         }
     }
 }

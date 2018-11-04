@@ -15,7 +15,7 @@ class UserSearchViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredUsers: [[String: String]] = []
     var delegate: UserSearchViewControllerDelegate? = nil
-    var currentUserID: String = ""
+    var currentUserIDs: [String] = []
 
     func presentSelfIn(viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: self)
@@ -61,7 +61,7 @@ class UserSearchViewController: UITableViewController {
                     let data = document.data()
                     let userID = data["userID"]! as! String
 
-                    if(userID != self.currentUserID) {
+                    if(!self.currentUserIDs.contains(userID)) {
                         let searchQuery = data["fullName"] ?? data["emailAddress"]
                         let baseSearchUser = ["query": searchQuery, "userID": userID]
                         self.filteredUsers.append(baseSearchUser as! [String: String])

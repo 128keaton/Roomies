@@ -55,7 +55,9 @@ class GroceryListViewController: UITableViewController {
         }else if(segue.identifier == "goToItem"){
             let selectedItem = self.groceryItems[(self.tableView.indexPathForSelectedRow?.row)!]
             (segue.destination as! GroceryItemViewController).groceryItem = selectedItem
+            (segue.destination as! GroceryItemViewController).groceryListManager = self.groceryListManager
         }
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -13,6 +13,7 @@ import MBProgressHUD
 
 class NewApartmentViewController: UITableViewController {
     var currentApartmentLocation: CLLocation?
+    var addressData = [String]()
     var userSearchController: UserSearchViewController? = nil
     var currentUserID = ""
     var currentUserFullName = ""
@@ -59,16 +60,21 @@ class NewApartmentViewController: UITableViewController {
 
     @IBAction func validateResponses() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        if(currentApartmentLocation != nil && apartmentNameField?.text != "") {
-            let apartment = Apartment(apartmentLocation: (currentApartmentLocation?.coordinate)!, apartmentName: (apartmentNameField?.text)!, baseUser: (self.apartmentManager?.currentUser!)!)
-
-            apartment.users.append(contentsOf: self.roommateIDs)
+        if(currentApartmentLocation != nil && apartmentNameField?.text != ""){
+            let name = apartmentNameField?.text
+            let address = apartmentAddressField?.text
+            let location = currentApartmentLocation?.coordinate
+            let ownerUser = self.userManager?.currentUser!
+            
+            let apartment = Apartment(apartmentAddress: address!, apartmentLocation: location!, apartmentName: name!, ownerUser: ownerUser!)
+            
+            apartment.addressComponents = self.addressData
+            apartment.userIDs.append(contentsOf: self.roommateIDs)
             apartment.userNames.append(contentsOf: self.roommates)
             
             apartmentManager?.persistApartment(apartment: apartment)
             MBProgressHUD.hide(for: self.view, animated: true)
             setDefaultApartmentAndDismiss(defaultApartmentID: apartment.apartmentID)
-
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {
             validateAddress(addressString: (apartmentAddressField?.text!)!)
         } else if(apartmentAddressField?.text == "" && currentApartmentLocation == nil) {
@@ -104,7 +110,7 @@ class NewApartmentViewController: UITableViewController {
     func showUserSearch() {
         userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
         userSearchController!.delegate = self
-        userSearchController?.currentUserID = self.currentUserID
+        userSearchController?.currentUserIDs = roommateIDs
         userSearchController?.presentSelfIn(viewController: self)
     }
 
@@ -233,38 +239,10 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.count >= 1 {
             currentApartmentLocation = locations.last!
-            geocoder.reverseGeocodeLocation(currentApartmentLocation!, completionHandler:
-                        { (placemarks, error) in
-                        if (error != nil)
-                        {
-                            self.displayAlert(message: "Unable to determine your address, please input manually", title: "Address Failure")
-                        }
-                        let pm = placemarks! as [CLPlacemark]
-
-                        if pm.count > 0 {
-                            let pm = placemarks![0]
-
-                            var addressString: String = ""
-                            if pm.subLocality != nil {
-                                addressString = addressString + pm.subLocality! + ", "
-                            }
-                            if pm.thoroughfare != nil {
-                                addressString = addressString + pm.thoroughfare! + ", "
-                            }
-                            if pm.locality != nil {
-                                addressString = addressString + pm.locality! + ", "
-                            }
-                            if pm.country != nil {
-                                addressString = addressString + pm.country! + ", "
-                            }
-                            if pm.postalCode != nil {
-                                addressString = addressString + pm.postalCode! + " "
-                            }
-
-
-                            self.updateAddressField(address: addressString)
-                        }
-                })
+            AddressLookup().getAddressComponentsFromLocation(location: currentApartmentLocation!) { (addressData) in
+                self.apartmentAddressField?.text = addressData.joined(separator: " ")
+                self.addressData = addressData
+            }
         }
     }
 

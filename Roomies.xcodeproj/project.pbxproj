@@ -20,6 +20,8 @@
 		8A29D555218E00BA003D2334 /* GroceryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D554218E00BA003D2334 /* GroceryListViewController.swift */; };
 		8A29D557218E5512003D2334 /* AddGroceryListItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D556218E5512003D2334 /* AddGroceryListItemController.swift */; };
 		8A29D559218E5D10003D2334 /* GroceryItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D558218E5D10003D2334 /* GroceryItemViewController.swift */; };
+		8A29D55C218E78ED003D2334 /* AddressLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55B218E78ED003D2334 /* AddressLookup.swift */; };
+		8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */; };
 		8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* AppUser.swift */; };
 		8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */; };
 		8A75B09821632B090071227C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B09721632B090071227C /* AppDelegate.swift */; };
@@ -49,6 +51,8 @@
 		8A29D554218E00BA003D2334 /* GroceryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListViewController.swift; sourceTree = "<group>"; };
 		8A29D556218E5512003D2334 /* AddGroceryListItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroceryListItemController.swift; sourceTree = "<group>"; };
 		8A29D558218E5D10003D2334 /* GroceryItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItemViewController.swift; sourceTree = "<group>"; };
+		8A29D55B218E78ED003D2334 /* AddressLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressLookup.swift; sourceTree = "<group>"; };
+		8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewStatCell.swift; sourceTree = "<group>"; };
 		8A2DFEB821654BCC00D71FC5 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8A75B09421632B090071227C /* Roomies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roomies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */,
+				8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */,
 			);
 			path = "Custom UIKit Classes";
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 				8A29D54C218D6B46003D2334 /* Custom UIKit Classes */,
 				8A29D54D218D6B51003D2334 /* Misc. ViewControllers */,
 				8A29D55A218E5F30003D2334 /* Grocery List */,
+				8A29D55B218E78ED003D2334 /* AddressLookup.swift */,
 			);
 			path = Roomies;
 			sourceTree = "<group>";
@@ -391,7 +397,9 @@
 				8A75B09821632B090071227C /* AppDelegate.swift in Sources */,
 				8A29D557218E5512003D2334 /* AddGroceryListItemController.swift in Sources */,
 				8A2DFEBC21654D0A00D71FC5 /* BaseViewController.swift in Sources */,
+				8A29D55C218E78ED003D2334 /* AddressLookup.swift in Sources */,
 				8A29D553218DC9BB003D2334 /* GroceryCategory.swift in Sources */,
+				8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */,
 				C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */,
 				8A29D559218E5D10003D2334 /* GroceryItemViewController.swift in Sources */,
 			);

@@ -176,7 +176,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="frz-dw-gLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4304.8000000000002" y="696.7016491754124"/>
+            <point key="canvasLocation" x="4494" y="682"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="nH0-Rw-wUx">
@@ -368,7 +368,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qth-PC-FtK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5129" y="-860"/>
+            <point key="canvasLocation" x="4494" y="-860"/>
         </scene>
         <!--Item-->
         <scene sceneID="FSZ-ww-RFu">
@@ -475,7 +475,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZN-a8-44I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3511" y="-1333"/>
+            <point key="canvasLocation" x="3550" y="-1627"/>
         </scene>
         <!--You-->
         <scene sceneID="Edp-tH-SjR">
@@ -529,13 +529,13 @@
                             <outlet property="delegate" destination="MNY-np-okI" id="qiK-f5-oYg"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Bills" id="t7h-Nb-AH9"/>
+                    <tabBarItem key="tabBarItem" title="Bills" image="bills" id="t7h-Nb-AH9"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K75-AW-308" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1774" y="-2579"/>
         </scene>
-        <!--Apartment-->
+        <!--Your Apartment-->
         <scene sceneID="abb-Ur-ye5">
             <objects>
                 <tableViewController storyboardIdentifier="apartmentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ukV-2S-frf" customClass="ApartmentViewController" customModule="Roomies" customModuleProvider="target" sceneMemberID="viewController">
@@ -568,26 +568,158 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mapCell" rowHeight="195" id="hUr-4H-qex" customClass="UITableViewMapCell" customModule="Roomies" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="375" height="195"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mapCell" rowHeight="300" id="hUr-4H-qex" customClass="UITableViewMapCell" customModule="Roomies" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hUr-4H-qex" id="PEa-m4-tEV">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="194.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JaJ-TO-672">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="194.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="187"/>
                                         </mapView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cI-X0-1pB">
+                                            <rect key="frame" x="16" y="197" width="56" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1355 E. Crestwood Dr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-mr-KLv">
+                                            <rect key="frame" x="16" y="217" width="343" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="PrD-kl-SRf"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Memphis, TN, 38119" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XfR-hI-b3l">
+                                            <rect key="frame" x="16" y="240" width="343" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="United States" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEp-HO-5D5">
+                                            <rect key="frame" x="16" y="262" width="343" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="JaJ-TO-672" firstAttribute="centerY" secondItem="PEa-m4-tEV" secondAttribute="centerY" id="0Eu-xc-kwg"/>
-                                        <constraint firstItem="JaJ-TO-672" firstAttribute="centerX" secondItem="PEa-m4-tEV" secondAttribute="centerX" id="2D9-TG-aDg"/>
-                                        <constraint firstItem="JaJ-TO-672" firstAttribute="width" secondItem="PEa-m4-tEV" secondAttribute="width" id="a7b-GW-awZ"/>
-                                        <constraint firstItem="JaJ-TO-672" firstAttribute="height" secondItem="PEa-m4-tEV" secondAttribute="height" id="jg3-bY-wVg"/>
+                                        <constraint firstItem="0cI-X0-1pB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GtZ-mr-KLv" secondAttribute="leading" id="4S4-Xv-IFe"/>
+                                        <constraint firstItem="XfR-hI-b3l" firstAttribute="trailing" secondItem="YEp-HO-5D5" secondAttribute="trailing" id="8Ik-mm-tN0"/>
+                                        <constraint firstItem="JaJ-TO-672" firstAttribute="top" secondItem="PEa-m4-tEV" secondAttribute="top" id="FNS-AN-YAP"/>
+                                        <constraint firstItem="GtZ-mr-KLv" firstAttribute="top" secondItem="0cI-X0-1pB" secondAttribute="bottom" constant="3" id="Fzg-NJ-bEF"/>
+                                        <constraint firstItem="XfR-hI-b3l" firstAttribute="leading" secondItem="YEp-HO-5D5" secondAttribute="leading" id="HHX-HK-25n"/>
+                                        <constraint firstItem="JaJ-TO-672" firstAttribute="centerX" secondItem="GtZ-mr-KLv" secondAttribute="centerX" id="MeI-1s-fto"/>
+                                        <constraint firstItem="0cI-X0-1pB" firstAttribute="leading" secondItem="PEa-m4-tEV" secondAttribute="leadingMargin" id="Mg8-gM-8b5"/>
+                                        <constraint firstItem="GtZ-mr-KLv" firstAttribute="trailing" secondItem="XfR-hI-b3l" secondAttribute="trailing" id="PqF-9q-VMy"/>
+                                        <constraint firstItem="YEp-HO-5D5" firstAttribute="top" secondItem="XfR-hI-b3l" secondAttribute="bottom" constant="2" id="RxE-J0-1Ng"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0cI-X0-1pB" secondAttribute="trailing" constant="20" symbolic="YES" id="UtF-Jz-sUG"/>
+                                        <constraint firstItem="GtZ-mr-KLv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XfR-hI-b3l" secondAttribute="leading" id="cgW-fD-9CF"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="YEp-HO-5D5" secondAttribute="bottom" constant="7" id="jYE-52-s03"/>
+                                        <constraint firstItem="JaJ-TO-672" firstAttribute="leading" secondItem="PEa-m4-tEV" secondAttribute="leading" id="jmS-A3-aCA"/>
+                                        <constraint firstItem="0cI-X0-1pB" firstAttribute="top" secondItem="JaJ-TO-672" secondAttribute="bottom" constant="10" id="lQQ-Tt-5fQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="JaJ-TO-672" secondAttribute="trailing" id="pM6-NE-u3k"/>
+                                        <constraint firstItem="XfR-hI-b3l" firstAttribute="top" secondItem="GtZ-mr-KLv" secondAttribute="bottom" constant="2" id="tvQ-T8-CzV"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="addressLineOne" destination="GtZ-mr-KLv" id="UUG-Hf-Twi"/>
+                                    <outlet property="addressLineThree" destination="YEp-HO-5D5" id="AXH-2D-iGX"/>
+                                    <outlet property="addressLineTwo" destination="XfR-hI-b3l" id="tpI-r3-Tpj"/>
                                     <outlet property="mapView" destination="JaJ-TO-672" id="I1z-4I-Xnk"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="statCell" rowHeight="125" id="4Uh-m0-HWf" customClass="UITableViewStatCell" customModule="Roomies" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="399.5" width="375" height="125"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Uh-m0-HWf" id="bIZ-cQ-42E">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="124.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="o3W-Dq-xln">
+                                            <rect key="frame" x="8" y="0.0" width="359" height="124.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c1H-a6-99C">
+                                                    <rect key="frame" x="0.0" y="32.5" width="113" height="59.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="233" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ii9-On-Do3">
+                                                            <rect key="frame" x="0.0" y="0.0" width="113" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bills" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDI-iO-lrs">
+                                                            <rect key="frame" x="0.0" y="41.5" width="113" height="18"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="ii9-On-Do3" firstAttribute="centerX" secondItem="c1H-a6-99C" secondAttribute="centerX" id="BGs-CI-a7h"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bOW-4f-x14">
+                                                    <rect key="frame" x="123" y="32.5" width="113" height="59.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EJ-lK-yPN">
+                                                            <rect key="frame" x="0.0" y="0.0" width="113" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roommates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pP8-bh-O5x">
+                                                            <rect key="frame" x="0.0" y="41.5" width="113" height="18"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="4EJ-lK-yPN" firstAttribute="centerX" secondItem="bOW-4f-x14" secondAttribute="centerX" id="rya-PJ-NRV"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pUW-yW-XIn">
+                                                    <rect key="frame" x="246" y="32.5" width="113" height="59.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="233" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkW-re-JXw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="113" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Groceries" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNT-ZS-W38">
+                                                            <rect key="frame" x="0.0" y="41.5" width="113" height="18"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="MkW-re-JXw" firstAttribute="centerX" secondItem="pUW-yW-XIn" secondAttribute="centerX" id="w7Z-0A-hGd"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="o3W-Dq-xln" firstAttribute="leading" secondItem="bIZ-cQ-42E" secondAttribute="leading" constant="8" id="OhC-Yn-3Vq"/>
+                                        <constraint firstAttribute="trailing" secondItem="o3W-Dq-xln" secondAttribute="trailing" constant="8" id="Tc2-nd-Flb"/>
+                                        <constraint firstItem="o3W-Dq-xln" firstAttribute="centerY" secondItem="bIZ-cQ-42E" secondAttribute="centerY" id="snY-Un-Vev"/>
+                                        <constraint firstItem="o3W-Dq-xln" firstAttribute="centerX" secondItem="bIZ-cQ-42E" secondAttribute="centerX" id="vc3-pq-hJh"/>
+                                        <constraint firstItem="o3W-Dq-xln" firstAttribute="height" secondItem="bIZ-cQ-42E" secondAttribute="height" id="x4O-5I-69x"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="billNumberTitle" destination="mDI-iO-lrs" id="x8O-vk-8io"/>
+                                    <outlet property="billsNumber" destination="ii9-On-Do3" id="Xu6-H8-OgX"/>
+                                    <outlet property="groceryListNumber" destination="MkW-re-JXw" id="Akj-9y-e5n"/>
+                                    <outlet property="groceryListNumberTitle" destination="YNT-ZS-W38" id="3ny-cV-WXf"/>
+                                    <outlet property="roommatesNumber" destination="4EJ-lK-yPN" id="F9p-Bq-DY9"/>
+                                    <outlet property="roommatesNumberTitle" destination="pP8-bh-O5x" id="BdE-OH-4yc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -596,18 +728,23 @@
                             <outlet property="delegate" destination="ukV-2S-frf" id="MHB-Yk-SN3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Apartment" largeTitleDisplayMode="always" id="WVc-iR-3gg">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Your Apartment" largeTitleDisplayMode="always" id="WVc-iR-3gg">
                         <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="Ar1-ul-aqW">
                             <connections>
                                 <segue destination="3gm-wy-S9p" kind="presentation" identifier="showApartments" id="ZG8-fn-yDS"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8Rl-ms-MUZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="24c-NC-FhH">
                             <connections>
-                                <segue destination="yEg-S2-qWt" kind="presentation" identifier="addApartment" id="wos-Eg-Mwn"/>
+                                <action selector="showUserSearch" destination="ukV-2S-frf" id="sGN-Mx-oCD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="yEg-S2-qWt" kind="presentation" identifier="addApartment" id="Z21-fE-CRg"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="auL-B7-n6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -668,7 +805,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Apz-Je-Igf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4314" y="-81"/>
+            <point key="canvasLocation" x="5322" y="-81"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3hS-oZ-2u7">
@@ -686,7 +823,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYS-6i-lNO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3366" y="-80"/>
+            <point key="canvasLocation" x="4494" y="-81"/>
         </scene>
         <!--Switch Apartments-->
         <scene sceneID="Nk2-PT-ZqF">
@@ -724,6 +861,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="K99-oW-ug0">
                             <connections>
                                 <action selector="dismissSelf" destination="TSi-BX-WLH" id="byn-ff-9Cn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="aNR-o8-A0g">
+                            <connections>
+                                <segue destination="yEg-S2-qWt" kind="presentation" identifier="addApartment" id="zDT-Eb-LWS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -785,11 +927,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTs-3G-cNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4190" y="-860"/>
+            <point key="canvasLocation" x="3551" y="-860"/>
         </scene>
     </scenes>
     <resources>
+        <image name="bills" width="34.5" height="34.5"/>
         <image name="groceries" width="46" height="46"/>
         <image name="home" width="46" height="43"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Z21-fE-CRg"/>
+    </inferredMetricsTieBreakers>
 </document>

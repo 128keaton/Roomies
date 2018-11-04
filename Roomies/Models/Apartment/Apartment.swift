@@ -13,23 +13,28 @@ import MapKit
 class Apartment: Codable {
     var apartmentLatitude: Double
     var apartmentLongitude: Double
-
-    var apartmentName: String
-    var baseUser: String
-    var users: [String] = []
-    var userNames: [String] = []
-    var apartmentID = UUID().uuidString.lowercased()
+    var apartmentAddress: String
+    var addressComponents = [String]()
     
-    var groceries: [String] = []
+    var apartmentName: String
+    var ownerUserID: String
+    
+    var userIDs: [String] = []
+    var userNames: [String] = []
+    
+    var apartmentID = UUID().uuidString.lowercased()
+    var groceryIDs: [String] = []
 
-    init(apartmentLocation: CLLocationCoordinate2D, apartmentName: String, baseUser: AppUser) {
+    init(apartmentAddress: String, apartmentLocation: CLLocationCoordinate2D, apartmentName: String, ownerUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
         self.apartmentLongitude = apartmentLocation.longitude
+        self.apartmentAddress = apartmentAddress
+        
+        
+        self.userIDs = [ownerUser.userID]
+        self.userNames = [ownerUser.fullName]
 
-        self.users = [baseUser.userID]
-        self.userNames = [baseUser.fullName]
-
-        self.baseUser = baseUser.userID
+        self.ownerUserID = ownerUser.userID
         self.apartmentName = apartmentName
     }
 
@@ -39,6 +44,7 @@ class Apartment: Codable {
         return annotation
     }
     
-    
-
+    func getLocation() -> CLLocation{
+        return CLLocation(latitude: self.apartmentLatitude, longitude: self.apartmentLongitude)
+    }
 }

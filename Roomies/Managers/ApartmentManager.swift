@@ -27,7 +27,7 @@ class ApartmentManager {
     }
 
     func startWatchingApartments() {
-        Firestore.firestore().collection("apartments").whereField("users", arrayContains: self.currentUserID).addSnapshotListener { (querySnapshot, error) in
+        Firestore.firestore().collection("apartments").whereField("userIDs", arrayContains: self.currentUserID).addSnapshotListener { (querySnapshot, error) in
             guard let snapshot = querySnapshot
                 else {
                     return
@@ -84,9 +84,9 @@ class ApartmentManager {
             self.currentUser?.apartments.append(apartment.apartmentID)
         }
 
-        for user in apartment.users {
+        for user in apartment.userIDs {
             self.userManager?.updateUserData(modificationType: .add, data: apartment.apartmentID, userID: user, key: "apartments")
-            self.updateApartmentData(modificationType: .add, data: user, apartment: apartment, key: "users")
+            self.updateApartmentData(modificationType: .add, data: user, apartment: apartment, key: "userIDs")
         }
         completion(true)
     }
@@ -98,7 +98,7 @@ class ApartmentManager {
     }
 
     func removeApartmentFromUser(apartment: Apartment, userID: String, fullName: String, completion: @escaping (Bool) -> Void) {
-        bulkUpdateApartmentData(modificationType: .remove, data: [userID, fullName], apartment: apartment, keys: ["users", "userNames"])
+        bulkUpdateApartmentData(modificationType: .remove, data: [userID, fullName], apartment: apartment, keys: ["userIDs", "userNames"])
         self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, userID: userID, key: "apartments")
         completion(true)
     }
@@ -122,7 +122,7 @@ class ApartmentManager {
     }
 
     func deleteApartment(apartment: Apartment) {
-        for user in apartment.users {
+        for user in apartment.userIDs {
             self.userManager?.updateUserData(modificationType: .remove, data: apartment.apartmentID, userID: user, key: "apartments")
             Firestore.firestore().collection("apartments").document(apartment.apartmentID).delete()
         }
@@ -210,6 +210,7 @@ protocol ApartmentManagerDelegate {
     func apartmentAdded(addedApartment: Apartment)
     func apartmentChanged(changedApartment: Apartment)
 }
+
 protocol CurrentApartmentManagerDelegate {
     func currentApartmentRemoved(removedApartment: Apartment)
     func currentApartmentUpdated(updatedApartment: Apartment)

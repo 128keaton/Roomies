@@ -54,13 +54,17 @@ class GroceryListManager {
     func addGroceryItem(newGroceryItem: GroceryItem) {
         let groceryItemData = try! FirebaseEncoder().encode(newGroceryItem) as! [String: Any]
 
-        self.apartmentManager?.updateApartmentData(modificationType: .add, data: newGroceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceries")
+        self.apartmentManager?.updateApartmentData(modificationType: .add, data: newGroceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceryIDs")
         Firestore.firestore().collection("groceries").document(newGroceryItem.groceryItemID).setData(groceryItemData)
     }
 
     func removeGroceryItem(removedGroceryItem: GroceryItem) {
-        self.apartmentManager?.updateApartmentData(modificationType: .remove, data: removedGroceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceries")
+        self.apartmentManager?.updateApartmentData(modificationType: .remove, data: removedGroceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceryIDs")
         Firestore.firestore().collection("groceries").document(removedGroceryItem.groceryItemID).delete()
+    }
+
+    func updateGroceryItem(modifiedGroceryItem: GroceryItem) {
+        self.apartmentManager?.updateApartmentData(modificationType: .update, data: modifiedGroceryItem.groceryItemID, apartment: self.currentApartment!, key: "groceries")
     }
 
 
