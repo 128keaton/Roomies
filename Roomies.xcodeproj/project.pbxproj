@@ -36,6 +36,8 @@
 		8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AB216332EA0071227C /* LoginViewController.swift */; };
 		8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AD216333DA0071227C /* GlobalOverrides.swift */; };
 		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
+		8AEE43162190E93700F82A19 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43152190E93700F82A19 /* EntityManager.swift */; };
+		8AEE43182190E9C600F82A19 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43172190E9C600F82A19 /* ObjectModel.swift */; };
 		C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F912165D3C70095E33E /* GroceryManager.swift */; };
 		C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F952165D40E0095E33E /* GroceryItem.swift */; };
 		C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F992165D5FA0095E33E /* Apartment.swift */; };
@@ -73,6 +75,8 @@
 		8A75B0AB216332EA0071227C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A75B0AD216333DA0071227C /* GlobalOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOverrides.swift; sourceTree = "<group>"; };
 		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		8AEE43152190E93700F82A19 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		8AEE43172190E9C600F82A19 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		C7C62F912165D3C70095E33E /* GroceryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryManager.swift; sourceTree = "<group>"; };
 		C7C62F952165D40E0095E33E /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		C7C62F992165D5FA0095E33E /* Apartment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apartment.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				8A75B0AF2163363A0071227C /* UserManager.swift */,
 				8A29D543218D534C003D2334 /* ApartmentManager.swift */,
 				8A29D562218EE5A7003D2334 /* BillManager.swift */,
+				8AEE43152190E93700F82A19 /* EntityManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				C7C62F902165D33F0095E33E /* Groceries */,
 				C7C62F8F2165D32E0095E33E /* Apartment */,
 				8A2DFEBA21654C9300D71FC5 /* User */,
+				8AEE43172190E9C600F82A19 /* ObjectModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -410,7 +416,9 @@
 			files = (
 				8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */,
 				8A29D53C218D259D003D2334 /* ShoppingViewController.swift in Sources */,
+				8AEE43162190E93700F82A19 /* EntityManager.swift in Sources */,
 				8A29D555218E00BA003D2334 /* GroceryListViewController.swift in Sources */,
+				8AEE43182190E9C600F82A19 /* ObjectModel.swift in Sources */,
 				8A29D546218D5BCE003D2334 /* ApartmentViewController.swift in Sources */,
 				8A29D544218D534C003D2334 /* ApartmentManager.swift in Sources */,
 				C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */,

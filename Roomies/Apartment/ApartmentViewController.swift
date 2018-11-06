@@ -55,6 +55,7 @@ class ApartmentViewController: UITableViewController {
             if document?.data() != nil {
                 let document = document!
                 let apartment = try! FirestoreDecoder().decode(Apartment.self, from: document.data()!)
+                apartment.addRelationshipForKey(key: "Test", object: apartment, objectKey: "Test2")
                 self.currentApartment = apartment
                 self.tableView.reloadData()
             } else {

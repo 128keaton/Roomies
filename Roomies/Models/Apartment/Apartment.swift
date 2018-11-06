@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import MapKit
 
-class Apartment: Codable {
+class Apartment: ObjectModel {
     var apartmentLatitude: Double
     var apartmentLongitude: Double
     var apartmentAddress: String
@@ -35,11 +35,15 @@ class Apartment: Codable {
         
         self.userIDs = [ownerUser.userID]
         self.userNames = [ownerUser.fullName]
-
         self.ownerUserID = ownerUser.userID
+        
         self.apartmentName = apartmentName
     }
-
+    
+    required init(from decoder: Decoder) throws {
+      try! super.init(from: decoder)
+    }
+    
     func getApartmentPlacemark() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(self.apartmentLatitude, self.apartmentLongitude)

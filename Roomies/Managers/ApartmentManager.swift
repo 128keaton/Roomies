@@ -59,9 +59,12 @@ class ApartmentManager {
                         self.delegate?.apartmentAdded(addedApartment: apartmentItem)
                         self.userManager?.updateUserData(modificationType: .add, data: apartmentItem.apartmentID, userID: self.currentUserID, key: "apartments")
                     }
+                    
                     if (diff.type == .modified) {
                         self.delegate?.apartmentChanged(changedApartment: apartmentItem)
+                        self.userManager?.updateUserData(modificationType: .update, data: apartmentItem.apartmentID, userID: self.currentUserID, key: "apartments")
                     }
+                    
                     if (diff.type == .removed) {
                         self.delegate?.apartmentRemoved(removedApartment: apartmentItem)
                         self.userManager?.updateUserData(modificationType: .remove, data: apartmentItem.apartmentID, userID: self.currentUserID, key: "apartments")
