@@ -11,13 +11,13 @@ import CoreLocation
 import MapKit
 
 class Apartment: ObjectModel {
-    var apartmentLatitude: Double
-    var apartmentLongitude: Double
-    var apartmentAddress: String
+    var apartmentLatitude: Double = Double()
+    var apartmentLongitude: Double = Double()
+    var apartmentAddress: String = String()
     var addressComponents = [String]()
     
-    var apartmentName: String
-    var ownerUserID: String
+    var apartmentName: String = String()
+    var ownerUserID: String = String()
     
     var userIDs: [String] = []
     var userNames: [String] = []
@@ -26,6 +26,17 @@ class Apartment: ObjectModel {
     var apartmentID = UUID().uuidString.lowercased()
     var groceryIDs: [String] = []
     var billIDs: [String] = []
+    
+    var databaseKey: String = "apartments"
+    
+    override public var overriddenDatabaseKey: String{
+            get {
+                return databaseKey
+            }
+            set {
+                databaseKey = overriddenDatabaseKey
+            }
+    }
 
     init(apartmentAddress: String, apartmentLocation: CLLocationCoordinate2D, apartmentName: String, ownerUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
@@ -38,10 +49,11 @@ class Apartment: ObjectModel {
         self.ownerUserID = ownerUser.userID
         
         self.apartmentName = apartmentName
+        super.init()
     }
     
-    required init(from decoder: Decoder) throws {
-      try! super.init(from: decoder)
+    required init(from decoder: Decoder) throws{
+       try super.init(from: decoder)
     }
     
     func getApartmentPlacemark() -> MKPointAnnotation {
@@ -52,5 +64,12 @@ class Apartment: ObjectModel {
     
     func getLocation() -> CLLocation{
         return CLLocation(latitude: self.apartmentLatitude, longitude: self.apartmentLongitude)
+    }
+    
+    enum CodingKeys : String, CodingKey {
+        case page
+        case totalPages = "total_pages"
+        case perPage = "per_page"
+        case totalRecords = "total_records"
     }
 }

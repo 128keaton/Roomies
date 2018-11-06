@@ -11,9 +11,11 @@ import CodableFirebase
 
 class ObjectModel: Codable{
 
+    public var overriddenDatabaseKey: String = "invalid key"
+    
     func addRelationshipForKey(key: String, object: ObjectModel, objectKey: String) -> ObjectModel{
         let rawObject =  try! FirebaseEncoder().encode(self)
-        print(type(of: self))
+        print(object.overriddenDatabaseKey)
         return try! FirebaseDecoder().decode(type(of: self), from: rawObject)
     }
 }

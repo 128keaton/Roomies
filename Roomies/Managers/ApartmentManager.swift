@@ -108,7 +108,7 @@ class ApartmentManager {
 
         for user in apartment.userIDs {
             self.userManager?.updateUserData(modificationType: .add, data: apartment.apartmentID, userID: user, key: "apartments")
-            self.updateApartmentData(modificationType: .add, data: user, apartment: apartment, key: "userIDs")
+      //      self.updateApartmentData(modificationType: .add, data: user, apartment: apartment, key: "userIDs")
         }
         completion(true)
     }

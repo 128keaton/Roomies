@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField?
     @IBOutlet weak var passwordField: UITextField?
 
-    var userManager: UserManager? = nil
+    var userManager: UserManager? = UserManager()
 
     override func viewDidLoad() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
