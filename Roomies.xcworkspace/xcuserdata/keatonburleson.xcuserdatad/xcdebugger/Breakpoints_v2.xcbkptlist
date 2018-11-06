@@ -36,7 +36,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.7261699"
+            timestampString = "563024032.439378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
@@ -52,7 +52,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "563171537.699703"
+            timestampString = "563024032.4400769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
@@ -260,7 +260,7 @@
                   moduleName = "Roomies"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Grocery%20List/GroceryListViewController.swift"
-                  timestampString = "563172801.0353529"
+                  timestampString = "563217360.452704"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "89"
@@ -275,7 +275,7 @@
                   moduleName = "Roomies"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Grocery%20List/GroceryListViewController.swift"
-                  timestampString = "563172801.038375"
+                  timestampString = "563217360.4544801"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "90"
@@ -580,7 +580,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/AppDelegate.swift"
-            timestampString = "563024032.442488"
+            timestampString = "563216196.761278"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
@@ -596,7 +596,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/AppDelegate.swift"
-            timestampString = "563024032.442719"
+            timestampString = "563216196.7619981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -612,7 +612,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.72658"
+            timestampString = "563024032.4427921"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "42"
@@ -628,7 +628,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "563171537.700484"
+            timestampString = "563024032.4431551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "320"
@@ -644,7 +644,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentViewController.swift"
-            timestampString = "563171537.700812"
+            timestampString = "563024032.443217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "305"
@@ -736,7 +736,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Apartment/ApartmentListViewController.swift"
@@ -752,11 +752,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.726754"
+            timestampString = "563024032.4438781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
@@ -768,11 +768,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.726819"
+            timestampString = "563024032.444162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
@@ -784,11 +784,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.726879"
+            timestampString = "563024032.444513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
@@ -804,7 +804,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.726938"
+            timestampString = "563024032.444892"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
@@ -820,7 +820,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Roomies/Managers/ApartmentManager.swift"
-            timestampString = "563172800.726997"
+            timestampString = "563024032.445206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -867,13 +867,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.7270581"
+            filePath = "Roomies/Models/ObjectModel.swift"
+            timestampString = "563217360.141204"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "loginButtonPressed()"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "addRelationshipForKey(key:object:objectKey:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -883,205 +883,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.727123"
+            filePath = "Roomies/Models/ObjectModel.swift"
+            timestampString = "563217360.141504"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "loginButtonPressed()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.7271841"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "loginButtonPressed()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Roomies.LoginViewController.loginButtonPressed() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.0812761"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "329">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Roomies.LoginViewController.loginButtonPressed() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.084015"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "32">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.727246"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "loginButtonPressed()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Roomies.LoginViewController.loginButtonPressed() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.092237"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Roomies.AppUser&gt;) -&gt; () in closure #1 () -&gt; () in Roomies.LoginViewController.loginButtonPressed() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.095499"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
-                  offsetFromSymbolStart = "37">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.727308"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/LoginViewController.swift"
-            timestampString = "563172800.72737"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Roomies.LoginViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.108255"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.FIRAuth, Swift.Optional&lt;__C.FIRUser&gt;) -&gt; () in Roomies.LoginViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Roomies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keatonburleson/Documents/Roomies/Roomies/Misc.%20ViewControllers/LoginViewController.swift"
-                  timestampString = "563172801.11098"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "49">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/BaseViewController.swift"
-            timestampString = "563171792.712252"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "viewDidAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Roomies/Misc. ViewControllers/BaseViewController.swift"
-            timestampString = "563171793.147017"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "viewDidAppear(_:)"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "addRelationshipForKey(key:object:objectKey:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

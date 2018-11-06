@@ -29,15 +29,6 @@ class Apartment: ObjectModel {
     
     var databaseKey: String = "apartments"
     
-    override public var overriddenDatabaseKey: String{
-            get {
-                return databaseKey
-            }
-            set {
-                databaseKey = overriddenDatabaseKey
-            }
-    }
-
     init(apartmentAddress: String, apartmentLocation: CLLocationCoordinate2D, apartmentName: String, ownerUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
         self.apartmentLongitude = apartmentLocation.longitude

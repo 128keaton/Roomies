@@ -228,13 +228,3 @@ class ApartmentManager {
 
 }
 
-protocol ApartmentManagerDelegate {
-    func apartmentRemoved(removedApartment: Apartment)
-    func apartmentAdded(addedApartment: Apartment)
-    func apartmentChanged(changedApartment: Apartment)
-}
-
-protocol CurrentApartmentManagerDelegate {
-    func currentApartmentRemoved(removedApartment: Apartment)
-    func currentApartmentUpdated(updatedApartment: Apartment)
-}
