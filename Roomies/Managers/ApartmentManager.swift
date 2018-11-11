@@ -14,7 +14,7 @@ import CoreLocation
 class ApartmentManager {
     var currentUser: AppUser? = nil
     var currentUserID = ""
-    var delegate: ApartmentManagerDelegate? = nil
+    var delegate: ApartmentListManagerDelegate? = nil
     var currentApartmentDelegate: CurrentApartmentManagerDelegate? = nil
 
     private var userManager: UserManager? = nil

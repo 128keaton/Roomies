@@ -99,7 +99,7 @@ class ApartmentListViewController: UITableViewController {
 
 }
 
-extension ApartmentListViewController: ApartmentManagerDelegate {
+extension ApartmentListViewController: ApartmentListManagerDelegate {
     func apartmentAdded(addedApartment: Apartment) {
         if(addedApartment.apartmentID != currentApartmentID) {
             self.userApartments.append(addedApartment)

@@ -54,8 +54,9 @@ class ApartmentViewController: UITableViewController {
         Firestore.firestore().collection("apartments").document(apartmentID).getDocument { document, error in
             if document?.data() != nil {
                 let document = document!
-                let apartment = try! FirestoreDecoder().decode(Apartment.self, from: document.data()!)
-                apartment.addRelationshipForKey(key: "Test", object: apartment, objectKey: "Test2")
+                let newManager = EntityManager()
+                let apartment = newManager.getEntityModelFromData(document.data()!, expectedType: Apartment.self)
+                
                 self.currentApartment = apartment
                 self.tableView.reloadData()
             } else {
@@ -235,7 +236,9 @@ class ApartmentViewController: UITableViewController {
             // Map section
             let mapCell = self.tableView.dequeueReusableCell(withIdentifier: "mapCell") as! UITableViewMapCell
             mapCell.addAddressData(addressData: apartment.addressComponents)
-            mapCell.setDistance(distance: getUserDistanceFromApartment()!)
+            if let distance = getUserDistanceFromApartment(){
+                mapCell.setDistance(distance: distance)
+            }
             mapCell.addMapPoint(annotation: apartment.getApartmentPlacemark())
             cell = mapCell
         } else if(indexPath.section == 1 && indexPath.row == 0) {
@@ -294,6 +297,12 @@ extension ApartmentViewController: UserManagerDelegate {
 }
 
 extension ApartmentViewController: CurrentApartmentManagerDelegate {
+    func currentApartmentChanged(newApartment: Apartment) {
+        self.currentApartment = newApartment
+        self.currentApartmentID = newApartment.apartmentID
+        self.tableView.reloadData()
+    }
+    
     func currentApartmentRemoved(removedApartment: Apartment) {
         self.currentApartment = nil
         self.currentApartmentID = ""

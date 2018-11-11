@@ -196,15 +196,3 @@ class UserManager {
     }
 }
 
-protocol UserManagerDelegate {
-    func userHasBeenAuthenticated()
-}
-
-enum DataModificationType {
-    case remove
-    case update
-    case add
-}
-
-
-
