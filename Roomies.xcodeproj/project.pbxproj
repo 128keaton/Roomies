@@ -11,7 +11,6 @@
 		8A29D53C218D259D003D2334 /* ShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D53B218D259D003D2334 /* ShoppingViewController.swift */; };
 		8A29D53E218D3C5E003D2334 /* NewApartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D53D218D3C5E003D2334 /* NewApartmentViewController.swift */; };
 		8A29D542218D3EBD003D2334 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A29D541218D3EBD003D2334 /* CoreLocation.framework */; };
-		8A29D544218D534C003D2334 /* ApartmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D543218D534C003D2334 /* ApartmentManager.swift */; };
 		8A29D546218D5BCE003D2334 /* ApartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D545218D5BCE003D2334 /* ApartmentViewController.swift */; };
 		8A29D548218D5FAE003D2334 /* UITableViewMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */; };
 		8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */; };
@@ -38,7 +37,6 @@
 		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
 		8AEE43162190E93700F82A19 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43152190E93700F82A19 /* EntityManager.swift */; };
 		8AEE43182190E9C600F82A19 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43172190E9C600F82A19 /* ObjectModel.swift */; };
-		C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F912165D3C70095E33E /* GroceryManager.swift */; };
 		C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F952165D40E0095E33E /* GroceryItem.swift */; };
 		C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F992165D5FA0095E33E /* Apartment.swift */; };
 /* End PBXBuildFile section */
@@ -48,7 +46,6 @@
 		8A29D53B218D259D003D2334 /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
 		8A29D53D218D3C5E003D2334 /* NewApartmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewApartmentViewController.swift; sourceTree = "<group>"; };
 		8A29D541218D3EBD003D2334 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		8A29D543218D534C003D2334 /* ApartmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApartmentManager.swift; sourceTree = "<group>"; };
 		8A29D545218D5BCE003D2334 /* ApartmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApartmentViewController.swift; sourceTree = "<group>"; };
 		8A29D547218D5FAE003D2334 /* UITableViewMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewMapCell.swift; sourceTree = "<group>"; };
 		8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +74,6 @@
 		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		8AEE43152190E93700F82A19 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		8AEE43172190E9C600F82A19 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
-		C7C62F912165D3C70095E33E /* GroceryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryManager.swift; sourceTree = "<group>"; };
 		C7C62F952165D40E0095E33E /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		C7C62F992165D5FA0095E33E /* Apartment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apartment.swift; sourceTree = "<group>"; };
 		D186EC00820531ED6846B6B6 /* Pods_Roomies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Roomies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,9 +124,7 @@
 		8A29D54A218D6B26003D2334 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C7C62F912165D3C70095E33E /* GroceryManager.swift */,
 				8A75B0AF2163363A0071227C /* UserManager.swift */,
-				8A29D543218D534C003D2334 /* ApartmentManager.swift */,
 				8A29D562218EE5A7003D2334 /* BillManager.swift */,
 				8AEE43152190E93700F82A19 /* EntityManager.swift */,
 			);
@@ -420,7 +414,6 @@
 				8A29D555218E00BA003D2334 /* GroceryListViewController.swift in Sources */,
 				8AEE43182190E9C600F82A19 /* ObjectModel.swift in Sources */,
 				8A29D546218D5BCE003D2334 /* ApartmentViewController.swift in Sources */,
-				8A29D544218D534C003D2334 /* ApartmentManager.swift in Sources */,
 				C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */,
 				C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */,
 				8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */,
@@ -440,7 +433,6 @@
 				8A29D561218ED945003D2334 /* Bill.swift in Sources */,
 				8A29D553218DC9BB003D2334 /* GroceryCategory.swift in Sources */,
 				8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */,
-				C7C62F922165D3C70095E33E /* GroceryManager.swift in Sources */,
 				8A29D559218E5D10003D2334 /* GroceryItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

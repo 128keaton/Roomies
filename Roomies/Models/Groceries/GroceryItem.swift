@@ -8,13 +8,14 @@
 
 import Foundation
 
-class GroceryItem: Codable {
-    var name: String
-    var category: GroceryCategory
+class GroceryItem: ObjectModel {
+    var name: String = ""
+    var category: GroceryCategory? = nil
     var priority = 0
     var groceryItemID = UUID().uuidString
-    var attachedApartmentID: String
-
+    var attachedApartmentID: String = ""
+    var databaseKey: String = "groceries"
+    
     init(name: String, category: GroceryCategory?, priority: Int, apartmentID: String) {
         self.name = name
         if(category == nil) {
@@ -25,8 +26,13 @@ class GroceryItem: Codable {
 
         self.attachedApartmentID = apartmentID
         self.priority = priority
+        super.init()
     }
-
+    
+    required init(from decoder: Decoder) throws {
+        try! super.init(from: decoder)
+    }
+    
     func getPriority() -> String {
         switch self.priority {
         case 1:

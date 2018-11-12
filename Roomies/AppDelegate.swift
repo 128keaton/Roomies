@@ -12,16 +12,8 @@ import CoreLocation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     var window: UIWindow?
-    var userManager: UserManager? = nil {
-        didSet {
-            apartmentManager = ApartmentManager(withUserManager: userManager!)
-            checkUserInRange(location: lastUserLocation)
-        }
-    }
-    var apartmentManager: ApartmentManager? = nil
-    var locationManager: CLLocationManager? = CLLocationManager()
-    var lastUserLocation: CLLocation? = nil
-
+    var entityManager: EntityManager? = nil
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -30,29 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
 
-        locationManager!.delegate = self
-        locationManager!.requestAlwaysAuthorization()
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager!.startUpdatingLocation() // start location manager
-        }
-
-        return true
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            if(apartmentManager != nil && userManager != nil) {
-                checkUserInRange(location: location)
+        // First authorization check will listen for a login and return the user
+        let handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            guard let returnedAuthUser = user
+                else{
+                    // FIXME:
+                    // Show login screen
+                    return
             }
-            lastUserLocation = location
+            self.entityManager = EntityManager(firUser: returnedAuthUser)
         }
-    }
-
-    func checkUserInRange(location: CLLocation?) {
-        if(location != nil){
-              apartmentManager?.checkIfUserInRangeOfApartments(userID: (userManager?.currentUser?.userID)!, userLocation: location!)
-        }
+        Auth.auth().removeStateDidChangeListener(handle)
+        
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
