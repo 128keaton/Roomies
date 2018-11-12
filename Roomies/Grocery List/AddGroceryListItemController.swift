@@ -16,7 +16,7 @@ class AddGroceryListItemController: UITableViewController {
     @IBOutlet weak var categoryField: UITextField?
 
     var currentPriority = 1
-    var groceryListManager: GroceryListManager? = nil
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
     
     @IBAction func validateValues() {
         if(self.nameField?.text == "") {
@@ -32,7 +32,7 @@ class AddGroceryListItemController: UITableViewController {
         let currentApartmentID = UserDefaults.standard.string(forKey: "selectedApartmentID")
         let groceryItem = GroceryItem(name: (nameField?.text)!, category: category, priority: currentPriority, apartmentID: currentApartmentID!)
         
-        self.groceryListManager?.addGroceryItem(newGroceryItem: groceryItem)
+        entityManager.persistEntity(entity: groceryItem)
         dismissSelf()
     }
 

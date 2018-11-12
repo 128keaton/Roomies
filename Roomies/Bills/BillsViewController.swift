@@ -11,22 +11,20 @@ import UIKit
 import MBProgressHUD
 
 class BillsViewController: UITableViewController {
-    var billManager: BillManager? = nil
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
     var bills = [Bill]()
     var apartmentID = ""
     
+    override func viewDidLoad() {
+        entityManager.billManagerDelegate = self
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        let userDefaults = UserDefaults.standard
-        let userManager = (UIApplication.shared.delegate as! AppDelegate).userManager!
-
-        if(userDefaults.string(forKey: "selectedApartmentID") != apartmentID) {
+        if(apartmentID != entityManager.currentApartment?.apartmentID) {
             bills = []
             self.tableView.reloadData()
-            apartmentID = userDefaults.string(forKey: "selectedApartmentID")!
-            billManager = BillManager(apartmentID: apartmentID, userManager: userManager)
+            apartmentID = entityManager.currentApartment?.apartmentID
         }
-
-        billManager?.delegate = self
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -87,7 +85,7 @@ class BillsViewController: UITableViewController {
 
     @IBAction func addTestData() {
         let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: self.apartmentID, dueBy: Date())
-        self.billManager?.addBill(newBill: bill)
+        entityManager.persistEntity(entity: bill)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -96,11 +94,11 @@ class BillsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            billManager?.removeBill(removedBill: bills[indexPath.section])
+            entityManager.deleteEntity(entity: bills[indexPath.section])
         }
     }
 }
-extension BillsViewController: BillManagerDelegate {
+extension BillsViewController: BillListManagerDelegate {
     func billAdded(addedBill: Bill) {
         self.bills.append(addedBill)
         let indexSection = self.bills.firstIndex { (bill) -> Bool in

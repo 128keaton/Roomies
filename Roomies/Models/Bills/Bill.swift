@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Bill: Codable{
-    var amount: Decimal
-    var title: String
+class Bill: ObjectModel{
+    var amount: Decimal = 0.0
+    var title: String = ""
     var billID = UUID().uuidString
-    var attachedApartmentID: String
-    var dueBy: Date
+    var attachedApartmentID: String = ""
+    var dueBy: Date = Date()
     
     init(amount: Decimal, title: String, attachedApartmentID: String, dueBy: Date) {
         self.amount = amount

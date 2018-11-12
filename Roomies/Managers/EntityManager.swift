@@ -82,18 +82,18 @@ class EntityManager: NSObject {
     // Gets the current user
     public func getCurrentUser(completion: @escaping (AppUser?) -> Void) {
         self.findUser(userID: (self.currentFIRUser?.uid)!, email: (self.currentFIRUser?.email)!, returnedUser: { (user) in
-            if(user == nil) {
-                self.authState = .unauthorized
-                self.currentUser = nil
-                self.userDelegate?.userAuthorizationExpired()
-                completion(self.currentUser)
-            } else {
-                self.authState = .authorized
-                self.currentUser = user!
-                self.userDelegate?.userHasBeenAuthenticated()
-                completion(self.currentUser)
-            }
-        })
+                if(user == nil) {
+                    self.authState = .unauthorized
+                    self.currentUser = nil
+                    self.userDelegate?.userAuthorizationExpired()
+                    completion(self.currentUser)
+                } else {
+                    self.authState = .authorized
+                    self.currentUser = user!
+                    self.userDelegate?.userHasBeenAuthenticated()
+                    completion(self.currentUser)
+                }
+            })
     }
 
     public func findObjectByID<T : Decodable>(id: String, collectionPath: String, expectedType: T.Type, returnedData: @escaping(T?) -> Void) {
@@ -113,6 +113,38 @@ class EntityManager: NSObject {
         }
     }
 
+    public func updateEntity<T>(entity: T) {
+        var entityKey = ""
+        var entityID = ""
+        var collectionKey = ""
+        var entityData: [String: Any]? = nil
+
+        guard let apartment = currentApartment
+            else {
+                return
+        }
+
+        if(type(of: entity) == GroceryItem.self) {
+            let groceryItem = (entity as! GroceryItem)
+            entityKey = groceryItem.databaseKey
+            entityID = groceryItem.groceryItemID
+            collectionKey = "groceries"
+            entityData = try! FirebaseEncoder().encode(groceryItem) as! [String: Any]
+        }
+
+        guard let updatedEntityData = entityData
+            else {
+                return
+        }
+
+        bulkUpdateEntityData(modificationType: .modified, data: [entityID], entity: apartment, keys: [collectionKey])
+        Firestore.firestore().collection(entityKey).document(entityID).updateData(updatedEntityData)
+    }
+
+    public func persistEntity(entity: ObjectModel){
+        bulkUpdateEntityData(modificationType: .added, data: [], entity: entity, keys: [])
+    }
+    
     public func deleteEntity<T>(entity: T) {
         var entityKey = ""
         var entityID = ""
@@ -180,6 +212,9 @@ class EntityManager: NSObject {
         } else if (type(of: entity) == User.self) {
             entityKey = (entity as! AppUser).databaseKey
             entityID = (entity as! AppUser).userID
+        } else if(type(of: entity) == GroceryItem.self){
+            entityKey = (entity as! GroceryItem).databaseKey
+            entityID = (entity as! GroceryItem).groceryItemID
         }
 
         var index = 0
@@ -276,7 +311,7 @@ class EntityManager: NSObject {
                 } catch {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
                 }
-                
+
             }
         }
     }

@@ -15,14 +15,13 @@ class GroceryItemViewController: UITableViewController {
     @IBOutlet weak var nameField: UITextField?
     @IBOutlet weak var categoryField: UITextField?
     
-    
     var groceryItem: GroceryItem? = nil
-    var groceryListManager: GroceryListManager? = nil
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
     
     override func viewDidLoad() {
         self.priorityLabel?.text = "Priority: \(groceryItem!.getPriority())"
         self.nameField?.text = groceryItem!.name
-        self.categoryField?.text = groceryItem?.category.name
+        self.categoryField?.text = groceryItem?.category!.name
         self.title = groceryItem?.name
         priorityStepper?.value = Double(groceryItem!.priority)
         
@@ -77,7 +76,7 @@ class GroceryItemViewController: UITableViewController {
             groceryItem?.category = GroceryCategory(name: "Uncategorized")
         }
         
-        self.groceryListManager?.updateGroceryItem(modifiedGroceryItem: groceryItem!)
+        entityManager.updateEntity(entity: groceryItem!)
         self.navigationController?.popToRootViewController(animated: true)
     }
 }
