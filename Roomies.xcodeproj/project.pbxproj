@@ -218,23 +218,31 @@
 		8A75B09621632B090071227C /* Roomies */ = {
 			isa = PBXGroup;
 			children = (
-				8A29D564218EE707003D2334 /* Bills */,
-				8A75B09E21632B0A0071227C /* Assets.xcassets */,
 				8A75B09721632B090071227C /* AppDelegate.swift */,
-				8A29D549218D6B1D003D2334 /* Apartment */,
+				C7877F67219B3E77002772C7 /* VIewControllers */,
+				8A75B09E21632B0A0071227C /* Assets.xcassets */,
 				8A2DFEB721654BBA00D71FC5 /* Models */,
 				8A75B09B21632B090071227C /* Main.storyboard */,
-				8A29D54B218D6B37003D2334 /* Shopping */,
 				8A75B0A021632B0A0071227C /* LaunchScreen.storyboard */,
 				8A75B0A321632B0A0071227C /* Info.plist */,
 				8A75B0AD216333DA0071227C /* GlobalOverrides.swift */,
 				8A29D54A218D6B26003D2334 /* Managers */,
 				8A29D54C218D6B46003D2334 /* Custom UIKit Classes */,
-				8A29D54D218D6B51003D2334 /* Misc. ViewControllers */,
-				8A29D55A218E5F30003D2334 /* Grocery List */,
 				8A29D55B218E78ED003D2334 /* AddressLookup.swift */,
 			);
 			path = Roomies;
+			sourceTree = "<group>";
+		};
+		C7877F67219B3E77002772C7 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A29D549218D6B1D003D2334 /* Apartment */,
+				8A29D564218EE707003D2334 /* Bills */,
+				8A29D55A218E5F30003D2334 /* Grocery List */,
+				8A29D54B218D6B37003D2334 /* Shopping */,
+				8A29D54D218D6B51003D2334 /* Misc. ViewControllers */,
+			);
+			path = VIewControllers;
 			sourceTree = "<group>";
 		};
 		C7C62F8F2165D32E0095E33E /* Apartment */ = {
@@ -571,7 +579,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JMQ9Y3A8K6;
+				DEVELOPMENT_TEAM = 4N8LV524T9;
 				INFOPLIST_FILE = Roomies/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -590,7 +598,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JMQ9Y3A8K6;
+				DEVELOPMENT_TEAM = 4N8LV524T9;
 				INFOPLIST_FILE = Roomies/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
