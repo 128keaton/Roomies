@@ -12,20 +12,13 @@ import MBProgressHUD
 import CodableFirebase
 
 class BillsViewController: UITableViewController {
-    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
+    var entityManager: EntityManager? = nil
     var bills = [Bill]()
-    var apartmentID = ""
-    
+
     override func viewDidLoad() {
+        entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
         entityManager?.billManagerDelegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if(apartmentID != entityManager?.currentApartment?.apartmentID) {
-            bills = []
-            self.tableView.reloadData()
-            apartmentID = (entityManager?.currentApartment?.apartmentID)!
-        }
+        entityManager?.startWatchingBills()
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -55,50 +48,49 @@ class BillsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "billCell") as? UITableBillCell
         let bill = bills[indexPath.section]
-        
+
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd"
-        
+
         cell?.billTitleLabel?.text = bill.title
         cell?.billAmountLabel?.text = "\((numberFormatter.string(from: (bill.amount as NSNumber))!))"
         cell?.layer.cornerRadius = 4
         cell?.clipsToBounds = true
-        
-        if(bill.dueBy == Date()){
+
+        if(bill.dueBy == Date()) {
             cell?.billDueLabel?.text = "Due today"
-        }else if(Date() > bill.dueBy){
+        } else if(Date() > bill.dueBy) {
             cell?.backgroundColor = UIColor(red: 0.9, green: 0.1, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Past due (\(dateFormatter.string(from: bill.dueBy)))"
-        }else{
-             cell?.backgroundColor = UIColor(red: 0.1, green: 0.9, blue: 0.0, alpha: 0.8)
+        } else {
+            cell?.backgroundColor = UIColor(red: 0.1, green: 0.9, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Due on \(dateFormatter.string(from: bill.dueBy))"
         }
-        
+
         cell?.billTitleLabel?.textColor = UIColor.white
         cell?.billDueLabel?.textColor = UIColor.white
         cell?.billAmountLabel?.textColor = UIColor.white
-        
+
         return cell!
     }
 
     @IBAction func addTestData() {
-        let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: self.apartmentID, dueBy: Date())
-        let entityData = try! FirebaseEncoder().encode(bill) as! [String:Any]
-        
-        entityManager?.persistEntity(entityData)
+        let currentApartmentID = UserDefaults.standard.string(forKey: "selectedApartmentID")
+        let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: currentApartmentID!, dueBy: Date())
+
+        entityManager?.persistEntity(bill)
     }
-    
+
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            let entityData = try! FirebaseEncoder().encode(bills[indexPath.row]) as! [String:Any]
-            entityManager?.deleteEntityFromApartment(entityData: entityData, collectionKey: "billIDs")
+           entityManager?.deleteEntity(bills[indexPath.row])
         }
     }
 }

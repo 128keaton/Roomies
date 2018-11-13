@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import MBProgressHUD
-import CodableFirebase
 
 class ApartmentListViewController: UITableViewController {
     var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
@@ -83,14 +82,13 @@ class ApartmentListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let apartment = userApartments[indexPath.row]
-            let entityData = try! FirebaseEncoder().encode(apartment) as! [String:Any]
             
             if(currentUser?.userID == apartment.ownerUserID) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
                 entityManager.deleteApartment(apartment)
             } else {
-                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.userID)!], entityData: entityData, keys: ["userIDs"])
-                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.fullName)!], entityData: entityData, keys: ["userNames"])
+                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.userID)!], entity: apartment, keys: ["userIDs"])
+                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.fullName)!], entity: apartment, keys: ["userNames"])
             }
         }
     }

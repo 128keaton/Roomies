@@ -19,6 +19,7 @@ class GroceryListViewController: UITableViewController {
     override func viewDidLoad() {
         entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
         entityManager?.groceryManagerDelegate = self
+        entityManager?.startWatchingGroceries()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,8 +70,7 @@ class GroceryListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            let entityData = try! FirebaseEncoder().encode(groceryItems[indexPath.row]) as! [String:Any]
-            entityManager?.deleteEntityFromApartment(entityData: entityData, collectionKey: "groceryIDs")
+            entityManager?.deleteEntity(groceryItems[indexPath.row])
         }
     }
 }

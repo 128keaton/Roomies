@@ -8,23 +8,18 @@
 
 import Foundation
 
-class Bill: ObjectModel{
-    var amount: Decimal = 0.0
-    var title: String = ""
-    var billID = UUID().uuidString
-    var attachedApartmentID: String = ""
-    var dueBy: Date = Date()
+class Bill: Codable{
+    var amount: Decimal
+    var title: String
+    var billID = UUID().uuidString.lowercased()
+    var attachedApartmentID: String
+    var dueBy: Date
+    var databaseKey = "bills"
     
     init(amount: Decimal, title: String, attachedApartmentID: String, dueBy: Date) {
         self.amount = amount
         self.title = title
         self.attachedApartmentID = attachedApartmentID
         self.dueBy = dueBy
-        super.init()
     }
-    
-    required init(from decoder: Decoder) throws {
-       try! super.init(from: decoder)
-    }
-    
 }

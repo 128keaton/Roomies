@@ -13,7 +13,13 @@ import CoreLocation
 
 class EntityManager: NSObject {
     // App User Properties
-    private (set) public var currentUser: AppUser?
+    private (set) public var currentUser: AppUser?{
+        didSet{
+            if let location = lastUserLocation{
+                checkIfLocationInRangeOfApartments(location: location)
+            }
+        }
+    }
     private var currentFIRUser: User?
     private let userPath = "users"
 
@@ -27,10 +33,19 @@ class EntityManager: NSObject {
     // Misc. Properties
     private var userDefaults = UserDefaults.standard
     public var lastUserLocation: CLLocation? = nil
-    private (set) public var currentApartment: Apartment? = nil
+    private (set) public var currentApartment: Apartment? = nil{
+        didSet{
+                self.startWatchingCurrentApartment()
+        }
+    }
+    
+    private var locationManager: CLLocationManager = CLLocationManager()
 
     // Listeners
     private var groceriesListener: ListenerRegistration? = nil
+    private var currentApartmentListener: ListenerRegistration? = nil
+    private var apartmentsListener: ListenerRegistration? = nil
+    private var billsListener: ListenerRegistration? = nil
 
     // MARK: Initialization
 
@@ -48,8 +63,23 @@ class EntityManager: NSObject {
                         self.currentApartmentDelegate?.noApartmentFound()
                     }
                 }
+                NotificationCenter.default.post(name: Notification.Name("currentUserSet"), object: nil)
+            } else {
+                self.currentApartmentDelegate?.noApartmentFound()
             }
-            NotificationCenter.default.post(name: Notification.Name("currentUserSet"), object: nil)
+
+            DispatchQueue.main.async {
+                self.setupLocationManager()
+            }
+        }
+    }
+
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.authorizationStatus() == .authorizedAlways {
+            locationManager.startUpdatingLocation() // start location manager
         }
     }
 
@@ -68,14 +98,14 @@ class EntityManager: NSObject {
 
             for document in snapshot.documents {
                 let apartment = try! FirebaseDecoder().decode(Apartment.self, from: document.data())
-                let entityData = try! FirebaseEncoder().encode(apartment) as! [String: Any]
                 let apartmentLocation = CLLocation(latitude: apartment.apartmentLatitude, longitude: apartment.apartmentLongitude)
 
                 if(location.distance(from: apartmentLocation) <= 10) {
-                    self.bulkUpdateEntityData(modificationType: .added, data: [userID], entityData: entityData, keys: ["usersInRange"])
+                    apartment.usersInRange.append(userID)
                 } else if(apartment.usersInRange.contains(userID)) {
-                    self.bulkUpdateEntityData(modificationType: .removed, data: [userID], entityData: entityData, keys: ["usersInRange"])
+                    apartment.usersInRange = apartment.usersInRange.filter { $0 != userID}
                 }
+                self.persistEntity(apartment)
             }
         }
     }
@@ -123,44 +153,25 @@ class EntityManager: NSObject {
                     return returnedData(nil)
             }
 
-            print(entityData)
-            
             returnedData(try! FirebaseDecoder().decode(expectedType.self, from: entityData))
         }
     }
 
     public func persistEntity<T>(_ entity: T) {
-        var entityData = [String:Any]()
-        
-        if(type(of: entity) == Apartment.self){
-            entityData = try! FirebaseEncoder().encode(entity as! Apartment) as! [String : Any]
-        }
-        
-        bulkUpdateEntityData(modificationType: .added, data: [], entityData: entityData, keys: [])
-    }
-    
-    public func persistEntity(_ entityData: [String: Any]) {
-        bulkUpdateEntityData(modificationType: .added, data: [], entityData: entityData, keys: [])
+        bulkUpdateEntityData(modificationType: .added, data: [], entity: entity, keys: [])
     }
 
-    public func deleteEntityFromApartment(entityData: [String: Any], collectionKey: String) {
+    public func deleteEntity<T>(_ entity: T) {
+        let entityData = getDataForEntityType(entity)
         let entityID = guessEntityID(entityData)
         let entityKey = guessEntityKey(entityData)
-
-        guard let apartmentData = try! FirebaseEncoder().encode(currentApartment) as? [String: Any]
-            else {
-                return
-        }
-
-        bulkUpdateEntityData(modificationType: .removed, data: [entityID], entityData: apartmentData, keys: [collectionKey])
         Firestore.firestore().collection(entityKey).document(entityID).delete()
     }
 
     public func deleteApartment(_ apartment: Apartment) {
         getUsersForApartment(apartment: apartment) { (users) in
             for user in users {
-                let entityData = try! FirestoreEncoder().encode(user) as [String: Any]
-                self.bulkUpdateEntityData(modificationType: .removed, data: [apartment.apartmentID], entityData: entityData, keys: ["apartments"])
+                self.bulkUpdateEntityData(modificationType: .removed, data: [apartment.apartmentID], entity: user, keys: ["apartments"])
             }
         }
         Firestore.firestore().collection("apartments").document(apartment.apartmentID).delete()
@@ -176,8 +187,7 @@ class EntityManager: NSObject {
     }
 
     public func persistNewUser(user: AppUser, completion: @escaping (AppUser?) -> Void) {
-        let entityData = try! FirebaseEncoder().encode(user) as! [String: Any]
-        bulkUpdateEntityData(modificationType: .added, data: [], entityData: entityData, keys: [])
+        bulkUpdateEntityData(modificationType: .added, data: [], entity: user, keys: [])
         let handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             guard let returnedAuthUser = user
                 else {
@@ -210,9 +220,8 @@ class EntityManager: NSObject {
             self.currentUser?.apartments.append(apartment.apartmentID)
         }
 
-        let entityData = try! FirebaseEncoder().encode(apartment) as! [String: Any]
-        bulkUpdateEntityData(modificationType: .added, data: apartment.userIDs, entityData: entityData, keys: ["userIDs"])
-        bulkUpdateEntityData(modificationType: .added, data: apartment.userNames, entityData: entityData, keys: ["userNames"])
+        bulkUpdateEntityData(modificationType: .added, data: apartment.userIDs, entity: apartment, keys: ["userIDs"])
+        bulkUpdateEntityData(modificationType: .added, data: apartment.userNames, entity: apartment, keys: ["userNames"])
 
         completion(true)
     }
@@ -227,10 +236,9 @@ class EntityManager: NSObject {
     }
 
     private func guessEntityID(_ entityData: [String: Any]) -> String {
-        print(Array(entityData.keys))
         // FIXME
         for key in Array(entityData.keys) {
-            if(key == "apartmentID" || key == "userID" || key == "groceryItemID" || key == "billID"){
+            if(key == "apartmentID" || key == "userID" || key == "groceryItemID" || key == "billID") {
                 return entityData[key] as! String
             }
         }
@@ -238,9 +246,22 @@ class EntityManager: NSObject {
         return UUID().uuidString.lowercased()
     }
 
-    public func bulkUpdateEntityData(modificationType: DocumentChangeType, data: [String], entityData: [String: Any], keys: [String]) {
+    func getDataForEntityType<T>(_ entity: T) -> [String: Any] {
+        if(type(of: entity) == Apartment.self) {
+            return try! FirebaseEncoder().encode(entity as! Apartment) as! [String: Any]
+        } else if(type(of: entity) == GroceryItem.self) {
+            return try! FirebaseEncoder().encode(entity as! GroceryItem) as! [String: Any]
+        } else if(type(of: entity) == Bill.self) {
+            return try! FirebaseEncoder().encode(entity as! Bill) as! [String: Any]
+        } else if(type(of: entity) == AppUser.self) {
+            return try! FirebaseEncoder().encode(entity as! AppUser) as! [String: Any]
+        }
+        return [String: Any]()
+    }
+
+    public func bulkUpdateEntityData<T>(modificationType: DocumentChangeType, data: [String], entity: T, keys: [String]) {
         var index = 0
-        var copiedData = entityData
+        var entityData = getDataForEntityType(entity)
 
         let entityKey = guessEntityKey(entityData)
         let entityID = guessEntityID(entityData)
@@ -264,17 +285,10 @@ class EntityManager: NSObject {
             }
 
             index += 1
-            copiedData[key] = exclusiveData
+            entityData[key] = exclusiveData
         }
-        let documentRef = Firestore.firestore().collection(entityKey).document(entityID)
 
-        documentRef.getDocument { (documentSnapshot, error) in
-            if let document = documentSnapshot, document.exists {
-                document.setValuesForKeys(copiedData)
-            } else {
-                Firestore.firestore().collection(entityKey).document(entityID).setData(entityData)
-            }
-        }
+        Firestore.firestore().collection(entityKey).document(entityID).setData(entityData)
     }
 
     private func getEntityModelFromData<T : Decodable>(_ data: [String: Any], expectedType: T.Type) -> T? {
@@ -289,18 +303,22 @@ class EntityManager: NSObject {
         self.currentApartmentDelegate?.currentApartmentChanged(newApartment: newApartment)
     }
 
-    // Entity-specific calls
+    // Entity-specific watchers
     func startWatchingGroceries() {
         guard let apartment = currentApartment
             else {
                 return
         }
+
+        if groceriesListener != nil {
+            groceriesListener?.remove()
+        }
+
         groceriesListener = Firestore.firestore().collection("groceries").whereField("attachedApartmentID", isEqualTo: apartment.apartmentID).addSnapshotListener { (querySnapshot, error) in
             guard let snapshot = querySnapshot
                 else {
                     return
             }
-            let apartmentData = self.getCurrentApartmentData()
             snapshot.documentChanges.forEach { diff in
                 let groceryItem = try! FirebaseDecoder().decode(GroceryItem.self, from: diff.document.data())
                 if (diff.type == .added) {
@@ -312,24 +330,61 @@ class EntityManager: NSObject {
                 if (diff.type == .removed) {
                     self.groceryManagerDelegate?.groceryRemoved(removedGrocery: groceryItem)
                 }
-                self.bulkUpdateEntityData(modificationType: diff.type, data: [groceryItem.groceryItemID], entityData: apartmentData, keys: ["groceryIDs"])
+        //        self.bulkUpdateEntityData(modificationType: diff.type, data: [groceryItem.groceryItemID], entity: apartment, keys: ["groceryIDs"])
+                apartment.groceryIDs.append(groceryItem.groceryItemID)
+                self.persistEntity(apartment)
             }
         }
     }
 
+    func startWatchingBills() {
+        guard let apartment = currentApartment
+            else {
+                return
+        }
+
+        if billsListener != nil {
+            billsListener?.remove()
+        }
+
+        billsListener = Firestore.firestore().collection("bills").whereField("attachedApartmentID", isEqualTo: apartment.apartmentID).addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot
+                else {
+                    return
+            }
+            snapshot.documentChanges.forEach { diff in
+                let bill = try! FirebaseDecoder().decode(Bill.self, from: diff.document.data())
+                if (diff.type == .added) {
+                    self.billManagerDelegate?.billAdded(addedBill: bill)
+                }
+                if (diff.type == .modified) {
+                    self.billManagerDelegate?.billChanged(changedBill: bill)
+                }
+                if (diff.type == .removed) {
+                    self.billManagerDelegate?.billRemoved(removedBill: bill)
+                }
+                apartment.billIDs.append(bill.billID)
+                self.persistEntity(apartment)
+            }
+        }
+    }
 
     func startWatchingApartments() {
         guard let user = currentUser
             else {
                 return
         }
-        Firestore.firestore().collection("apartments").whereField("userIDs", arrayContains: user.userID).addSnapshotListener { (querySnapshot, error) in
+
+        if apartmentsListener != nil {
+            apartmentsListener?.remove()
+        }
+
+        apartmentsListener = Firestore.firestore().collection("apartments").whereField("userIDs", arrayContains: user.userID).addSnapshotListener { (querySnapshot, error) in
             guard let snapshot = querySnapshot
                 else {
                     return
             }
 
-            let userData = self.getCurrentUserData()
             snapshot.documentChanges.forEach { diff in
                 do {
                     let apartment = try FirebaseDecoder().decode(Apartment.self, from: diff.document.data())
@@ -344,7 +399,7 @@ class EntityManager: NSObject {
                     if (diff.type == .removed) {
                         self.apartmentListDelegate?.apartmentRemoved(removedApartment: apartment)
                     }
-                    self.bulkUpdateEntityData(modificationType: diff.type, data: [apartment.apartmentID], entityData: userData, keys: ["apartments"])
+                    self.bulkUpdateEntityData(modificationType: diff.type, data: [apartment.apartmentID], entity: self.currentUser!, keys: ["apartments"])
                 } catch {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
                 }
@@ -353,6 +408,41 @@ class EntityManager: NSObject {
         }
     }
 
+    func startWatchingCurrentApartment() {
+        guard let apartment = currentApartment
+            else {
+                return
+        }
+
+        if let location = lastUserLocation{
+            checkIfLocationInRangeOfApartments(location: location)
+        }
+        
+        if currentApartmentListener != nil {
+            currentApartmentListener?.remove()
+        }
+
+        currentApartmentListener = Firestore.firestore().collection("apartments").whereField("apartmentID", isEqualTo: apartment.apartmentID).addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot
+                else {
+                    return
+            }
+
+            snapshot.documentChanges.forEach { diff in
+                do {
+                    let apartment = try FirebaseDecoder().decode(Apartment.self, from: diff.document.data())
+                    if (diff.type == .modified) {
+                        self.currentApartmentDelegate?.currentApartmentChanged(newApartment: apartment)
+                    }
+                } catch {
+                    //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
+                }
+
+            }
+        }
+    }
+
+    // MARK: Data-fetchers
     public func getCurrentApartmentData() -> [String: Any] {
         var apartmentData = [String: Any]()
 
@@ -381,6 +471,16 @@ extension EntityManager: CLLocationManagerDelegate {
             }
             lastUserLocation = location
         }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            self.locationManager.startUpdatingLocation()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }
 

@@ -66,14 +66,16 @@ class NewApartmentViewController: UITableViewController {
             let address = apartmentAddressField?.text
             let location = currentApartmentLocation?.coordinate
             let ownerUser = currentUser!
-            
             let apartment = Apartment(apartmentAddress: address!, apartmentLocation: location!, apartmentName: name!, ownerUser: ownerUser)
             
             apartment.addressComponents = self.addressData
             apartment.addRoommates(roommates)
             
             entityManager?.persistEntity(apartment)
-            entityManager?.updateCurrentApartment(newApartment: apartment)
+            if(currentUser?.apartments.count == 0){
+                entityManager?.updateCurrentApartment(newApartment: apartment)
+            }
+            
             MBProgressHUD.hide(for: self.view, animated: true)
             setDefaultApartmentAndDismiss(defaultApartmentID: apartment.apartmentID)
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {

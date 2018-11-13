@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
             self.entityManager = EntityManager(firUser: returnedAuthUser)
         }
+        
         Auth.auth().removeStateDidChangeListener(handle)
         
         return true

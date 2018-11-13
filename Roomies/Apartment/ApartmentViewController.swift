@@ -18,37 +18,18 @@ class ApartmentViewController: UITableViewController {
     var createApartmentButton: UIButton? = nil
     var currentHUD: MBProgressHUD? = nil
     var entityManager: EntityManager? = nil
-    var currentApartment: Apartment? = nil {
-        didSet {
-            self.fetchApartmentData()
-        }
-    }
+    var currentApartment: Apartment? = nil
 
     override func viewDidLoad() {
-        currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-
         NotificationCenter.default.addObserver(self, selector: #selector(userAuthSuccess), name: Notification.Name(rawValue: "currentUserSet"), object: nil)
-   //     NotificationCenter.default.addObserver(self, selector: #selector(getCurrentApartment), name: Notification.Name(rawValue: "fetchApartmentData"), object: nil)
+        currentHUD = MBProgressHUD.showAdded(to: (self.parent?.view)!, animated: true)
     }
 
-    @objc func userAuthSuccess(){
+    @objc func userAuthSuccess() {
         entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
         entityManager?.currentApartmentDelegate = self
-        if let apartment = entityManager?.currentApartment{
-            currentApartment = apartment
-        }
     }
-    
-   @objc func getCurrentApartment(){
-        if let apartment = entityManager?.currentApartment{
-            currentApartment = apartment
-        }
-    }
-    
-    func fetchApartmentData() {
-        currentHUD?.hide(animated: true)
-        self.tableView.reloadData()
-    }
+
 
     func reloadRoommateRows() {
         var indexPaths: [IndexPath] = []
@@ -144,6 +125,10 @@ class ApartmentViewController: UITableViewController {
         // FIXME
     }
 
+    @objc func showApartments() {
+        self.performSegue(withIdentifier: "showApartments", sender: self)
+    }
+
     @IBAction func showUserSearch() {
         entityManager?.getUsersForApartment(apartment: self.currentApartment!, completion: { (currentUsers) in
             self.userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
@@ -168,10 +153,9 @@ class ApartmentViewController: UITableViewController {
         if editingStyle == .delete {
             let userToRemoveID = (self.currentApartment?.userIDs[indexPath.row])!
             let userToRemoveName = (self.currentApartment?.userNames[indexPath.row])!
-            let entityData = entityManager!.getCurrentApartmentData()
-            
-            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveID], entityData: entityData, keys: ["userIDs"])
-            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveName], entityData: entityData, keys: ["userNames"])
+
+            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveID], entity: self.currentApartment, keys: ["userIDs"])
+            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveName], entity: self.currentApartment, keys: ["userNames"])
         }
     }
 
@@ -248,22 +232,26 @@ extension ApartmentViewController: UserManagerDelegate {
 
 extension ApartmentViewController: CurrentApartmentManagerDelegate {
     func noApartmentFound() {
+        currentHUD?.hide(animated: true)
         addApartment()
     }
-    
+
     func currentApartmentChanged(newApartment: Apartment) {
         self.currentApartment = newApartment
+        currentHUD?.hide(animated: true)
         self.tableView.reloadData()
     }
 
     func currentApartmentRemoved(removedApartment: Apartment) {
         self.currentApartment = nil
+        currentHUD?.hide(animated: true)
         self.tableView.reloadData()
     }
 
     func currentApartmentUpdated(updatedApartment: Apartment) {
         let previousApartment = self.currentApartment!
         self.currentApartment = updatedApartment
+        currentHUD?.hide(animated: true)
 
         if(previousApartment.addressComponents != currentApartment!.addressComponents) {
             self.tableView.reloadSections([0], with: .automatic)
