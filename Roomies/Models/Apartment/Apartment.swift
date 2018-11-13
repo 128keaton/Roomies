@@ -10,10 +10,10 @@ import Foundation
 import CoreLocation
 import MapKit
 
-class Apartment: ObjectModel {
-    var apartmentLatitude: Double = Double()
-    var apartmentLongitude: Double = Double()
-    var apartmentAddress: String = String()
+class Apartment: Codable {
+    var apartmentLatitude: Double
+    var apartmentLongitude: Double
+    var apartmentAddress: String
     var addressComponents = [String]()
     
     var apartmentName: String = String()
@@ -40,12 +40,8 @@ class Apartment: ObjectModel {
         self.ownerUserID = ownerUser.userID
         
         self.apartmentName = apartmentName
-        super.init()
     }
-    
-    required init(from decoder: Decoder) throws{
-       try super.init(from: decoder)
-    }
+
     
     func getApartmentPlacemark() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
@@ -57,10 +53,10 @@ class Apartment: ObjectModel {
         return CLLocation(latitude: self.apartmentLatitude, longitude: self.apartmentLongitude)
     }
     
-    enum CodingKeys : String, CodingKey {
-        case page
-        case totalPages = "total_pages"
-        case perPage = "per_page"
-        case totalRecords = "total_records"
+    func addRoommates(_ roommates: [AppUser]){
+        for user in roommates{
+            self.userIDs.append(user.userID)
+            self.userNames.append(user.fullName)
+        }
     }
 }

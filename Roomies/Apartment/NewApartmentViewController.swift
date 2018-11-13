@@ -10,22 +10,21 @@ import Foundation
 import UIKit
 import CoreLocation
 import MBProgressHUD
+import CodableFirebase
 
 class NewApartmentViewController: UITableViewController {
     var currentApartmentLocation: CLLocation?
     var addressData = [String]()
     var userSearchController: UserSearchViewController? = nil
-    var currentUserID = ""
-    var currentUserFullName = ""
+    var currentUser: AppUser? = nil
     
-    var userManager: UserManager? = nil
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
 
     // hack because reload adds more fields
     var alreadyAddedAddressCell = false
     var alreadyAddedNameCell = false
 
-    var roommateIDs: [String] = []
-    var roommates: [String] = [] {
+    var roommates: [AppUser] = [] {
         didSet {
             reloadRoommateRows()
         }
@@ -41,15 +40,16 @@ class NewApartmentViewController: UITableViewController {
         return _locationManager
     }()
 
-    var apartmentManager: ApartmentManager? = nil
+
     let geocoder = CLGeocoder()
 
     var apartmentAddressField: UITextField?
     var apartmentNameField: UITextField?
 
     override func viewDidLoad() {
-        apartmentManager = ApartmentManager(withUserManager: userManager!)
-        currentUserFullName = userManager?.currentUser!.fullName ?? (userManager?.currentUser?.emailAddress)!
+        if let user = entityManager?.currentUser {
+            currentUser = user
+        }
     }
 
     @objc func useCurrentLocation() {
@@ -65,15 +65,15 @@ class NewApartmentViewController: UITableViewController {
             let name = apartmentNameField?.text
             let address = apartmentAddressField?.text
             let location = currentApartmentLocation?.coordinate
-            let ownerUser = self.userManager?.currentUser!
+            let ownerUser = currentUser!
             
-            let apartment = Apartment(apartmentAddress: address!, apartmentLocation: location!, apartmentName: name!, ownerUser: ownerUser!)
+            let apartment = Apartment(apartmentAddress: address!, apartmentLocation: location!, apartmentName: name!, ownerUser: ownerUser)
             
             apartment.addressComponents = self.addressData
-            apartment.userIDs.append(contentsOf: self.roommateIDs)
-            apartment.userNames.append(contentsOf: self.roommates)
+            apartment.addRoommates(roommates)
             
-            apartmentManager?.persistApartment(apartment: apartment)
+            entityManager?.persistEntity(apartment)
+            entityManager?.updateCurrentApartment(newApartment: apartment)
             MBProgressHUD.hide(for: self.view, animated: true)
             setDefaultApartmentAndDismiss(defaultApartmentID: apartment.apartmentID)
         } else if (apartmentAddressField?.text != "" && apartmentNameField?.text != "") {
@@ -111,7 +111,7 @@ class NewApartmentViewController: UITableViewController {
     func showUserSearch() {
         userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
         userSearchController!.delegate = self
-        userSearchController?.currentUserIDs = roommateIDs
+        userSearchController?.currentUsers = roommates
         userSearchController?.presentSelfIn(viewController: self)
     }
 
@@ -184,7 +184,7 @@ class NewApartmentViewController: UITableViewController {
         } else if(indexPath.section == 1) {
             if(roommates.count > 0) {
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "textCell")!
-                cell.textLabel?.text = roommates[indexPath.row]
+                cell.textLabel?.text = roommates[indexPath.row].fullName
                 cell.textLabel?.textAlignment = .left
                 cell.textLabel?.textColor = UIColor.black
             }
@@ -252,10 +252,7 @@ extension NewApartmentViewController: CLLocationManagerDelegate {
 }
 
 extension NewApartmentViewController: UserSearchViewControllerDelegate {
-    func didSelectUser(userID: String, fullName: String) {
-        self.userManager?.findUserByID(userID: userID, returnedUser: { (roommateUser) in
-            self.roommateIDs.append(userID)
-            self.roommates.append(roommateUser?.fullName ?? (roommateUser?.emailAddress)!)
-        })
+    func didSelectUser(_ user: AppUser) {
+        roommates.append(user)
     }
 }

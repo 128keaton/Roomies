@@ -20,6 +20,11 @@ class Bill: ObjectModel{
         self.title = title
         self.attachedApartmentID = attachedApartmentID
         self.dueBy = dueBy
+        super.init()
     }
-
+    
+    required init(from decoder: Decoder) throws {
+       try! super.init(from: decoder)
+    }
+    
 }

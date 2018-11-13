@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CodableFirebase
 
 class GroceryItemViewController: UITableViewController {
     @IBOutlet weak var priorityLabel: UILabel?
@@ -76,7 +77,9 @@ class GroceryItemViewController: UITableViewController {
             groceryItem?.category = GroceryCategory(name: "Uncategorized")
         }
         
-        entityManager.updateEntity(entity: groceryItem!)
+        let entityData = try! FirebaseEncoder().encode(groceryItem) as! [String:Any]
+        
+        entityManager.bulkUpdateEntityData(modificationType: .modified, data: [], entityData: entityData, keys: [])
         self.navigationController?.popToRootViewController(animated: true)
     }
 }

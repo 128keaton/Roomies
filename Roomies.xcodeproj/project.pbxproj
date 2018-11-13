@@ -22,7 +22,6 @@
 		8A29D55C218E78ED003D2334 /* AddressLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55B218E78ED003D2334 /* AddressLookup.swift */; };
 		8A29D55E218EA191003D2334 /* UITableViewStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */; };
 		8A29D561218ED945003D2334 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D560218ED945003D2334 /* Bill.swift */; };
-		8A29D563218EE5A7003D2334 /* BillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D562218EE5A7003D2334 /* BillManager.swift */; };
 		8A29D566218EE719003D2334 /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D565218EE719003D2334 /* BillsViewController.swift */; };
 		8A29D568218EEEAE003D2334 /* UITableViewBillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A29D567218EEEAE003D2334 /* UITableViewBillCell.swift */; };
 		8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFEB821654BCC00D71FC5 /* AppUser.swift */; };
@@ -34,7 +33,6 @@
 		8A75B0AA21632D290071227C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A75B0A921632D290071227C /* GoogleService-Info.plist */; };
 		8A75B0AC216332EA0071227C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AB216332EA0071227C /* LoginViewController.swift */; };
 		8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AD216333DA0071227C /* GlobalOverrides.swift */; };
-		8A75B0B02163363A0071227C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A75B0AF2163363A0071227C /* UserManager.swift */; };
 		8AEE43162190E93700F82A19 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43152190E93700F82A19 /* EntityManager.swift */; };
 		8AEE43182190E9C600F82A19 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEE43172190E9C600F82A19 /* ObjectModel.swift */; };
 		C7C62F962165D40E0095E33E /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F952165D40E0095E33E /* GroceryItem.swift */; };
@@ -57,7 +55,6 @@
 		8A29D55B218E78ED003D2334 /* AddressLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressLookup.swift; sourceTree = "<group>"; };
 		8A29D55D218EA191003D2334 /* UITableViewStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewStatCell.swift; sourceTree = "<group>"; };
 		8A29D560218ED945003D2334 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
-		8A29D562218EE5A7003D2334 /* BillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillManager.swift; sourceTree = "<group>"; };
 		8A29D565218EE719003D2334 /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
 		8A29D567218EEEAE003D2334 /* UITableViewBillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewBillCell.swift; sourceTree = "<group>"; };
 		8A2DFEB821654BCC00D71FC5 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
@@ -71,7 +68,6 @@
 		8A75B0A921632D290071227C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A75B0AB216332EA0071227C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A75B0AD216333DA0071227C /* GlobalOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOverrides.swift; sourceTree = "<group>"; };
-		8A75B0AF2163363A0071227C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		8AEE43152190E93700F82A19 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		8AEE43172190E9C600F82A19 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		C7C62F952165D40E0095E33E /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
@@ -124,8 +120,6 @@
 		8A29D54A218D6B26003D2334 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				8A75B0AF2163363A0071227C /* UserManager.swift */,
-				8A29D562218EE5A7003D2334 /* BillManager.swift */,
 				8AEE43152190E93700F82A19 /* EntityManager.swift */,
 			);
 			path = Managers;
@@ -419,9 +413,7 @@
 				8A29D54F218D6D89003D2334 /* UserSearchViewController.swift in Sources */,
 				8A29D551218D9965003D2334 /* ApartmentListViewController.swift in Sources */,
 				8A75B0AE216333DA0071227C /* GlobalOverrides.swift in Sources */,
-				8A29D563218EE5A7003D2334 /* BillManager.swift in Sources */,
 				8A29D548218D5FAE003D2334 /* UITableViewMapCell.swift in Sources */,
-				8A75B0B02163363A0071227C /* UserManager.swift in Sources */,
 				8A29D53E218D3C5E003D2334 /* NewApartmentViewController.swift in Sources */,
 				8A29D568218EEEAE003D2334 /* UITableViewBillCell.swift in Sources */,
 				8A2DFEB921654BCC00D71FC5 /* AppUser.swift in Sources */,

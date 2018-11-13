@@ -9,21 +9,22 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import CodableFirebase
 
 class BillsViewController: UITableViewController {
-    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
     var bills = [Bill]()
     var apartmentID = ""
     
     override func viewDidLoad() {
-        entityManager.billManagerDelegate = self
+        entityManager?.billManagerDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if(apartmentID != entityManager.currentApartment?.apartmentID) {
+        if(apartmentID != entityManager?.currentApartment?.apartmentID) {
             bills = []
             self.tableView.reloadData()
-            apartmentID = entityManager.currentApartment?.apartmentID
+            apartmentID = (entityManager?.currentApartment?.apartmentID)!
         }
     }
 
@@ -85,7 +86,9 @@ class BillsViewController: UITableViewController {
 
     @IBAction func addTestData() {
         let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: self.apartmentID, dueBy: Date())
-        entityManager.persistEntity(entity: bill)
+        let entityData = try! FirebaseEncoder().encode(bill) as! [String:Any]
+        
+        entityManager?.persistEntity(entityData)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -94,7 +97,8 @@ class BillsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            entityManager.deleteEntity(entity: bills[indexPath.section])
+            let entityData = try! FirebaseEncoder().encode(bills[indexPath.row]) as! [String:Any]
+            entityManager?.deleteEntityFromApartment(entityData: entityData, collectionKey: "billIDs")
         }
     }
 }

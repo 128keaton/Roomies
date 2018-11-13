@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CodableFirebase
 
 class AddGroceryListItemController: UITableViewController {
     @IBOutlet weak var priorityLabel: UILabel?
@@ -32,7 +33,9 @@ class AddGroceryListItemController: UITableViewController {
         let currentApartmentID = UserDefaults.standard.string(forKey: "selectedApartmentID")
         let groceryItem = GroceryItem(name: (nameField?.text)!, category: category, priority: currentPriority, apartmentID: currentApartmentID!)
         
-        entityManager.persistEntity(entity: groceryItem)
+        let entityData = try! FirebaseEncoder().encode(groceryItem) as! [String: Any]
+        
+        entityManager.persistEntity(entityData)
         dismissSelf()
     }
 

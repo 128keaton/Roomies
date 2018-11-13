@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import CodableFirebase
 
 class GroceryListViewController: UITableViewController {
     var entityManager: EntityManager? = nil
@@ -24,7 +25,7 @@ class GroceryListViewController: UITableViewController {
         if(apartmentID != entityManager?.currentApartment?.apartmentID) {
             groceryItems = []
             self.tableView.reloadData()
-            apartmentID = entityManager?.currentApartment?.apartmentID
+            apartmentID = (entityManager?.currentApartment?.apartmentID)!
         }
     }
 
@@ -44,7 +45,7 @@ class GroceryListViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "addItem") {
-            let addListController = (segue.destination.children.first! as! AddGroceryListItemController)
+            // let addListController = (segue.destination.children.first! as! AddGroceryListItemController)
         } else if(segue.identifier == "goToItem") {
             let selectedItem = self.groceryItems[(self.tableView.indexPathForSelectedRow?.row)!]
             (segue.destination as! GroceryItemViewController).groceryItem = selectedItem
@@ -68,7 +69,8 @@ class GroceryListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            groceryListManager?.removeGroceryItem(removedGroceryItem: groceryItems[indexPath.row])
+            let entityData = try! FirebaseEncoder().encode(groceryItems[indexPath.row]) as! [String:Any]
+            entityManager?.deleteEntityFromApartment(entityData: entityData, collectionKey: "groceryIDs")
         }
     }
 }

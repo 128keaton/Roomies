@@ -13,10 +13,10 @@ import CodableFirebase
 
 class UserSearchViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
-    var filteredUsers: [[String: String]] = []
     var delegate: UserSearchViewControllerDelegate? = nil
-    var currentUserIDs: [String] = []
-
+    var users: [AppUser] = []
+    var currentUsers: [AppUser] = []
+    
     func presentSelfIn(viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: self)
         navigationController.definesPresentationContext = true
@@ -54,17 +54,14 @@ class UserSearchViewController: UITableViewController {
 
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         Firestore.firestore().collection("users").whereField("fullName", isGreaterThanOrEqualTo: searchText).getDocuments { (snapshot, error) in
-            self.filteredUsers = []
+            self.users = []
             if let snapshot = snapshot {
 
                 for document in snapshot.documents {
-                    let data = document.data()
-                    let userID = data["userID"]! as! String
+                    let user = try! FirebaseDecoder().decode(AppUser.self, from: document.data())
 
-                    if(!self.currentUserIDs.contains(userID)) {
-                        let searchQuery = data["fullName"] ?? data["emailAddress"]
-                        let baseSearchUser = ["query": searchQuery, "userID": userID]
-                        self.filteredUsers.append(baseSearchUser as! [String: String])
+                    if((self.currentUsers.filter { $0.userID != user.userID }).count == 0) {
+                       self.users.append(user)
                     }
                 }
 
@@ -79,10 +76,10 @@ class UserSearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() && filteredUsers.count > 0{
+        if isFiltering() && users.count > 0{
             self.tableView.backgroundView = nil
-            return filteredUsers.count
-        }else if filteredUsers.count == 0 && isFiltering(){
+            return users.count
+        }else if users.count == 0 && isFiltering(){
             TableViewHelper.emptyMessage(message: "No users found", viewController: self)
             return 0
         }
@@ -95,7 +92,7 @@ class UserSearchViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         if isFiltering() {
-            cell.textLabel!.text = filteredUsers[indexPath.row]["query"]
+            cell.textLabel!.text = users[indexPath.row].fullName
         }
 
         return cell
@@ -108,7 +105,7 @@ class UserSearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isFiltering() {
             self.dismiss(animated: true, completion: nil)
-            self.delegate?.didSelectUser(userID: filteredUsers[indexPath.row]["userID"]!, fullName: filteredUsers[indexPath.row]["query"]!)
+            self.delegate?.didSelectUser(users[indexPath.row])
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -125,5 +122,5 @@ extension UserSearchViewController: UISearchResultsUpdating {
 }
 
 protocol UserSearchViewControllerDelegate {
-    func didSelectUser(userID: String, fullName: String)
+    func didSelectUser(_ user: AppUser)
 }
