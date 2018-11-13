@@ -141,14 +141,14 @@
 			path = "Custom UIKit Classes";
 			sourceTree = "<group>";
 		};
-		8A29D54D218D6B51003D2334 /* Misc. ViewControllers */ = {
+		8A29D54D218D6B51003D2334 /* Misc. */ = {
 			isa = PBXGroup;
 			children = (
 				8A75B0AB216332EA0071227C /* LoginViewController.swift */,
 				8A2DFEBB21654D0A00D71FC5 /* BaseViewController.swift */,
 				8A29D54E218D6D89003D2334 /* UserSearchViewController.swift */,
 			);
-			path = "Misc. ViewControllers";
+			path = Misc.;
 			sourceTree = "<group>";
 		};
 		8A29D55A218E5F30003D2334 /* Grocery List */ = {
@@ -169,12 +169,12 @@
 			path = Bills;
 			sourceTree = "<group>";
 		};
-		8A29D564218EE707003D2334 /* Bills */ = {
+		8A29D564218EE707003D2334 /* Bill */ = {
 			isa = PBXGroup;
 			children = (
 				8A29D565218EE719003D2334 /* BillsViewController.swift */,
 			);
-			path = Bills;
+			path = Bill;
 			sourceTree = "<group>";
 		};
 		8A2DFEB721654BBA00D71FC5 /* Models */ = {
@@ -237,10 +237,10 @@
 			isa = PBXGroup;
 			children = (
 				8A29D549218D6B1D003D2334 /* Apartment */,
-				8A29D564218EE707003D2334 /* Bills */,
+				8A29D564218EE707003D2334 /* Bill */,
 				8A29D55A218E5F30003D2334 /* Grocery List */,
 				8A29D54B218D6B37003D2334 /* Shopping */,
-				8A29D54D218D6B51003D2334 /* Misc. ViewControllers */,
+				8A29D54D218D6B51003D2334 /* Misc. */,
 			);
 			path = VIewControllers;
 			sourceTree = "<group>";
