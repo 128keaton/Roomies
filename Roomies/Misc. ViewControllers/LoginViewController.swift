@@ -15,25 +15,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField?
     @IBOutlet weak var passwordField: UITextField?
 
-    var userManager: UserManager? = nil
-
-    override func viewDidLoad() {
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if(user != nil){
-                self.userManager = UserManager(firUser: user!)
-            }
-        }
-    }
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
 
     @IBAction func loginButtonPressed() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         if(validateFields()) {
             DispatchQueue.main.async {
-                self.userManager?.signInUser(email: (self.emailField?.text)!, password: (self.passwordField?.text)!, authReturned: { (user) in
+                Auth.auth().signIn(withEmail: (self.emailField?.text)!, password: (self.passwordField?.text)!, completion: { (authResult, error) in
                     MBProgressHUD.hide(for: self.view, animated: true)
-                    if(user == nil) {
-                        self.displayAlert(message: "Incorrect username or password", title: "Error")
-                    }else{
+                    if let error = error {
+                        self.displayAlert(message: error.localizedDescription, title: "Error")
+                    } else {
                         self.dismiss(animated: true, completion: nil)
                     }
                 })

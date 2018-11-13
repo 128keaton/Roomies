@@ -14,55 +14,22 @@ import MBProgressHUD
 import CoreLocation
 
 class ApartmentViewController: UITableViewController {
-    var userManager: UserManager? = nil
-    var currentUser: AppUser? = nil
-    var currentApartment: Apartment? = nil
-    var currentApartmentID = "" {
-        didSet {
-            fetchApartmentData(apartmentID: currentApartmentID)
-        }
-    }
-
     var userSearchController: UserSearchViewController? = nil
     var createApartmentButton: UIButton? = nil
     var currentHUD: MBProgressHUD? = nil
-    
-    var apartmentManager: ApartmentManager? = nil
-    let userDefaults = UserDefaults.standard
+    var entityManager: EntityManager? = nil
+    var currentApartment: Apartment? = nil
 
     override func viewDidLoad() {
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if(user != nil) {
-                self.currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-                self.userManager = UserManager(firUser: user!)
-                self.userManager?.getCurrentUser(completion: { (user) in
-                    self.currentUser = user
-                    self.getSelectedApartmentID()
-                    self.apartmentManager = ApartmentManager(withUserManager: self.userManager!)
-                    self.apartmentManager?.currentApartmentDelegate = self
-                    self.apartmentManager?.startWatchingApartment(apartmentID: self.currentApartmentID)
-                    (UIApplication.shared.delegate as! AppDelegate).userManager = self.userManager
-                })
-
-            }
-        }
-
-        NotificationCenter.default.addObserver(self, selector: #selector(getSelectedApartmentID), name: Notification.Name(rawValue: "showNewApartment"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userAuthSuccess), name: Notification.Name(rawValue: "currentUserSet"), object: nil)
+        currentHUD = MBProgressHUD.showAdded(to: (self.parent?.view)!, animated: true)
     }
 
-    func fetchApartmentData(apartmentID: String) {
-        Firestore.firestore().collection("apartments").document(apartmentID).getDocument { document, error in
-            if document?.data() != nil {
-                let document = document!
-                let apartment = try! FirestoreDecoder().decode(Apartment.self, from: document.data()!)
-                self.currentApartment = apartment
-                self.tableView.reloadData()
-            } else {
-                self.addApartment()
-            }
-            self.currentHUD?.hide(animated: true)
-        }
+    @objc func userAuthSuccess() {
+        entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
+        entityManager?.currentApartmentDelegate = self
     }
+
 
     func reloadRoommateRows() {
         var indexPaths: [IndexPath] = []
@@ -154,41 +121,25 @@ class ApartmentViewController: UITableViewController {
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func updateApartmentID(newApartmentID: String?) {
-        if(newApartmentID != nil) {
-            userDefaults.set(newApartmentID!, forKey: "selectedApartmentID")
-            userDefaults.synchronize()
-            self.currentApartmentID = newApartmentID!
-            self.apartmentManager?.startWatchingApartment(apartmentID: self.currentApartmentID)
-        } else {
-            self.currentHUD?.hide(animated: true)
-            addCreateApartmentButton()
-        }
+    @objc func getSelectedApartmentID() {
+        // FIXME
     }
 
-    @objc func getSelectedApartmentID() {
-        var apartmentID = userDefaults.string(forKey: "selectedApartmentID")
-
-        if(apartmentID == nil) {
-            apartmentID = self.currentUser?.apartments.first
-            updateApartmentID(newApartmentID: apartmentID)
-        } else {
-            self.currentApartmentID = apartmentID!
-        }
+    @objc func showApartments() {
+        self.performSegue(withIdentifier: "showApartments", sender: self)
     }
 
     @IBAction func showUserSearch() {
-        userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
-        userSearchController!.delegate = self
-        userSearchController?.currentUserIDs = (currentApartment?.userIDs)!
-        userSearchController?.presentSelfIn(viewController: self.parent!)
+        entityManager?.getUsersForApartment(apartment: self.currentApartment!, completion: { (currentUsers) in
+            self.userSearchController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "userSearch") as? UserSearchViewController
+            self.userSearchController!.delegate = self
+            self.userSearchController?.currentUsers = currentUsers
+            self.userSearchController?.presentSelfIn(viewController: self.parent!)
+        })
     }
 
     @objc func addApartment() {
-        if(self.currentUser != nil || self.userManager?.currentUser != nil) {
-            self.currentUser = self.userManager?.currentUser
-            self.performSegue(withIdentifier: "addApartment", sender: self)
-        }
+        self.performSegue(withIdentifier: "addApartment", sender: self)
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -200,14 +151,11 @@ class ApartmentViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let userToRemoveID = self.currentApartment?.userIDs[indexPath.row]
-            let userToRemoveName = self.currentApartment?.userNames[indexPath.row]
+            let userToRemoveID = (self.currentApartment?.userIDs[indexPath.row])!
+            let userToRemoveName = (self.currentApartment?.userNames[indexPath.row])!
 
-            self.apartmentManager?.removeApartmentFromUser(apartment: self.currentApartment!, userID: userToRemoveID!, fullName: userToRemoveName!) { (didRemove) in
-                if(didRemove) {
-                    self.fetchApartmentData(apartmentID: (self.currentApartment?.apartmentID)!)
-                }
-            }
+            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveID], entity: self.currentApartment, keys: ["userIDs"])
+            entityManager?.bulkUpdateEntityData(modificationType: .removed, data: [userToRemoveName], entity: self.currentApartment, keys: ["userNames"])
         }
     }
 
@@ -215,11 +163,6 @@ class ApartmentViewController: UITableViewController {
         if (segue.identifier == "showApartments") {
             let apartmentListController = segue.destination.children.first! as! ApartmentListViewController
             apartmentListController.apartmentViewController = self
-            apartmentListController.userManager = self.userManager
-            apartmentListController.currentApartmentID = self.currentApartmentID
-        } else if (segue.identifier == "addApartment") {
-            let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
-            newApartmentViewController.userManager = self.userManager
         }
     }
 
@@ -234,7 +177,9 @@ class ApartmentViewController: UITableViewController {
             // Map section
             let mapCell = self.tableView.dequeueReusableCell(withIdentifier: "mapCell") as! UITableViewMapCell
             mapCell.addAddressData(addressData: apartment.addressComponents)
-            mapCell.setDistance(distance: getUserDistanceFromApartment()!)
+            if let distance = entityManager?.getDistanceFromCurrentApartment() {
+                mapCell.setDistance(distance: distance)
+            }
             mapCell.addMapPoint(annotation: apartment.getApartmentPlacemark())
             cell = mapCell
         } else if(indexPath.section == 1 && indexPath.row == 0) {
@@ -250,7 +195,7 @@ class ApartmentViewController: UITableViewController {
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "infoCell")!
                 cell.textLabel?.text = apartment.userNames[indexPath.row]
 
-                if(apartment.userIDs[indexPath.row] == self.currentUser?.userID) {
+                if(apartment.userIDs[indexPath.row] == self.entityManager?.currentUser?.userID) {
                     cell.detailTextLabel?.text = "(you)"
                     cell.detailTextLabel?.textColor = UIColor.gray
                 } else {
@@ -271,20 +216,13 @@ class ApartmentViewController: UITableViewController {
         }
         return cell
     }
-
-    func getUserDistanceFromApartment() -> Double? {
-        let apartmentLocation = CLLocation(latitude: currentApartment!.apartmentLatitude, longitude: currentApartment!.apartmentLongitude)
-        guard let userLocation = (UIApplication.shared.delegate as! AppDelegate).lastUserLocation
-            else{
-                return nil
-        }
-        
-        return Double(round(1000 * apartmentLocation.distance(from: userLocation) * 0.000621371)/1000)
-    }
-
 }
 
 extension ApartmentViewController: UserManagerDelegate {
+    func userAuthorizationExpired() {
+        // remove the fucking user
+    }
+
     func userHasBeenAuthenticated() {
         DispatchQueue.main.async {
             self.getSelectedApartmentID()
@@ -293,17 +231,27 @@ extension ApartmentViewController: UserManagerDelegate {
 }
 
 extension ApartmentViewController: CurrentApartmentManagerDelegate {
-    func currentApartmentRemoved(removedApartment: Apartment) {
-        self.currentApartment = nil
-        self.currentApartmentID = ""
-        userDefaults.set(nil, forKey: "selectedApartmentID")
-        userDefaults.synchronize()
+    func noApartmentFound() {
+        currentHUD?.hide(animated: true)
+        addApartment()
+    }
+
+    func currentApartmentChanged(newApartment: Apartment) {
+        self.currentApartment = newApartment
+        currentHUD?.hide(animated: true)
         self.tableView.reloadData()
     }
-    
+
+    func currentApartmentRemoved(removedApartment: Apartment) {
+        self.currentApartment = nil
+        currentHUD?.hide(animated: true)
+        self.tableView.reloadData()
+    }
+
     func currentApartmentUpdated(updatedApartment: Apartment) {
         let previousApartment = self.currentApartment!
         self.currentApartment = updatedApartment
+        currentHUD?.hide(animated: true)
 
         if(previousApartment.addressComponents != currentApartment!.addressComponents) {
             self.tableView.reloadSections([0], with: .automatic)
@@ -314,7 +262,7 @@ extension ApartmentViewController: CurrentApartmentManagerDelegate {
         }
 
         if(previousApartment.userIDs != currentApartment?.userIDs || previousApartment.usersInRange != currentApartment?.usersInRange) {
-            self.tableView.reloadSections([0,2], with: .automatic)
+            self.tableView.reloadSections([0, 2], with: .automatic)
         }
 
         if(previousApartment.groceryIDs != currentApartment?.groceryIDs || previousApartment.userIDs != currentApartment?.userIDs || previousApartment.billIDs != currentApartment?.billIDs) {
@@ -324,13 +272,14 @@ extension ApartmentViewController: CurrentApartmentManagerDelegate {
     }
 }
 extension ApartmentViewController: UserSearchViewControllerDelegate {
-    func didSelectUser(userID: String, fullName: String) {
-        let apartment = currentApartment!
-        apartment.userNames.append(fullName)
-        apartment.userIDs.append(userID)
-
-        self.apartmentManager?.addApartmentToUsers(apartment: apartment) { (_) in
-            self.tableView.reloadSections([2], with: .automatic)
+    func didSelectUser(_ user: AppUser) {
+        guard let apartment = currentApartment
+            else {
+                return
         }
+        apartment.addRoommates([user])
+        entityManager?.addApartmentToUsers(apartment: apartment, completion: { (_) in
+            self.tableView.reloadSections([2], with: .automatic)
+        })
     }
 }

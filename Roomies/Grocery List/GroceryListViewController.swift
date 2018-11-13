@@ -9,30 +9,31 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import CodableFirebase
 
 class GroceryListViewController: UITableViewController {
-    var groceryListManager: GroceryListManager? = nil
+    var entityManager: EntityManager? = nil
     var groceryItems = [GroceryItem]()
     var apartmentID = ""
 
-    override func viewWillAppear(_ animated: Bool) {
-        let userDefaults = UserDefaults.standard
-        let userManager = (UIApplication.shared.delegate as! AppDelegate).userManager!
+    override func viewDidLoad() {
+        entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
+        entityManager?.groceryManagerDelegate = self
+        entityManager?.startWatchingGroceries()
+    }
 
-        if(userDefaults.string(forKey: "selectedApartmentID") != apartmentID) {
+    override func viewWillAppear(_ animated: Bool) {
+        if(apartmentID != entityManager?.currentApartment?.apartmentID) {
             groceryItems = []
             self.tableView.reloadData()
-            apartmentID = userDefaults.string(forKey: "selectedApartmentID")!
-            groceryListManager = GroceryListManager(apartmentID: apartmentID, userManager: userManager)
+            apartmentID = (entityManager?.currentApartment?.apartmentID)!
         }
-        
-        groceryListManager?.delegate = self
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groceryCell")
         let grocery = groceryItems[indexPath.row]
@@ -44,17 +45,15 @@ class GroceryListViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "addItem"){
-            let addListController = (segue.destination.children.first! as! AddGroceryListItemController)
-            addListController.groceryListManager = self.groceryListManager
-        }else if(segue.identifier == "goToItem"){
+        if(segue.identifier == "addItem") {
+            // let addListController = (segue.destination.children.first! as! AddGroceryListItemController)
+        } else if(segue.identifier == "goToItem") {
             let selectedItem = self.groceryItems[(self.tableView.indexPathForSelectedRow?.row)!]
             (segue.destination as! GroceryItemViewController).groceryItem = selectedItem
-            (segue.destination as! GroceryItemViewController).groceryListManager = self.groceryListManager
         }
-        
+
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(groceryItems.count == 0) {
             TableViewHelper.emptyMessage(message: "You have nothing on your shopping list", viewController: self)
@@ -71,7 +70,7 @@ class GroceryListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            groceryListManager?.removeGroceryItem(removedGroceryItem: groceryItems[indexPath.row])
+            entityManager?.deleteEntity(groceryItems[indexPath.row])
         }
     }
 }
@@ -82,7 +81,7 @@ extension GroceryListViewController: GroceryManagerDelegate {
         let indexRow = self.groceryItems.firstIndex { (groceryItem) -> Bool in
             return groceryItem.groceryItemID == addedGrocery.groceryItemID
         }
-        
+
         self.tableView.insertRows(at: [IndexPath(row: indexRow!, section: 0)], with: .automatic)
     }
     func groceryChanged(changedGrocery: GroceryItem) {

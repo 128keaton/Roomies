@@ -16,8 +16,8 @@ class Apartment: Codable {
     var apartmentAddress: String
     var addressComponents = [String]()
     
-    var apartmentName: String
-    var ownerUserID: String
+    var apartmentName: String = String()
+    var ownerUserID: String = String()
     
     var userIDs: [String] = []
     var userNames: [String] = []
@@ -26,7 +26,9 @@ class Apartment: Codable {
     var apartmentID = UUID().uuidString.lowercased()
     var groceryIDs: [String] = []
     var billIDs: [String] = []
-
+    
+    var databaseKey: String = "apartments"
+    
     init(apartmentAddress: String, apartmentLocation: CLLocationCoordinate2D, apartmentName: String, ownerUser: AppUser) {
         self.apartmentLatitude = apartmentLocation.latitude
         self.apartmentLongitude = apartmentLocation.longitude
@@ -35,11 +37,12 @@ class Apartment: Codable {
         
         self.userIDs = [ownerUser.userID]
         self.userNames = [ownerUser.fullName]
-
         self.ownerUserID = ownerUser.userID
+        
         self.apartmentName = apartmentName
     }
 
+    
     func getApartmentPlacemark() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(self.apartmentLatitude, self.apartmentLongitude)
@@ -48,5 +51,12 @@ class Apartment: Codable {
     
     func getLocation() -> CLLocation{
         return CLLocation(latitude: self.apartmentLatitude, longitude: self.apartmentLongitude)
+    }
+    
+    func addRoommates(_ roommates: [AppUser]){
+        for user in roommates{
+            self.userIDs.append(user.userID)
+            self.userNames.append(user.fullName)
+        }
     }
 }

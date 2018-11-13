@@ -14,26 +14,26 @@ class GroceryItemViewController: UITableViewController {
     @IBOutlet weak var priorityStepper: UIStepper?
     @IBOutlet weak var nameField: UITextField?
     @IBOutlet weak var categoryField: UITextField?
-    
-    
+
     var groceryItem: GroceryItem? = nil
-    var groceryListManager: GroceryListManager? = nil
-    
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
+
     override func viewDidLoad() {
         self.priorityLabel?.text = "Priority: \(groceryItem!.getPriority())"
         self.nameField?.text = groceryItem!.name
-        self.categoryField?.text = groceryItem?.category.name
+        self.categoryField?.text = groceryItem?.category!.name
         self.title = groceryItem?.name
         priorityStepper?.value = Double(groceryItem!.priority)
+
         
         self.nameField?.delegate = self
         self.categoryField?.delegate = self
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
+
     func displayAlert(message: String, title: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Ok", style: .default) { (_) in
@@ -42,7 +42,7 @@ class GroceryItemViewController: UITableViewController {
         alert.addAction(dismissAction)
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     @IBAction func stepperValueChanged(sender: UIStepper) {
         changeToSaveButton()
         switch sender.value {
@@ -58,31 +58,30 @@ class GroceryItemViewController: UITableViewController {
         }
         groceryItem?.priority = Int(sender.value)
     }
-    
-    func changeToSaveButton(){
+
+    func changeToSaveButton() {
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(validateAndSave))
         self.navigationItem.leftBarButtonItem = saveButton
     }
-    
-    @objc func validateAndSave(){
+
+    @objc func validateAndSave() {
         if(self.nameField?.text == "") {
             displayAlert(message: "The name field cannot be empty", title: "Invalid name")
             return
         }
-        
 
-        if(self.categoryField!.text != nil){
+        if(self.categoryField!.text != nil) {
             groceryItem?.category = GroceryCategory(name: (self.categoryField?.text)!)
-        }else if(self.categoryField?.text == nil){
+        } else if(self.categoryField?.text == nil) {
             groceryItem?.category = GroceryCategory(name: "Uncategorized")
         }
-        
-        self.groceryListManager?.updateGroceryItem(modifiedGroceryItem: groceryItem!)
+
+        entityManager.bulkUpdateEntityData(modificationType: .modified, data: [], entity: groceryItem, keys: [])
         self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
-extension GroceryItemViewController: UITextFieldDelegate{
+extension GroceryItemViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         changeToSaveButton()
     }

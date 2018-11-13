@@ -11,31 +11,30 @@ import UIKit
 import MBProgressHUD
 
 class ApartmentListViewController: UITableViewController {
-    var apartmentManager: ApartmentManager? = nil
-    var userManager: UserManager? = nil
-    var currentUserID = ""
-    var currentApartmentID = ""
+    var entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager!
+    var currentUser: AppUser? = nil
+    var currentApartment: Apartment? = nil
     var apartmentViewController: ApartmentViewController? = nil
     var userApartments: [Apartment] = []
 
     override func viewDidLoad() {
-        apartmentManager = ApartmentManager(withUserManager: self.userManager!)
-        apartmentManager!.delegate = self
-        apartmentManager!.startWatchingApartments()
+        entityManager.apartmentListDelegate = self
+        entityManager.startWatchingApartments()
+        if let currentApartment = entityManager.currentApartment {
+            self.currentApartment = currentApartment
+        }
+
+        if let user = entityManager.currentUser {
+            currentUser = user
+        }
+
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "addApartment"){
-            let newApartmentViewController = segue.destination.children.first! as! NewApartmentViewController
-            newApartmentViewController.userManager = self.userManager
-        }
-    }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         MBProgressHUD.hide(for: self.view, animated: true)
         if(userApartments.count == 0) {
@@ -56,12 +55,8 @@ class ApartmentListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let apartment = userApartments[indexPath.row]
         self.tableView.deselectRow(at: indexPath, animated: true)
-        updateCurrentApartment(newApartmentID: apartment.apartmentID)
+        entityManager.updateCurrentApartment(newApartment: apartment)
         dismissSelf()
-    }
-
-    func updateCurrentApartment(newApartmentID: String) {
-        apartmentViewController?.updateApartmentID(newApartmentID: newApartmentID)
     }
 
     @IBAction func dismissSelf() {
@@ -78,7 +73,7 @@ class ApartmentListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         let apartment = userApartments[indexPath.row]
-        if(currentUserID == apartment.ownerUserID) {
+        if(currentUser?.userID == apartment.ownerUserID) {
             return "Delete"
         }
         return "Leave"
@@ -87,21 +82,22 @@ class ApartmentListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let apartment = userApartments[indexPath.row]
-            if(currentUserID == apartment.ownerUserID) {
+            
+            if(currentUser?.userID == apartment.ownerUserID) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
-                apartmentManager?.deleteApartment(apartment: apartment)
-                apartmentManager?.delegate = self
+                entityManager.deleteApartment(apartment)
             } else {
-                apartmentManager?.removeApartmentFromUser(apartment: apartment, user: (apartmentManager?.currentUser!)!)
+                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.userID)!], entity: apartment, keys: ["userIDs"])
+                entityManager.bulkUpdateEntityData(modificationType: .removed, data: [(currentUser?.fullName)!], entity: apartment, keys: ["userNames"])
             }
         }
     }
 
 }
 
-extension ApartmentListViewController: ApartmentManagerDelegate {
+extension ApartmentListViewController: ApartmentListManagerDelegate {
     func apartmentAdded(addedApartment: Apartment) {
-        if(addedApartment.apartmentID != currentApartmentID) {
+        if(addedApartment.apartmentID != currentApartment?.apartmentID) {
             self.userApartments.append(addedApartment)
             let indexRow = self.userApartments.firstIndex { (apartment) -> Bool in
                 return addedApartment.apartmentID == apartment.apartmentID
@@ -110,7 +106,7 @@ extension ApartmentListViewController: ApartmentManagerDelegate {
         }
     }
     func apartmentChanged(changedApartment: Apartment) {
-        if(changedApartment.apartmentID != currentApartmentID) {
+        if(changedApartment.apartmentID != currentApartment?.apartmentID) {
             let indexRow = self.userApartments.firstIndex { (apartment) -> Bool in
                 return changedApartment.apartmentID == apartment.apartmentID
             }

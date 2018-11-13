@@ -9,11 +9,13 @@
 import Foundation
 
 class AppUser: Codable {
-    var emailAddress: String
-    var fullName: String
-    var userID: String
+    var emailAddress: String = String()
+    var fullName: String = String()
+    var userID: String = String()
     var apartments: [String] = []
     var groceryCategories: [GroceryCategory]? = []
+    
+    var databaseKey: String = "users"
     
     init(emailAddress: String, fullName: String?, userID: String?) {
         self.fullName = fullName!
@@ -21,13 +23,9 @@ class AppUser: Codable {
         self.userID = userID!
     }
     
+    // STRUCT USE ONLY
     convenience init(emailAddress: String, fullName: String?){
         self.init(emailAddress: emailAddress, fullName: fullName, userID: "")
     }
-}
-
-enum UserAuthState: Int, Codable {
-    case authorized = 0
-    case unauthorized = 1
 }
 

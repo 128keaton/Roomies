@@ -9,24 +9,16 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import CodableFirebase
 
 class BillsViewController: UITableViewController {
-    var billManager: BillManager? = nil
+    var entityManager: EntityManager? = nil
     var bills = [Bill]()
-    var apartmentID = ""
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let userDefaults = UserDefaults.standard
-        let userManager = (UIApplication.shared.delegate as! AppDelegate).userManager!
 
-        if(userDefaults.string(forKey: "selectedApartmentID") != apartmentID) {
-            bills = []
-            self.tableView.reloadData()
-            apartmentID = userDefaults.string(forKey: "selectedApartmentID")!
-            billManager = BillManager(apartmentID: apartmentID, userManager: userManager)
-        }
-
-        billManager?.delegate = self
+    override func viewDidLoad() {
+        entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
+        entityManager?.billManagerDelegate = self
+        entityManager?.startWatchingBills()
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -56,51 +48,53 @@ class BillsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "billCell") as? UITableBillCell
         let bill = bills[indexPath.section]
-        
+
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd"
-        
+
         cell?.billTitleLabel?.text = bill.title
         cell?.billAmountLabel?.text = "\((numberFormatter.string(from: (bill.amount as NSNumber))!))"
         cell?.layer.cornerRadius = 4
         cell?.clipsToBounds = true
-        
-        if(bill.dueBy == Date()){
+
+        if(bill.dueBy == Date()) {
             cell?.billDueLabel?.text = "Due today"
-        }else if(Date() > bill.dueBy){
+        } else if(Date() > bill.dueBy) {
             cell?.backgroundColor = UIColor(red: 0.9, green: 0.1, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Past due (\(dateFormatter.string(from: bill.dueBy)))"
-        }else{
-             cell?.backgroundColor = UIColor(red: 0.1, green: 0.9, blue: 0.0, alpha: 0.8)
+        } else {
+            cell?.backgroundColor = UIColor(red: 0.1, green: 0.9, blue: 0.0, alpha: 0.8)
             cell?.billDueLabel?.text = "Due on \(dateFormatter.string(from: bill.dueBy))"
         }
-        
+
         cell?.billTitleLabel?.textColor = UIColor.white
         cell?.billDueLabel?.textColor = UIColor.white
         cell?.billAmountLabel?.textColor = UIColor.white
-        
+
         return cell!
     }
 
     @IBAction func addTestData() {
-        let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: self.apartmentID, dueBy: Date())
-        self.billManager?.addBill(newBill: bill)
+        let currentApartmentID = UserDefaults.standard.string(forKey: "selectedApartmentID")
+        let bill = Bill(amount: 4.20, title: "Test Bill", attachedApartmentID: currentApartmentID!, dueBy: Date())
+
+        entityManager?.persistEntity(bill)
     }
-    
+
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete) {
-            billManager?.removeBill(removedBill: bills[indexPath.section])
+           entityManager?.deleteEntity(bills[indexPath.row])
         }
     }
 }
-extension BillsViewController: BillManagerDelegate {
+extension BillsViewController: BillListManagerDelegate {
     func billAdded(addedBill: Bill) {
         self.bills.append(addedBill)
         let indexSection = self.bills.firstIndex { (bill) -> Bool in
