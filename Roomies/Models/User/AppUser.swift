@@ -16,6 +16,7 @@ class AppUser: Codable {
     var groceryCategories: [GroceryCategory]? = []
     
     var databaseKey: String = "users"
+    var profilePictureURL: URL? 
     
     init(emailAddress: String, fullName: String?, userID: String?) {
         self.fullName = fullName!
