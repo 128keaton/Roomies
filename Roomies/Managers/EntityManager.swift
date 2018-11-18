@@ -13,9 +13,9 @@ import CoreLocation
 
 class EntityManager: NSObject {
     // App User Properties
-    private (set) public var currentUser: AppUser?{
-        didSet{
-            if let location = lastUserLocation{
+    private (set) public var currentUser: AppUser? {
+        didSet {
+            if let location = lastUserLocation {
                 checkIfLocationInRangeOfApartments(location: location)
             }
         }
@@ -33,12 +33,12 @@ class EntityManager: NSObject {
     // Misc. Properties
     private var userDefaults = UserDefaults.standard
     public var lastUserLocation: CLLocation? = nil
-    private (set) public var currentApartment: Apartment? = nil{
-        didSet{
-                self.startWatchingCurrentApartment()
+    private (set) public var currentApartment: Apartment? = nil {
+        didSet {
+            self.startWatchingCurrentApartment()
         }
     }
-    
+
     private var locationManager: CLLocationManager = CLLocationManager()
 
     // Listeners
@@ -57,6 +57,7 @@ class EntityManager: NSObject {
             if let currentApartmentID = self.userDefaults.string(forKey: "selectedApartmentID") {
                 self.findObjectByID(id: currentApartmentID, collectionPath: "apartments", expectedType: Apartment.self) { (returnedData) in
                     if let apartment = returnedData {
+                        self.validateApartmentData(apartment: apartment)
                         self.currentApartment = apartment
                         self.currentApartmentDelegate?.currentApartmentChanged(newApartment: apartment)
                     } else {
@@ -103,7 +104,7 @@ class EntityManager: NSObject {
                 if(location.distance(from: apartmentLocation) <= 10) {
                     apartment.usersInRange.append(userID)
                 } else if(apartment.usersInRange.contains(userID)) {
-                    apartment.usersInRange = apartment.usersInRange.filter { $0 != userID}
+                    apartment.usersInRange = apartment.usersInRange.filter { $0 != userID }
                 }
                 self.persistEntity(apartment)
             }
@@ -299,6 +300,7 @@ class EntityManager: NSObject {
     public func updateCurrentApartment(newApartment: Apartment) {
         userDefaults.set(newApartment.apartmentID, forKey: "selectedApartmentID")
         userDefaults.synchronize()
+        self.validateApartmentData(apartment: newApartment)
         currentApartment = newApartment
         self.currentApartmentDelegate?.currentApartmentChanged(newApartment: newApartment)
     }
@@ -322,16 +324,17 @@ class EntityManager: NSObject {
             snapshot.documentChanges.forEach { diff in
                 let groceryItem = try! FirebaseDecoder().decode(GroceryItem.self, from: diff.document.data())
                 if (diff.type == .added) {
+                    apartment.groceryIDs.append(groceryItem.groceryItemID)
                     self.groceryManagerDelegate?.groceryAdded(addedGrocery: groceryItem)
                 }
                 if (diff.type == .modified) {
                     self.groceryManagerDelegate?.groceryChanged(changedGrocery: groceryItem)
                 }
                 if (diff.type == .removed) {
+                    apartment.groceryIDs = apartment.groceryIDs.filter { $0 != groceryItem.groceryItemID }
                     self.groceryManagerDelegate?.groceryRemoved(removedGrocery: groceryItem)
                 }
-        //        self.bulkUpdateEntityData(modificationType: diff.type, data: [groceryItem.groceryItemID], entity: apartment, keys: ["groceryIDs"])
-                apartment.groceryIDs.append(groceryItem.groceryItemID)
+
                 self.persistEntity(apartment)
             }
         }
@@ -355,15 +358,17 @@ class EntityManager: NSObject {
             snapshot.documentChanges.forEach { diff in
                 let bill = try! FirebaseDecoder().decode(Bill.self, from: diff.document.data())
                 if (diff.type == .added) {
+                    apartment.billIDs.append(bill.billID)
                     self.billManagerDelegate?.billAdded(addedBill: bill)
                 }
                 if (diff.type == .modified) {
                     self.billManagerDelegate?.billChanged(changedBill: bill)
                 }
                 if (diff.type == .removed) {
+                    apartment.billIDs = apartment.billIDs.filter { $0 != bill.billID }
                     self.billManagerDelegate?.billRemoved(removedBill: bill)
                 }
-                apartment.billIDs.append(bill.billID)
+
                 self.persistEntity(apartment)
             }
         }
@@ -414,10 +419,10 @@ class EntityManager: NSObject {
                 return
         }
 
-        if let location = lastUserLocation{
+        if let location = lastUserLocation {
             checkIfLocationInRangeOfApartments(location: location)
         }
-        
+
         if currentApartmentListener != nil {
             currentApartmentListener?.remove()
         }
@@ -438,6 +443,26 @@ class EntityManager: NSObject {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
                 }
 
+            }
+        }
+    }
+    
+    func validateApartmentData(apartment: Apartment){
+        for billID in apartment.billIDs{
+            Firestore.firestore().collection("bills").document(billID).getDocument { (document, error) in
+                if(document == nil || (document)!.exists == false){
+                    apartment.billIDs = apartment.billIDs.filter { $0 != billID }
+                    self.persistEntity(apartment)
+                }
+            }
+        }
+        
+        for groceryID in apartment.groceryIDs {
+            Firestore.firestore().collection("groceries").document(groceryID).getDocument { (document, error) in
+                if(document == nil || (document)!.exists == false){
+                    apartment.groceryIDs = apartment.groceryIDs.filter { $0 != groceryID }
+                    self.persistEntity(apartment)
+                }
             }
         }
     }

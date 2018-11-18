@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         db.settings = settings
 
         // First authorization check will listen for a login and return the user
-        let handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        Auth.auth().addStateDidChangeListener { (auth, user) in
             guard let returnedAuthUser = user
                 else{
                     // FIXME:
@@ -32,8 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
             self.entityManager = EntityManager(firUser: returnedAuthUser)
         }
-        
-        Auth.auth().removeStateDidChangeListener(handle)
         
         return true
     }
