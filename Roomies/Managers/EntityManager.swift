@@ -404,6 +404,7 @@ class EntityManager: NSObject {
                     if (diff.type == .removed) {
                         self.apartmentListDelegate?.apartmentRemoved(removedApartment: apartment)
                     }
+                    self.validateApartmentData(apartment: apartment)
                     self.bulkUpdateEntityData(modificationType: diff.type, data: [apartment.apartmentID], entity: self.currentUser!, keys: ["apartments"])
                 } catch {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
@@ -438,6 +439,11 @@ class EntityManager: NSObject {
                     let apartment = try FirebaseDecoder().decode(Apartment.self, from: diff.document.data())
                     if (diff.type == .modified) {
                         self.currentApartmentDelegate?.currentApartmentChanged(newApartment: apartment)
+                        self.validateApartmentData(apartment: apartment)
+                    }
+                    
+                    if (diff.type == .removed){
+                        self.currentApartmentDelegate?.noApartmentFound()J
                     }
                 } catch {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
