@@ -38,6 +38,18 @@
 		C7C62F9A2165D5FA0095E33E /* Apartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C62F992165D5FA0095E33E /* Apartment.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		8A7C1F9C21A1372C00A82C6C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = "com.apple.build-tasks.3d_asset_validation.xcplugin";
+			fileType = wrapper.xcclassmodel;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		5F49D2F597BB0B873B299147 /* Pods-Roomies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roomies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Roomies/Pods-Roomies.release.xcconfig"; sourceTree = "<group>"; };
 		8A29D53B218D259D003D2334 /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +288,7 @@
 				B463CE726C699CA9EAB277FB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				8A7C1F9C21A1372C00A82C6C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -579,7 +592,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4N8LV524T9;
+				DEVELOPMENT_TEAM = JMQ9Y3A8K6;
 				INFOPLIST_FILE = Roomies/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -598,7 +611,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4N8LV524T9;
+				DEVELOPMENT_TEAM = JMQ9Y3A8K6;
 				INFOPLIST_FILE = Roomies/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

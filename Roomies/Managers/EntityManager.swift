@@ -107,7 +107,15 @@ class EntityManager: NSObject {
                     apartment.usersInRange = apartment.usersInRange.filter { $0 != userID }
                 }
                 self.persistEntity(apartment)
+                self.currentApartmentDelegate?.currentUserLocationUpdated()
             }
+        }
+    }
+    
+    public func regenerateAddressComponentsForApartment(_ apartment: Apartment){
+        AddressLookup().getAddressComponentsFromLocation(location: apartment.getApartmentLocation()) { (addressData) in
+            apartment.addressComponents = addressData
+            self.persistEntity(apartment)
         }
     }
 
@@ -443,7 +451,8 @@ class EntityManager: NSObject {
                     }
                     
                     if (diff.type == .removed){
-                        self.currentApartmentDelegate?.noApartmentFound()J
+                        self.currentUser?.apartments = (self.currentUser?.apartments.filter { $0 != apartment.apartmentID })!
+                        self.currentApartmentDelegate?.noApartmentFound()
                     }
                 } catch {
                     //  self.deleteRawApartment(apartmentID: diff.document["apartmentID"] as? String ?? diff.document["uuid"] as! String)
@@ -533,6 +542,7 @@ protocol ApartmentListManagerDelegate {
 // Delegate protocol for the currently selected apartment
 protocol CurrentApartmentManagerDelegate {
     func noApartmentFound()
+    func currentUserLocationUpdated()
     func currentApartmentRemoved(removedApartment: Apartment)
     func currentApartmentChanged(newApartment: Apartment)
     func currentApartmentUpdated(updatedApartment: Apartment)

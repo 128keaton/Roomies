@@ -42,6 +42,9 @@ class Apartment: Codable {
         self.apartmentName = apartmentName
     }
 
+    func getApartmentLocation() -> CLLocation {
+        return CLLocation(latitude: self.apartmentLatitude, longitude: self.apartmentLongitude)
+    }
     
     func getApartmentPlacemark() -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
