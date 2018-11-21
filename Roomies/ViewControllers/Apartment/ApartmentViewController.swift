@@ -176,10 +176,20 @@ class ApartmentViewController: UITableViewController {
         if(indexPath.section == 0 && indexPath.row == 0) {
             // Map section
             let mapCell = self.tableView.dequeueReusableCell(withIdentifier: "mapCell") as! UITableViewMapCell
-            mapCell.addAddressData(addressData: apartment.addressComponents)
+            
+            if(apartment.addressComponents.count == 0){
+                entityManager?.regenerateAddressComponentsForApartment(apartment)
+            }else{
+                mapCell.addAddressData(addressData: apartment.addressComponents)
+            }
+
             if let distance = entityManager?.getDistanceFromCurrentApartment() {
                 mapCell.setDistance(distance: distance)
             }
+            
+            print(apartment.apartmentLatitude)
+            print(apartment.apartmentLongitude)
+            
             mapCell.addMapPoint(annotation: apartment.getApartmentPlacemark())
             cell = mapCell
         } else if(indexPath.section == 1 && indexPath.row == 0) {
@@ -231,6 +241,10 @@ extension ApartmentViewController: UserManagerDelegate {
 }
 
 extension ApartmentViewController: CurrentApartmentManagerDelegate {
+    func currentUserLocationUpdated() {
+        self.tableView.reloadSections([0], with: .automatic)
+    }
+    
     func noApartmentFound() {
         currentHUD?.hide(animated: true)
         addApartment()
@@ -268,7 +282,10 @@ extension ApartmentViewController: CurrentApartmentManagerDelegate {
         if(previousApartment.groceryIDs != currentApartment?.groceryIDs || previousApartment.userIDs != currentApartment?.userIDs || previousApartment.billIDs != currentApartment?.billIDs) {
             self.tableView.reloadSections([1], with: .automatic)
         }
-
+        
+        if(entityManager?.lastUserLocation != nil){
+            self.tableView.reloadSections([0], with: .automatic)
+        }
     }
 }
 extension ApartmentViewController: UserSearchViewControllerDelegate {
