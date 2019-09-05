@@ -26,7 +26,12 @@ class GroceryListViewController: UITableViewController {
         if(apartmentID != entityManager?.currentApartment?.apartmentID) {
             groceryItems = []
             self.tableView.reloadData()
-            apartmentID = (entityManager?.currentApartment?.apartmentID)!
+            if let validEntityManager = entityManager,
+                let validCurrentApartment = validEntityManager.currentApartment {
+                apartmentID = validCurrentApartment.apartmentID
+            } else {
+                print("No Apartment")
+            }
         }
     }
 

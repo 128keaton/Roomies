@@ -22,12 +22,21 @@ class ApartmentViewController: UITableViewController {
 
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self, selector: #selector(userAuthSuccess), name: Notification.Name(rawValue: "currentUserSet"), object: nil)
-        currentHUD = MBProgressHUD.showAdded(to: (self.parent?.view)!, animated: true)
     }
 
     @objc func userAuthSuccess() {
         entityManager = (UIApplication.shared.delegate as! AppDelegate).entityManager
         entityManager?.currentApartmentDelegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let validEntityManager = entityManager,
+            let validCurrentApartment = validEntityManager.currentApartment {
+          //  apartmentID = validCurrentApartment.apartmentID
+              currentHUD = MBProgressHUD.showAdded(to: (self.parent?.view)!, animated: true)
+        } else {
+           self.performSegue(withIdentifier: "addApartment", sender: self)
+        }
     }
 
 
